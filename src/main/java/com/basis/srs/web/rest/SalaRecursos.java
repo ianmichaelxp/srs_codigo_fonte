@@ -1,11 +1,17 @@
 package com.basis.srs.web.rest;
 
 import com.basis.srs.dominio.Sala;
-import com.basis.srs.servico.SalaDTO;
-import com.basis.srs.servico.SalaServicos;
+import com.basis.srs.servico.dto.SalaDTO;
+import com.basis.srs.servico.SalaServico;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.attribute.URISyntax;
+import javax.xml.ws.Response;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -13,28 +19,31 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SalaRecursos
 {
-    private SalaServicos servicos;
+    private SalaServico salaServico;
 
     @GetMapping
-    public List<Sala> listarSalas(){
-        return servicos.listarSalas();
+    public ResponseEntity<List<SalaDTO>> listarSalas(){
+
+        return ResponseEntity.ok(salaServico.listarSalas());
     }
     @GetMapping("/{id}")
-    public Sala listarSala(@PathVariable(value = "id") int id){
-        return servicos.listarSala(id);
+    public ResponseEntity<SalaDTO> listarSala(@PathVariable(value = "id") Integer id){
+
+        return ResponseEntity.ok(salaServico.listarSala(id));
     }
     @PostMapping
-    public Sala criarSala(@RequestBody SalaDTO dto){
-        Sala sala = servicos.salvarSala(dto);
-        return sala;
+    public ResponseEntity<SalaDTO> criarSala(@RequestBody SalaDTO dto) throws URISyntaxException
+    {
+        return ResponseEntity.created(new URI("/api/clientes/")).body(dto);
     }
     @PutMapping
-    public Sala atualizarSala(@RequestBody SalaDTO dto){
-        Sala sala = servicos.atualizarSala(dto);
-        return sala;
+    public ResponseEntity<SalaDTO> atualizarSala(@RequestBody SalaDTO salaDTO){
+        SalaDTO dto = new SalaDTO();
+        return ResponseEntity.ok(dto);
     }
     @DeleteMapping("/{id}")
-    public void removerSala(@PathVariable(value = "id")int id){
-        servicos.removerConta(id);
+    public ResponseEntity<Void> removerSala(@PathVariable(value = "id")Integer id){
+
+        return ResponseEntity.ok().build();
     }
 }
