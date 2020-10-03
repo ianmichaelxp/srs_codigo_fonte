@@ -20,12 +20,12 @@ public class ClienteServicos
 
     public List<ClienteDTO> listarClientes()
     {
-        return mapper.toDTO(repositorio.findAll());
+        return mapper.toDto(repositorio.findAll());
     }
 
     public ClienteDTO obterPorId(Integer id)
     {
-        return mapper.toDTO(repositorio.findById(id).orElse(null));
+        return mapper.toDto(repositorio.findById(id).orElse(null));
     }
 
     public Cliente salvarCliente(ClienteDTO cliente)
