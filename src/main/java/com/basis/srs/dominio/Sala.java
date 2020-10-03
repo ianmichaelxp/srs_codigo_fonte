@@ -13,16 +13,20 @@ import java.util.List;
 public class Sala implements Serializable
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "sq_sala")
-    @SequenceGenerator(name="sq_sala",allocationSize = 1, sequenceName = "sq_cliente")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_sala")
+    @SequenceGenerator(name="seq_sala",allocationSize = 1, sequenceName = "seq_cliente")
     private Integer id;
+
     @Column(name = "descricao")
     private String descricao;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tipo_sala")
     private TipoSala tipoSala;
+
     @Column(name = "capacidade_pessoas")
     private Integer capacidadePessoas;
+
     @Column(name = "preco_diario")
     private Double precoDiario;
 

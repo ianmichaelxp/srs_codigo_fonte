@@ -7,78 +7,119 @@
     <changeSet id= "1" author="daniel.pinheiro">
         <createTable  tableName="cliente">
             <column  name="id"  type="number"  >
-                <constraints  primaryKey="true"  nullable="false"/>
+                <constraints nullable="false"/>
             </column>
             <column  name="nome"  type="varchar(120)">
                 <constraints  nullable="false"/>
             </column>
-            <column name="endereco" type="text"/>
-            <column name="data_nasc" type="date"/>
-            <column name="telefone" type="varchar(11)"/>
+            <column name="endereco" type="varchar(255)">
+            <constraints  nullable="false"/>
+            </column>
+            <column name="data_nascimento" type="date">
+                <constraints  nullable="false"/>
+            </column>
+            <column name="telefone" type="varchar(11)">
+                <constraints  nullable="false"/>
+            </column>
             <column name = "rg" type="varchar(7)">
                 <constraints  nullable="false"/>
             </column>
             <column name = "cpf" type="varchar(11)">
                 <constraints  nullable="false"/>
             </column>
-            <column name = "email" type="varchar(255)"/>
+            <column name = "email" type="varchar(255)">
+                <constraints  nullable="false"/>
+            </column>
         </createTable>
+        <addPrimaryKey tableName="cliente" columnNames="id" constraintName="pk_cliente_id"/>
     </changeSet>
 
     <changeSet  id="2" author="ian.michael">
         <createTable  tableName="equipamento">
             <column  name="id"  type="number" >
-                <constraints  primaryKey="true"  nullable="false"/>
+                <constraints nullable="false"/>
             </column>
-            <column  name="nome"  type="varchar(255)"/>
-            <column  name="id_tipo_equipamento"  type="number"/>
-            <column  name="tipo"  type="number"/>
-            <column  name="preco_diario"  type="double"/>
-            <column  name="equipamento_obrigatorio" type="number"/>
+            <column  name="nome"  type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column  name="id_tipo_equipamento"  type="number">
+                <constraints nullable="false"/>
+            </column>
+            <column  name="tipo"  type="number">
+                <constraints nullable="false"/>
+            </column>
+            <column  name="preco_diario"  type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column  name="equipamento_obrigatorio" type="number">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
+        <addPrimaryKey tableName="equipamento" columnNames="id" constraintName="pk_equipamento_id"/>
     </changeSet>
 
 
     <changeSet id="3" author="matheus.henrique">
         <createTable tableName="sala">
             <column  name="id"  type="number" >
-                <constraints  primaryKey="true"  nullable="false"/>
+                <constraints  nullable="false"/>
             </column>
             <column  name="descricao"  type="text"/>
             <column  name="id_tipo_sala" type="number"/>
             <column  name="capacidade_pessoas"  type="number"/>
             <column  name="preco_diario"  type="double"/>
         </createTable>
+        <addPrimaryKey tableName="sala" columnNames="id" constraintName="pk_sala_id"/>
     </changeSet>
 
     <changeSet id="4" author="mateus.ribeiro">
         <createTable  tableName = "reserva">
             <column  name="id"  type="number">
-                <constraints  primaryKey="true"  nullable="false"/>
+                <constraints nullable="false"/>
             </column>
-            <column  name="preco_final"  type="double"/>
-            <column  name="data_inicio"  type= "timestamp"/>
-            <column  name="data_fim"  type="timestamp"/>
-            <column  name="id_cliente"  type="number"/>
-            <column  name="id_sala"  type="number"/>
+            <column  name="preco_final"  type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column  name="data_inicio"  type= "timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column  name="data_fim"  type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column  name="id_cliente"  type="number">
+                <constraints nullable="false"/>
+            </column>
+            <column  name="id_sala"  type="number">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
+        <addPrimaryKey tableName="reserva" columnNames="id" constraintName="pk_reserva_id"/>
     </changeSet>
+
     <changeSet id="5" author="mateus.ribeiro">
         <createTable  tableName = "tipo_sala">
             <column  name="id"  type="number">
-                <constraints  primaryKey="true"  nullable="false"/>
+                <constraints nullable="false"/>
             </column>
-            <column  name="descricao"  type="varchar(255)"/>
+            <column  name="descricao"  type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
+        <addPrimaryKey tableName="tipo_sala" columnNames="id" constraintName="pk_tipo_sala_id"/>
     </changeSet>
+
     <changeSet id="6" author="ian.michael">
         <createTable  tableName = "tipo_equipamento">
             <column  name="id"  type="number">
-                <constraints  primaryKey="true"  nullable="false"/>
+                <constraints nullable="false"/>
             </column>
-            <column  name="descricao"  type="varchar(255)"/>
+            <column  name="descricao"  type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
+        <addPrimaryKey tableName="tipo_equipamento" columnNames="id" constraintName="pk_tipo_equipamento_id"/>
     </changeSet>
+
     <changeSet id="7" author="matheus.henrique">
         <addForeignKeyConstraint baseTableName="sala" baseColumnNames="id_tipo_sala" constraintName="fk_sala_tipo_sala"
                                  referencedTableName="tipo_sala"

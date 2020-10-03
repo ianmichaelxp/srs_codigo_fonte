@@ -9,12 +9,16 @@ import java.util.List;
 
 @Getter
 @Setter
-public class SalaDTO
-{
+public class SalaDTO {
     private Integer id;
+
     private String descricao;
+
     private Integer quantidadePessoas;
+
     private Double precoDiario;
+
     private TipoSala tipoSala;
+
     private List<SalaEquipamento> equipamentos;
 }

@@ -3,20 +3,18 @@ package com.basis.srs.web.rest;
 import com.basis.srs.dominio.Sala;
 import com.basis.srs.servico.dto.SalaDTO;
 import com.basis.srs.servico.SalaServico;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.URISyntax;
-import javax.xml.ws.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/salas")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class SalaRecursos
 {
     private SalaServico salaServico;
@@ -32,18 +30,18 @@ public class SalaRecursos
         return ResponseEntity.ok(salaServico.listarSala(id));
     }
     @PostMapping
-    public ResponseEntity<SalaDTO> criarSala(@RequestBody SalaDTO dto) throws URISyntaxException
+    public ResponseEntity<Sala> criarSala(@RequestBody SalaDTO dto) throws URISyntaxException
     {
-        return ResponseEntity.created(new URI("/api/clientes/")).body(dto);
+        return ResponseEntity.created(new URI("/api/clientes/")).body(salaServico.salvarSala(dto));
     }
     @PutMapping
-    public ResponseEntity<SalaDTO> atualizarSala(@RequestBody SalaDTO salaDTO){
+    public ResponseEntity<Sala> atualizarSala(@RequestBody SalaDTO salaDTO){
         SalaDTO dto = new SalaDTO();
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok(salaServico.salvarSala(dto));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerSala(@PathVariable(value = "id")Integer id){
-
+        salaServico.removerSala(id);
         return ResponseEntity.ok().build();
     }
 }

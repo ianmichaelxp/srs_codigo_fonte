@@ -1,18 +1,12 @@
 package com.basis.srs.servico.mapper;
 
+import com.basis.srs.dominio.Sala;
+import com.basis.srs.servico.dto.SalaDTO;
 import org.mapstruct.Mapper;
 
-import java.util.List;
 
-
-@Mapper(componentModel = "spring" )
-public interface SalaMapper<SalaDTO,Sala>
+@Mapper(componentModel = "spring", uses = {})
+public interface SalaMapper extends EntityMapper<SalaDTO, Sala>
 {
-
-    Sala toEntity(SalaDTO salaDTO);
-    SalaDTO toDTO(Sala sala);
-
-    List<Sala> toEntity(List<SalaDTO> dtoList);
-    List<SalaDTO> toDTO(List<Sala> salaList);
 
 }

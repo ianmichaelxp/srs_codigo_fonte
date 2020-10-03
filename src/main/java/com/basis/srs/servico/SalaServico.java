@@ -17,24 +17,23 @@ import java.util.List;
 @Transactional
 public class SalaServico
 {
-    private SalaRepositorio salaRepositorio;
-    private SalaMapper salaMapper;
+    private final SalaRepositorio salaRepositorio;
+    private final SalaMapper salaMapper;
 
     public List<SalaDTO> listarSalas(){
 
-        return salaMapper.toDTO(salaRepositorio.findAll());
+        return salaMapper.toDto(salaRepositorio.findAll());
     }
     public SalaDTO listarSala(@PathVariable(value= "id")Integer id){
 
-        return (SalaDTO) salaMapper.toDTO(salaRepositorio.findById(id));
+        return salaMapper.toDto(salaRepositorio.findById(id).orElse(null));
     }
-    public SalaDTO salvarSala(@RequestBody Sala sala){
+    public Sala salvarSala(@RequestBody SalaDTO salaDTO){
 
-        return (SalaDTO) salaMapper.toDTO(sala);
-        //return null;
+        return salaRepositorio.save(salaMapper.toEntity(salaDTO));
     }
     public void removerSala(@PathVariable(value = "id") Integer id){
-       // salaMapper.toDTO(salaRepositorio.deleteById(id));
+       salaRepositorio.deleteById(id);
     }
 
 }
