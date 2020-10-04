@@ -2,15 +2,15 @@ package com.basis.srs.dominio;
 
 import lombok.Getter;
 import lombok.Setter;
-import sun.nio.fs.GnomeFileTypeDetector;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
 @Entity
 @Table(name ="sala_equipamento")
-public class SalaEquipamento
+public class SalaEquipamento implements Serializable
 {
     @EmbeddedId
     private SalaEquipamentoPK id;
@@ -18,11 +18,13 @@ public class SalaEquipamento
     @Column(name = "quantidade")
     private Integer quantidade;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("id_sala")
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
     @JoinColumn(name = "id_sala")
     private Sala sala;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("id_equipamento")
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_equipamento")
-    private Object equipamento;
+    private Equipamento equipamento;
 }

@@ -14,7 +14,7 @@ public class Sala implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_sala")
-    @SequenceGenerator(name="seq_sala",allocationSize = 1, sequenceName = "seq_cliente")
+    @SequenceGenerator(name="seq_sala",allocationSize = 1, sequenceName = "seq_sala")
     private Integer id;
 
     @Column(name = "descricao")

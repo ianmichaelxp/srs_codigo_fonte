@@ -3,7 +3,6 @@ package com.basis.srs.web.rest;
 import com.basis.srs.dominio.Sala;
 import com.basis.srs.servico.dto.SalaDTO;
 import com.basis.srs.servico.SalaServico;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/salas")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SalaRecursos
 {
-    private SalaServico salaServico;
+    private final SalaServico salaServico;
 
     @GetMapping
     public ResponseEntity<List<SalaDTO>> listarSalas(){
