@@ -16,7 +16,7 @@ public class TipoSala implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sala")
     @SequenceGenerator(name = "seq_sala", allocationSize = 1, sequenceName = "seq_sala")
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "descricao")
     private String descricao;

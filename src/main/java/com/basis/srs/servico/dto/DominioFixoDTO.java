@@ -4,4 +4,5 @@ public class DominioFixoDTO
 {
     private Integer id;
     private String descricao;
+
 }

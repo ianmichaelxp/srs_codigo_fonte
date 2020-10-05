@@ -13,18 +13,19 @@ import java.io.Serializable;
 public class SalaEquipamento implements Serializable
 {
     @EmbeddedId
-    private SalaEquipamentoPK id;
+    private SalaEquipamentoPK salaEquipamentoPK;
 
-    @Column(name = "quantidade")
-    private Integer quantidade;
-
-    @MapsId("id_sala")
+    @MapsId("idSala")
     @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
     @JoinColumn(name = "id_sala")
     private Sala sala;
 
-    @MapsId("id_equipamento")
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_equipamento")
+    @MapsId("idEquipamento")
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    @JoinColumn(name="id_equipamento")
     private Equipamento equipamento;
+
+    @Column(name = "quantidade")
+    private Integer quantidade;
+
 }

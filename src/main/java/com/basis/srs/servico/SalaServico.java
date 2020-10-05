@@ -15,25 +15,28 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class SalaServico
-{
+public class SalaServico {
     private final SalaRepositorio salaRepositorio;
     private final SalaMapper salaMapper;
 
-    public List<SalaDTO> listarSalas(){
+    public List<SalaDTO> listarSalas() {
 
         return salaMapper.toDto(salaRepositorio.findAll());
     }
-    public SalaDTO listarSala(@PathVariable(value= "id")Integer id){
+
+    public SalaDTO listarSala(@PathVariable(value = "id") Integer id) {
 
         return salaMapper.toDto(salaRepositorio.findById(id).orElse(null));
     }
-    public Sala salvarSala(@RequestBody SalaDTO salaDTO){
+
+    public Sala salvarSala(@RequestBody SalaDTO salaDTO) {
 
         return salaRepositorio.save(salaMapper.toEntity(salaDTO));
     }
-    public void removerSala(@PathVariable(value = "id") Integer id){
-       salaRepositorio.deleteById(id);
+
+    public void removerSala(@PathVariable(value = "id") Integer id) {
+        salaRepositorio.deleteById(id);
+
     }
 
 }

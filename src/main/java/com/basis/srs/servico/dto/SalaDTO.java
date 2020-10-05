@@ -1,9 +1,10 @@
 package com.basis.srs.servico.dto;
 
-
-import com.basis.srs.dominio.TipoSala;
+import com.basis.srs.dominio.SalaEquipamento;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 
 @Getter
@@ -17,6 +18,8 @@ public class SalaDTO {
 
     private Double precoDiario;
 
-    private TipoSala tipoSala;
+    private Integer idTipoSala;
+
+    private List<SalaEquipamentoDTO> equipamentos;
 
 }
