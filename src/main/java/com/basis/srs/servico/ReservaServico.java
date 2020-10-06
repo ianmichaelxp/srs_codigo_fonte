@@ -1,7 +1,9 @@
 package com.basis.srs.servico;
 
 import com.basis.srs.dominio.Reserva;
+import com.basis.srs.servico.dto.ReservaDTO;
 import com.basis.srs.repositorio.ReservaRepositorio;
+import com.basis.srs.servico.mapper.ReservaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,39 +13,28 @@ import java.util.List;
 public class ReservaServico {
 
 
-        private ReservaRepositorio reservaRepositorio;
+    private final ReservaRepositorio repositorio;
+    private final ReservaMapper mapper;
 
+    public List<ReservaDTO> listarReservas()
+    {
+        return mapper.toDto(repositorio.findAll());
+    }
 
-        //get
-        public List<Reserva> ListarReservas() {
-            return reservaRepositorio.findAll();
+    public ReservaDTO obterPorId(Integer id)
+    {
+        return mapper.toDto(repositorio.findById(id).orElse(null));
+    }
 
-        }
-        //get
-        public Reserva obterReservaPorCodigo(int id) {
+    public Reserva salvarReserva(ReservaDTO Reserva)
+    {
+        return  repositorio.save(mapper.toEntity(Reserva));
+    }
 
-            return null; reservaRepositorio.findById(id).get();
-        }
-
-        //post
-
-        public Reserva criarReserva(Reserva reserva) {
-            return reservaRepositorio.save(reserva);
-        }
-
-        //put
-
-        public void atualizarReserva(Reserva reserva) {
-
-            reservaRepositorio.save(reserva);
-        }
-
-        //delete
-
-        public void deletarReserva(int id) {
-
-            reservaRepositorio.deleteById(id);
-        }
+    public void removerReserva(Integer id)
+    {
+        repositorio.deleteById(id);
+    }
 
 }
 

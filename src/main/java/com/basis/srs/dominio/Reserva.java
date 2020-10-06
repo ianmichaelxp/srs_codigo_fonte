@@ -14,27 +14,19 @@ public class Reserva {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int cliente_id;
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-//    private Integer sala_id;
-
+    private int id;
 
     private Timestamp dataInicio;
     private Timestamp dataFim;
     private Double precoFinal;
 
-    public Reserva(Timestamp dataInicio, Timestamp dataFim, Double precoFinal) {
-        this.dataInicio = dataInicio;
-        this.dataFim = dataFim;
-        this.precoFinal = precoFinal;
-    }
-
-    /*@OneToOne
+    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    @JoinColumn(name="id_cliente")
     private Cliente cliente;
-    @OneToMany
-    private Sala sala;*/
+
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    @JoinColumn(name="id_sala")
+    private Sala sala;
 
 
 }
