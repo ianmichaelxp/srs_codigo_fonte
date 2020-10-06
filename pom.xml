@@ -23,10 +23,7 @@
 		<org.mapstruct.version>1.4.0.Final</org.mapstruct.version>
 	</properties>
 	<dependencies>
-<<<<<<< HEAD
-=======
 
->>>>>>> 8faed6e89a8087475c1ef5e3e30fddb8ea58e219
 		<!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-core -->
 		<dependency>
 			<groupId>org.liquibase</groupId>
@@ -39,16 +36,6 @@
 			<artifactId>mapstruct</artifactId>
 			<version>1.4.0.Final</version>
 		</dependency>
-
-<<<<<<< HEAD
-=======
-<!--		<dependency>-->
-<!--			<groupId>org.modelmapper</groupId>-->
-<!--			<artifactId>modelmapper</artifactId>-->
-<!--			<version>2.3.8</version>-->
-<!--		</dependency>-->
->>>>>>> 8faed6e89a8087475c1ef5e3e30fddb8ea58e219
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -76,12 +63,8 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-<<<<<<< HEAD
-			<optional>true</optional>
-=======
 			<version>1.18.12</version>
 			<scope>provided</scope>
->>>>>>> 8faed6e89a8087475c1ef5e3e30fddb8ea58e219
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -104,18 +87,8 @@
 			<artifactId>postgresql</artifactId>
 			<scope>test</scope>
 		</dependency>
-<<<<<<< HEAD
-        <dependency>
-            <groupId>jakarta.persistence</groupId>
-            <artifactId>jakarta.persistence-api</artifactId>
-            <version>2.2.3</version>
-        </dependency>
-
-    </dependencies>
-=======
 
 	</dependencies>
->>>>>>> 8faed6e89a8087475c1ef5e3e30fddb8ea58e219
 
 	<dependencyManagement>
 
@@ -153,10 +126,7 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-<<<<<<< HEAD
-=======
 
->>>>>>> 8faed6e89a8087475c1ef5e3e30fddb8ea58e219
 		</plugins>
 	</build>
 

@@ -15,5 +15,4 @@ public class EquipamentoDTO
     private Integer idTipoEquipamento;
     private Double precoDiario;
     private Integer equipamentoObrigatorio;
-    //private List<EquipamentoDTO> equipamentos;
 }

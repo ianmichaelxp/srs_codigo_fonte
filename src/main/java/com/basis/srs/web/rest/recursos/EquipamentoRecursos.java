@@ -1,4 +1,4 @@
-package com.basis.srs.web.rest;
+package com.basis.srs.web.rest.recursos;
 import com.basis.srs.dominio.Equipamento;
 import com.basis.srs.servico.dto.EquipamentoDTO;
 import com.basis.srs.servico.EquipamentoServico;
@@ -32,16 +32,18 @@ public class EquipamentoRecursos
     }
 
     @PostMapping
-    public ResponseEntity<Equipamento> criarEquipamento(@RequestBody EquipamentoDTO dto) throws URISyntaxException
-    {
-        return ResponseEntity.created(new URI("/api/clientes/")).body(equipamentoServico.salvarEquipamento(dto));
-    }
+    public ResponseEntity<EquipamentoDTO> cadastrarEquipamento(@RequestBody EquipamentoDTO equipamentoDTO) throws URISyntaxException {
+
+        EquipamentoDTO equipamentoSalvo = equipamentoServico.salvarEquipamento(equipamentoDTO);
+
+        return ResponseEntity.created(new URI("/api/equipamentos")).body(equipamentoSalvo);
+    };
 
     @PutMapping
-    public ResponseEntity<Equipamento> atualizarEquipamento(@RequestBody EquipamentoDTO equipamentoDTO)
+    public ResponseEntity<EquipamentoDTO> atualizarEquipamento(@RequestBody EquipamentoDTO equipamentoDTO)
     {
-        EquipamentoDTO dto = new EquipamentoDTO();
-        return ResponseEntity.ok(equipamentoServico.salvarEquipamento(dto));
+        EquipamentoDTO dto = equipamentoServico.salvarEquipamento(equipamentoDTO);
+        return ResponseEntity.ok(dto);
     }
 
     @DeleteMapping("/{id}")

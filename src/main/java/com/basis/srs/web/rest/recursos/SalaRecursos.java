@@ -1,4 +1,4 @@
-package com.basis.srs.web.rest;
+package com.basis.srs.web.rest.recursos;
 
 import com.basis.srs.servico.dto.SalaDTO;
 import com.basis.srs.servico.SalaServico;
@@ -30,13 +30,13 @@ public class SalaRecursos {
 
     @PostMapping
     public ResponseEntity<SalaDTO> criarSala(@RequestBody SalaDTO dto) throws URISyntaxException {
-        return ResponseEntity.created(new URI("/api/clientes/")).body(salaServico.salvarSala(dto));
+        return ResponseEntity.created(new URI("/api/salas/")).body(salaServico.salvarSala(dto));
     }
 
     @PutMapping
     public ResponseEntity<SalaDTO> atualizarSala(@RequestBody SalaDTO salaDTO) {
-        SalaDTO dto = new SalaDTO();
-        return ResponseEntity.ok(salaServico.salvarSala(dto));
+        SalaDTO dto = salaServico.salvarSala(salaDTO);
+        return ResponseEntity.ok(dto);
     }
 
     @DeleteMapping("/{id}")

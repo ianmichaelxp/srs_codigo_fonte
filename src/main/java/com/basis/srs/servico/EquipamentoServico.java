@@ -29,10 +29,11 @@ public class EquipamentoServico
         return equipamentoMapper.toDto(equipamentoRepositorio.findById(id).orElse(null));
     }
 
-    public Equipamento salvarEquipamento(@RequestBody EquipamentoDTO equipamentoDTO)
-    {
-        return equipamentoRepositorio.save(equipamentoMapper.toEntity(equipamentoDTO));
-    }
+    public EquipamentoDTO salvarEquipamento(EquipamentoDTO equipamentoDTO){
+        Equipamento equipamento = equipamentoMapper.toEntity(equipamentoDTO);
+        equipamentoRepositorio.save(equipamento);
+        return equipamentoMapper.toDto(equipamento);
+    };
 
     public void removerEquipamento(@PathVariable(value = "id") Integer id)
     {
