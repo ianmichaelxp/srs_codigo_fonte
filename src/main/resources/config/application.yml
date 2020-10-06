@@ -11,7 +11,11 @@ spring:
         password: srs
         hikari:
             poolName: Hikari
+<<<<<<< HEAD
             auto_commit: false
+=======
+            auto-commit: false
+>>>>>>> 8faed6e89a8087475c1ef5e3e30fddb8ea58e219
     jackson:
         date-format: yyyy-MM-dd
         deserialization:
