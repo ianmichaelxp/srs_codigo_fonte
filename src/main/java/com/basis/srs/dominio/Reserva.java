@@ -20,7 +20,7 @@ public class Reserva {
     private Timestamp dataFim;
     private Double precoFinal;
 
-    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
     @JoinColumn(name="id_cliente")
     private Cliente cliente;
 
