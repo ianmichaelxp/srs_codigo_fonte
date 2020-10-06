@@ -2,7 +2,6 @@ package com.basis.srs.dominio;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -10,8 +9,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Table(name = "equipamento")
-public class Equipamento implements Serializable {
-
+public class Equipamento implements Serializable 
+{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_equipamento") //sequence aqui
     @SequenceGenerator(name = "seq_equipamento", allocationSize = 1, sequenceName = "seq_equipamento")

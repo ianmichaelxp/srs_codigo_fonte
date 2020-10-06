@@ -2,6 +2,7 @@ package com.basis.srs.servico.mapper;
 
 import java.util.List;
 
+
 public interface EntityMapper<D, E>
 {
     E toEntity(D dto);
