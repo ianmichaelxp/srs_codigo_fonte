@@ -35,9 +35,8 @@ public class EquipamentoServico
         return equipamentoMapper.toDto(equipamento);
     };
 
-    public void removerEquipamento(@PathVariable(value = "id") Integer id)
+    public void removerEquipamento(@PathVariable Integer id)
     {
-
         equipamentoRepositorio.deleteById(id);
     }
 }

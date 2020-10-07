@@ -40,7 +40,7 @@ public class SalaRecursos {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removerSala(@PathVariable(value = "id") Integer id) {
+    public ResponseEntity<Void> removerSala(@PathVariable Integer id) {
         salaServico.removerSala(id);
         return ResponseEntity.ok().build();
     }

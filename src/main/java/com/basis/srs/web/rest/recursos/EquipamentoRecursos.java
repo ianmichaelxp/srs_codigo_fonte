@@ -47,7 +47,7 @@ public class EquipamentoRecursos
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removerEquipamento(@PathVariable(value = "id")Integer id)
+    public ResponseEntity<Void> removerEquipamento(@PathVariable Integer id)
     {
         equipamentoServico.removerEquipamento(id);
         return ResponseEntity.ok().build();

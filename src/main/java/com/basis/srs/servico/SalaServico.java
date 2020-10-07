@@ -9,8 +9,6 @@ import com.basis.srs.servico.mapper.SalaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +28,12 @@ public class SalaServico {
         return salaMapper.toDto(salaRepositorio.findAll());
     }
 
-    public SalaDTO listarSala(@PathVariable(value = "id") Integer id) {
+    public SalaDTO listarSala(Integer id) {
 
         return salaMapper.toDto(salaRepositorio.findById(id).orElse(null));
     }
 
-    public SalaDTO salvarSala(@RequestBody SalaDTO salaDTO) {
+    public SalaDTO salvarSala(SalaDTO salaDTO) {
         Sala sala = salaMapper.toEntity(salaDTO);
         List<SalaEquipamento> equipamentos = sala.getEquipamentos();
         sala.setEquipamentos(new ArrayList<>());
@@ -48,7 +46,9 @@ public class SalaServico {
         return salaMapper.toDto(sala);
     }
 
-    public void removerSala(@PathVariable(value = "id") Integer id) {
+    public void removerSala(Integer id) {
+        Sala sala = salaRepositorio.findById(id).orElse(null);
+        salaEquipamentoRepositorio.deleteAll(sala.getEquipamentos());
         salaRepositorio.deleteById(id);
 
     }
