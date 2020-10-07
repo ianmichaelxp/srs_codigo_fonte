@@ -13,7 +13,7 @@ public class SalaDTO {
 
     private String descricao;
 
-    private Integer quantidadePessoas;
+    private Integer capacidadePessoas;
 
     private Double precoDiario;
 
