@@ -32,16 +32,17 @@ public class EquipamentoRecursos
     }
 
     @PostMapping
-    public ResponseEntity<Equipamento> criarEquipamento(@RequestBody EquipamentoDTO dto) throws URISyntaxException
+    public ResponseEntity<EquipamentoDTO> cadastrarEquipamento(@RequestBody EquipamentoDTO dto) throws URISyntaxException
     {
-        return ResponseEntity.created(new URI("/api/clientes/")).body(equipamentoServico.salvarEquipamento(dto));
+        EquipamentoDTO equipamentoDTO = equipamentoServico.salvarEquipamento(dto);
+        return ResponseEntity.created(new URI("/api/equipamentos/")).body(equipamentoDTO);
     }
 
     @PutMapping
-    public ResponseEntity<Equipamento> atualizarEquipamento(@RequestBody EquipamentoDTO equipamentoDTO)
+    public ResponseEntity<EquipamentoDTO> atualizarEquipamento(@RequestBody EquipamentoDTO dto)
     {
-        EquipamentoDTO dto = new EquipamentoDTO();
-        return ResponseEntity.ok(equipamentoServico.salvarEquipamento(dto));
+        EquipamentoDTO equipamentoDTO = equipamentoServico.salvarEquipamento(dto);
+        return ResponseEntity.ok(equipamentoDTO);
     }
 
     @DeleteMapping("/{id}")
