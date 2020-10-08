@@ -1,7 +1,9 @@
 package com.basis.srs.servico;
 
+import com.basis.srs.dominio.Reserva;
 import com.basis.srs.dominio.Sala;
 import com.basis.srs.dominio.SalaEquipamento;
+import com.basis.srs.repositorio.ReservaRepositorio;
 import com.basis.srs.repositorio.SalaEquipamentoRepositorio;
 import com.basis.srs.repositorio.SalaRepositorio;
 import com.basis.srs.servico.dto.SalaDTO;
@@ -9,36 +11,37 @@ import com.basis.srs.servico.mapper.SalaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class SalaServico {
+public class SalaServicos
+{
     private final SalaRepositorio salaRepositorio;
-
     private final SalaEquipamentoRepositorio salaEquipamentoRepositorio;
-
+    private final ReservaRepositorio reservaRepositorio;
     private final SalaMapper salaMapper;
 
-    public List<SalaDTO> listarSalas() {
-
+    public List<SalaDTO> listarSalas()
+    {
         return salaMapper.toDto(salaRepositorio.findAll());
     }
 
-    public SalaDTO listarSala(Integer id) {
-
+    public SalaDTO obterPorId(Integer id)
+    {
         return salaMapper.toDto(salaRepositorio.findById(id).orElse(null));
     }
 
-    public SalaDTO salvarSala(SalaDTO salaDTO) {
+    public SalaDTO salvarSala(SalaDTO salaDTO)
+    {
         Sala sala = salaMapper.toEntity(salaDTO);
         List<SalaEquipamento> equipamentos = sala.getEquipamentos();
         sala.setEquipamentos(new ArrayList<>());
         salaRepositorio.save(sala);
-        equipamentos.forEach(equipamento -> {
+        equipamentos.forEach(equipamento ->
+        {
            equipamento.setSala(sala);
            equipamento.getSalaEquipamentoPK().setIdSala(sala.getId());
         });
@@ -46,11 +49,18 @@ public class SalaServico {
         return salaMapper.toDto(sala);
     }
 
-    public void removerSala(Integer id) {
+    public void removerSala(Integer id)
+    {
         Sala sala = salaRepositorio.findById(id).orElse(null);
-        salaEquipamentoRepositorio.deleteAll(sala.getEquipamentos());
+        salaEquipamentoRepositorio.deleteInBatch(sala.getEquipamentos());
+        List<Reserva> reservas = reservaRepositorio.findAll();
+        reservas.forEach(reserva ->
+                {
+                    if (reserva.getSala().getId().equals(id))
+                    {
+                        reservaRepositorio.delete(reserva);
+                    }
+                });
         salaRepositorio.deleteById(id);
-
     }
-
 }

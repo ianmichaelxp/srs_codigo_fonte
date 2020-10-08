@@ -7,9 +7,7 @@ import com.basis.srs.servico.mapper.ReservaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-
 
 @Service
 @Transactional
@@ -19,18 +17,24 @@ public class ReservaServicos
     private final ReservaRepositorio reservaRepositorio;
     private final ReservaMapper reservaMapper;
 
-    public List<ReservaDTO> listarReservas(){
+    public List<ReservaDTO> listarReserva()
+    {
         return reservaMapper.toDto(reservaRepositorio.findAll());
     }
-    public ReservaDTO listarReserva(Integer id){
+
+    public ReservaDTO obterPorId(Integer id)
+    {
         return reservaMapper.toDto(reservaRepositorio.findById(id).orElse(null));
     }
-    public ReservaDTO salvarReserva(ReservaDTO dto){
-        Reserva reserva = reservaMapper.toEntity(dto);
-        reservaRepositorio.save(reserva);
+
+    public ReservaDTO salvarReserva(ReservaDTO reservaDTO)
+    {
+        Reserva reserva = reservaRepositorio.save(reservaMapper.toEntity(reservaDTO));
         return reservaMapper.toDto(reserva);
     }
-    public void deletarReserva(Integer id){
+
+    public void removerReserva(Integer id)
+    {
         reservaRepositorio.deleteById(id);
     }
 }

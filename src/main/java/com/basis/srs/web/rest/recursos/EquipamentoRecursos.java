@@ -1,8 +1,7 @@
 package com.basis.srs.web.rest.recursos;
-import com.basis.srs.dominio.Equipamento;
-import com.basis.srs.servico.dto.EquipamentoDTO;
-import com.basis.srs.servico.EquipamentoServico;
 
+import com.basis.srs.servico.dto.EquipamentoDTO;
+import com.basis.srs.servico.EquipamentoServicos;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,14 +9,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-
-
 @RestController
 @RequestMapping("/api/equipamentos")
 @RequiredArgsConstructor
 public class EquipamentoRecursos
 {
-    private final EquipamentoServico equipamentoServico;
+    private final EquipamentoServicos equipamentoServico;
 
     @GetMapping
     public ResponseEntity<List<EquipamentoDTO>> listarEquipamentos()
@@ -26,16 +23,15 @@ public class EquipamentoRecursos
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<EquipamentoDTO> listarEquipamento(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<EquipamentoDTO> obterPorId(@PathVariable(value = "id") Integer id)
     {
-        return ResponseEntity.ok(equipamentoServico.listarEquipamento(id));
+        return ResponseEntity.ok(equipamentoServico.obterPorId(id));
     }
 
     @PostMapping
-    public ResponseEntity<EquipamentoDTO> cadastrarEquipamento(@RequestBody EquipamentoDTO equipamentoDTO) throws URISyntaxException {
-
+    public ResponseEntity<EquipamentoDTO> criarEquipamento(@RequestBody EquipamentoDTO equipamentoDTO) throws URISyntaxException
+    {
         EquipamentoDTO equipamentoSalvo = equipamentoServico.salvarEquipamento(equipamentoDTO);
-
         return ResponseEntity.created(new URI("/api/equipamentos")).body(equipamentoSalvo);
     };
 
@@ -47,7 +43,7 @@ public class EquipamentoRecursos
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removerEquipamento(@PathVariable Integer id)
+    public ResponseEntity<Void> removerEquipamento(@PathVariable(value = "id")Integer id)
     {
         equipamentoServico.removerEquipamento(id);
         return ResponseEntity.ok().build();
