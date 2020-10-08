@@ -9,6 +9,7 @@ import com.basis.srs.servico.mapper.EquipamentoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
 import java.util.Collection;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class EquipamentoBuilder extends ConstrutorDeEntidade<Equipamento> {
     private EquipamentoMapper equipamentoMapper;
 
     @Override
-    public Equipamento construirEntidade()
+    public Equipamento construirEntidade() throws ParseException
     {
         Equipamento equipamento = new Equipamento();
         TipoEquipamento tipoEquipamento = new TipoEquipamento();

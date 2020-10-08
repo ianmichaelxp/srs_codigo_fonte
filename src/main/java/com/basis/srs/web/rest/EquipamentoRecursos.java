@@ -1,14 +1,11 @@
 package com.basis.srs.web.rest;
-import com.basis.srs.dominio.Equipamento;
 import com.basis.srs.servico.dto.EquipamentoDTO;
 import com.basis.srs.servico.EquipamentoServico;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-//import javax.validation.Valid;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;

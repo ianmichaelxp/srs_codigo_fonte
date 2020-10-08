@@ -4,7 +4,6 @@ import com.basis.srs.builder.EquipamentoBuilder;
 import com.basis.srs.dominio.Equipamento;
 import com.basis.srs.util.IntTestComum;
 import com.basis.srs.util.TestUtil;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -13,9 +12,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-//import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -49,5 +49,31 @@ public class EquipamentoRecursoIT extends IntTestComum {
                     equipamentoBuilder.converterToDto(equipamento))
             ))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void buscar() throws Exception{
+        Equipamento equipamento = equipamentoBuilder.construir();
+        getMockMvc().perform(get("/api/equipamentos/" + equipamento.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(equipamento.getId()));
+    }
+
+    @Test
+    public void editar() throws Exception{
+        Equipamento equipamento = equipamentoBuilder.construir();
+
+        getMockMvc().perform(put("/api/equipamentos")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(equipamentoBuilder.converterToDto(equipamento))
+                ))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void deletar() throws Exception{
+        Equipamento equipamento = equipamentoBuilder.construir();
+        getMockMvc().perform(delete("/api/equipamentos/" + equipamento.getId()))
+                .andExpect(status().isOk());
     }
 }

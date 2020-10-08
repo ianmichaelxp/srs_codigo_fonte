@@ -7,8 +7,6 @@ import com.basis.srs.servico.mapper.EquipamentoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 @Service
@@ -24,7 +22,7 @@ public class EquipamentoServico
         return equipamentoMapper.toDto(equipamentoRepositorio.findAll());
     }
 
-    public EquipamentoDTO listarEquipamento(@PathVariable(value= "id")Integer id)
+    public EquipamentoDTO listarEquipamento(Integer id)
     {
         return equipamentoMapper.toDto(equipamentoRepositorio.findById(id).orElse(null));
     }
