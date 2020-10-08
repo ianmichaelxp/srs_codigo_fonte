@@ -5,7 +5,11 @@ import com.basis.srs.servico.EquipamentoServico;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+//import javax.validation.Valid;
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -32,14 +36,14 @@ public class EquipamentoRecursos
     }
 
     @PostMapping
-    public ResponseEntity<EquipamentoDTO> cadastrarEquipamento(@RequestBody EquipamentoDTO dto) throws URISyntaxException
+    public ResponseEntity<EquipamentoDTO> cadastrarEquipamento(@Valid @RequestBody EquipamentoDTO dto) throws URISyntaxException
     {
         EquipamentoDTO equipamentoDTO = equipamentoServico.salvarEquipamento(dto);
         return ResponseEntity.created(new URI("/api/equipamentos/")).body(equipamentoDTO);
     }
 
     @PutMapping
-    public ResponseEntity<EquipamentoDTO> atualizarEquipamento(@RequestBody EquipamentoDTO dto)
+    public ResponseEntity<EquipamentoDTO> atualizarEquipamento(@Valid @RequestBody EquipamentoDTO dto)
     {
         EquipamentoDTO equipamentoDTO = equipamentoServico.salvarEquipamento(dto);
         return ResponseEntity.ok(equipamentoDTO);
