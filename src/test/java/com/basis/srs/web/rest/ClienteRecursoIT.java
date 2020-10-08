@@ -12,10 +12,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @Transactional
@@ -25,32 +23,55 @@ public class ClienteRecursoIT extends IntTestComum
     private ClienteBuilder clienteBuilder;
 
     @BeforeEach
-    public void limparBanco(){
+    public void limparBanco()
+    {
         clienteBuilder.limparBanco();
     }
 
     @Test
-    public void listar() throws Exception {
-         clienteBuilder.construir();
-         getMockMvc().perform(get("/api/clientes"))
-                 .andExpect(status().isOk())
-                 .andExpect(jsonPath("$[*].id",hasSize(1)));
+    public void listar() throws Exception
+    {
+        Cliente cliente = clienteBuilder.construir();
+        getMockMvc().perform(get("/api/clientes"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*].id", hasSize(1)));
     }
 
     @Test
-    public void salvar() throws Exception{
+    public void salvar() throws Exception
+    {
         Cliente cliente = clienteBuilder.construirEntidade();
-        getMockMvc().perform(post("/api/clientes")
+        getMockMvc().perform((post("/api/clientes"))
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(clienteBuilder.converterToDTO(cliente))))
+                .content(TestUtil.convertObjectToJsonBytes(clienteBuilder.converterToDto(cliente))))
                 .andExpect(status().isCreated());
     }
 
-//    @Test
-//    public void obterPorId() throws Exception{
-//        Cliente cliente = clienteBuilder.construir();
-//        getMockMvc().perform(get("/api/clientes" + cliente.getId()))
-//                .andExpect(status().isOk())
-//                .andExpect()
-//    }
+    @Test
+    public void obterPorId() throws Exception
+    {
+        Cliente cliente = clienteBuilder.construir();
+        getMockMvc().perform((get("/api/clientes/"+cliente.getId())))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(cliente.getId()));
+    }
+
+    @Test
+    public void atualizar() throws Exception
+    {
+        Cliente cliente = clienteBuilder.construir();
+        getMockMvc().perform(put("/api/clientes")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(clienteBuilder.converterToDto(cliente))))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void deletar() throws Exception
+    {
+        Cliente cliente = clienteBuilder.construir();
+        getMockMvc().perform(delete("/api/clientes/"+ cliente.getId()))
+                .andExpect(status().isOk());
+    }
 }
+

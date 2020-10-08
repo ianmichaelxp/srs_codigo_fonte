@@ -36,16 +36,19 @@ public class EquipamentoBuilder extends ConstrutorDeEntidade<Equipamento>
     public Equipamento construirEntidade() throws ParseException {
         Equipamento equipamento = new Equipamento();
         TipoEquipamento tipoEquipamento = new TipoEquipamento();
-
+        tipoEquipamento.setId(1);
+        tipoEquipamento.setDescricao("aaaa");
         equipamento.setNome("notebook");
         equipamento.setPrecoDiario(50.00);
         equipamento.setTipoEquipamento(tipoEquipamento);
+        equipamento.setEquipamentoObrigatorio(1);
         return equipamento;
     }
 
     @Override
     protected Equipamento persistir(Equipamento entidade) {
-        return null;
+        EquipamentoDTO dto = equipamentoServicos.salvarEquipamento(equipamentoMapper.toDto(entidade));
+        return equipamentoMapper.toEntity(dto);
     }
 
     @Override

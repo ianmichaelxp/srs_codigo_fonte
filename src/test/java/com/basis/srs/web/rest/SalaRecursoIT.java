@@ -1,5 +1,6 @@
 package com.basis.srs.web.rest;
 
+import com.basis.srs.builder.EquipamentoBuilder;
 import com.basis.srs.builder.SalaBuilder;
 import com.basis.srs.dominio.Sala;
 import com.basis.srs.util.IntTestComum;
@@ -25,15 +26,19 @@ public class SalaRecursoIT extends IntTestComum {
 
     @Autowired
     private SalaBuilder salaBuilder;
+    @Autowired
+    private EquipamentoBuilder equipamentoBuilder;
 
     @BeforeEach
     public void limparBanco(){
+
+        equipamentoBuilder.limparBanco();
         salaBuilder.limparBanco();
     }
 
     @Test
     public void listar() throws Exception{
-        salaBuilder.construir();
+        Sala sala = salaBuilder.construir();
         getMockMvc().perform(get("/api/salas"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*].id", hasSize(1)));
@@ -44,7 +49,7 @@ public class SalaRecursoIT extends IntTestComum {
         Sala sala = salaBuilder.construirEntidade();
         getMockMvc().perform(post("/api/salas")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(salaBuilder.converterToDTo(sala))
+                .content(TestUtil.convertObjectToJsonBytes(salaBuilder.converterToDTO(sala))
                 ))
                 .andExpect(status().isCreated());
     }
@@ -52,18 +57,18 @@ public class SalaRecursoIT extends IntTestComum {
     @Test
     public void buscar() throws Exception{
         Sala sala = salaBuilder.construir();
-        getMockMvc().perform(get("api/salas/" + sala.getId()))
+        getMockMvc().perform(get("/api/salas/" + sala.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(sala.getId()));
     }
 
     @Test
     public void editar() throws Exception{
-        Sala sala = salaBuilder.construir();
+        Sala sala = salaBuilder.construirEntidade();
 
-        getMockMvc().perform(put("api/salas")
+        getMockMvc().perform(put("/api/salas")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(salaBuilder.converterToDTo(sala))
+                .content(TestUtil.convertObjectToJsonBytes(salaBuilder.converterToDTO(sala))
                 ))
                 .andExpect(status().isOk());
     }

@@ -1,12 +1,10 @@
 package com.basis.srs.builder;
 
-import com.basis.srs.dominio.Equipamento;
-import com.basis.srs.dominio.Sala;
-import com.basis.srs.dominio.SalaEquipamento;
-import com.basis.srs.dominio.TipoSala;
+import com.basis.srs.dominio.*;
 import com.basis.srs.repositorio.SalaRepositorio;
 import com.basis.srs.servico.SalaServicos;
 import com.basis.srs.servico.dto.SalaDTO;
+import com.basis.srs.servico.dto.SalaEquipamentoDTO;
 import com.basis.srs.servico.mapper.SalaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,16 +28,18 @@ public class SalaBuilder extends ConstrutorDeEntidade<Sala>{
     @Autowired
     private EquipamentoBuilder equipamentoBuilder;
 
-    public SalaDTO converterToDTo(Sala sala){
+    public SalaDTO converterToDTO(Sala sala){
         return salaMapper.toDto(sala);
     }
 
     @Override
-    public Sala construirEntidade() throws ParseException {
-
+    public Sala construirEntidade() throws ParseException
+    {
         Equipamento equipamento = equipamentoBuilder.construir();
         Sala sala = new Sala();
         TipoSala tipoSala = new TipoSala();
+        tipoSala.setId(1);
+        tipoSala.setDescricao("aaaa");
         SalaEquipamento salaEquipamento = new SalaEquipamento();
 
         sala.setCapacidadePessoas(10);
@@ -59,8 +59,9 @@ public class SalaBuilder extends ConstrutorDeEntidade<Sala>{
     }
 
     @Override
-    public Sala persistir(Sala entidade) {
-        SalaDTO dto = salaServicos.salvarSala(salaMapper.toDto(entidade));
+    public Sala persistir(Sala sala)
+    {
+        SalaDTO dto = salaServicos.salvarSala(salaMapper.toDto(sala));
         return salaMapper.toEntity(dto);
     }
 
