@@ -41,14 +41,6 @@ public class EquipamentoServicos
 
     public void removerEquipamento(Integer id)
     {
-        List<SalaEquipamento> salaEquipamentos = salaEquipamentoRepositorio.findAll();
-        salaEquipamentos.forEach(salaEquipamento ->
-        {
-            if (salaEquipamento.getEquipamento().getId().equals(id))
-            {
-                salaEquipamentoRepositorio.delete(salaEquipamento);
-            }
-        });
         equipamentoRepositorio.deleteById(id);
     }
 }

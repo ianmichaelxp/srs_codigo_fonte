@@ -4,6 +4,7 @@ import com.basis.srs.servico.ClienteServicos;
 import com.basis.srs.servico.dto.ClienteDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -29,13 +30,13 @@ public class ClienteRecursos
     }
 
     @PutMapping
-    public ResponseEntity<ClienteDTO> atualizarCliente(@RequestBody ClienteDTO cliente)
+    public ResponseEntity<ClienteDTO> atualizarCliente(@Validated @RequestBody ClienteDTO cliente)
     {
         return ResponseEntity.ok(servicos.salvarCliente(cliente));
     }
 
     @PostMapping
-    public ResponseEntity<ClienteDTO> criarCliente(@RequestBody ClienteDTO cliente) throws URISyntaxException
+    public ResponseEntity<ClienteDTO> criarCliente(@Validated @RequestBody ClienteDTO cliente) throws URISyntaxException
     {
         return ResponseEntity.created(new URI("/api/cliente")).body(servicos.salvarCliente(cliente));
     }

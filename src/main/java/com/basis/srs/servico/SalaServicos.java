@@ -53,16 +53,6 @@ public class SalaServicos
 
     public void removerSala(Integer id)
     {
-        Sala sala = salaRepositorio.findById(id).orElse(null);
-        salaEquipamentoRepositorio.deleteInBatch(sala.getEquipamentos());
-        List<Reserva> reservas = reservaRepositorio.findAll();
-        reservas.forEach(reserva ->
-                {
-                    if (reserva.getSala().getId().equals(id))
-                    {
-                        reservaRepositorio.delete(reserva);
-                    }
-                });
         salaRepositorio.deleteById(id);
     }
 }

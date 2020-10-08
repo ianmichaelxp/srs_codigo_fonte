@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -25,7 +27,7 @@ public class Cliente implements Serializable
     private String endereco;
 
     @Column(name = "data_nascimento")
-    private Date dataNasc;
+    private LocalDate dataNasc;
 
     @Column(name = "telefone")
     private String telefone;

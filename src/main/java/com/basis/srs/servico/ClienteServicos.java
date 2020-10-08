@@ -38,14 +38,6 @@ public class ClienteServicos
     
     public void removerCliente(Integer id)
     {
-        List<Reserva> reservas = reservaRepositorio.findAll();
-        reservas.forEach(reserva ->
-        {
-            if (reserva.getCliente().getId().equals(id))
-            {
-                reservaRepositorio.delete(reserva);
-            }
-        });
         clienteRepositorio.deleteById(id);
     }
 }
