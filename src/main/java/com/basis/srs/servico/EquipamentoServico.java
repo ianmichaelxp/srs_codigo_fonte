@@ -2,6 +2,7 @@ package com.basis.srs.servico;
 import com.basis.srs.dominio.Equipamento;
 import com.basis.srs.repositorio.EquipamentoRepositorio;
 import com.basis.srs.servico.dto.EquipamentoDTO;
+import com.basis.srs.servico.exception.RegraNegocioException;
 import com.basis.srs.servico.mapper.EquipamentoMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,8 @@ public class EquipamentoServico
 
     public EquipamentoDTO listarEquipamento(Integer id)
     {
-        return equipamentoMapper.toDto(equipamentoRepositorio.findById(id).orElse(null));
+        return equipamentoMapper.toDto(equipamentoRepositorio.findById(id).orElseThrow(() ->
+                new RegraNegocioException("Usuario nao encontrado")));
     }
 
     public EquipamentoDTO salvarEquipamento(EquipamentoDTO dto){
@@ -35,6 +37,10 @@ public class EquipamentoServico
 
     public void removerEquipamento(Integer id)
     {
+        if (listarEquipamento(id).getEquipamentoObrigatorio() == 0)
+        {
+            throw new RegraNegocioException("Todas as salas deve Possuir este equipamento obrigatoriamente.");
+        }
         equipamentoRepositorio.deleteById(id);
     }
 }

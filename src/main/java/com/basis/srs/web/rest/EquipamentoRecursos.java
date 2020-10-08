@@ -32,6 +32,13 @@ public class EquipamentoRecursos
         return ResponseEntity.ok(equipamentoServico.listarEquipamento(id));
     }
 
+    /*
+    public ResponseEntity<EquipamentoDTO> listar(@PathVariable(value = "id") Integer id)
+
+    return ResponseEntity.ok(
+
+     */
+
     @PostMapping
     public ResponseEntity<EquipamentoDTO> cadastrarEquipamento(@Valid @RequestBody EquipamentoDTO dto) throws URISyntaxException
     {
