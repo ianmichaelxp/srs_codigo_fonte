@@ -7,12 +7,8 @@ import com.basis.srs.servico.dto.ClienteDTO;
 import com.basis.srs.servico.mapper.ClienteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sun.util.calendar.BaseCalendar;
 
-import javax.xml.crypto.Data;
-import java.sql.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Collection;
 

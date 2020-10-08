@@ -1,6 +1,5 @@
 package com.basis.srs.web.rest;
 
-
 import com.basis.srs.builder.ClienteBuilder;
 import com.basis.srs.dominio.Cliente;
 import com.basis.srs.util.IntTestComum;
@@ -11,10 +10,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @Transactional
@@ -60,7 +59,7 @@ public class ClienteRecursoIT extends IntTestComum
     @Test
     public void atualizar() throws Exception
     {
-        Cliente cliente = clienteBuilder.construir();
+        Cliente cliente = clienteBuilder.construirEntidade();
         getMockMvc().perform(put("/api/clientes")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(clienteBuilder.converterToDto(cliente))))
@@ -73,5 +72,22 @@ public class ClienteRecursoIT extends IntTestComum
         Cliente cliente = clienteBuilder.construir();
         getMockMvc().perform(delete("/api/clientes/"+ cliente.getId()))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void cpfJaCadastrado() throws Exception
+    {
+        Cliente cliente = clienteBuilder.construir();
+        getMockMvc().perform((post("/api/clientes/"))
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(clienteBuilder.converterToDto(cliente))))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void idNaoExistente() throws Exception
+    {
+        getMockMvc().perform((get("/api/clientes/"+1)))
+                .andExpect(status().isBadRequest());
     }
 }
