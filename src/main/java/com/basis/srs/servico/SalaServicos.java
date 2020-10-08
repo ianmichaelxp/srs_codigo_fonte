@@ -1,5 +1,6 @@
 package com.basis.srs.servico;
 
+import br.com.basis.sgp.servico.exception.RegraNegocioException;
 import com.basis.srs.dominio.Reserva;
 import com.basis.srs.dominio.Sala;
 import com.basis.srs.dominio.SalaEquipamento;
@@ -31,7 +32,8 @@ public class SalaServicos
 
     public SalaDTO obterPorId(Integer id)
     {
-        return salaMapper.toDto(salaRepositorio.findById(id).orElse(null));
+        return salaMapper.toDto(salaRepositorio.findById(id)
+                .orElseThrow(()-> new RegraNegocioException("Sala não Encontrada")));
     }
 
     public SalaDTO salvarSala(SalaDTO salaDTO)
@@ -51,16 +53,18 @@ public class SalaServicos
 
     public void removerSala(Integer id)
     {
-        Sala sala = salaRepositorio.findById(id).orElse(null);
+        Sala sala = salaRepositorio.findById(id).orElseThrow(()-> new RegraNegocioException("Sala não encontrada"));
         salaEquipamentoRepositorio.deleteInBatch(sala.getEquipamentos());
+
         List<Reserva> reservas = reservaRepositorio.findAll();
         reservas.forEach(reserva ->
                 {
                     if (reserva.getSala().getId().equals(id))
                     {
-                        reservaRepositorio.delete(reserva);
+                        throw new RegraNegocioException("Não pode remover sala quando há uma reserva cadastrada");
                     }
                 });
+        obterPorId(id);
         salaRepositorio.deleteById(id);
     }
 }

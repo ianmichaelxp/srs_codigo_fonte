@@ -63,6 +63,14 @@ public class SalaRecursoIT extends IntTestComum {
     }
 
     @Test
+    public void buscarComIdInvalido() throws Exception{
+        Sala sala = salaBuilder.construir();
+        getMockMvc().perform(get("/api/salas/" + sala.getId()))
+                .andExpect(status().isBadRequest());
+    }
+
+
+    @Test
     public void editar() throws Exception{
         Sala sala = salaBuilder.construirEntidade();
 
@@ -78,5 +86,12 @@ public class SalaRecursoIT extends IntTestComum {
         Sala sala = salaBuilder.construir();
         getMockMvc().perform(delete("/api/salas/" + sala.getId()))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void deletarComReservaCadastrada() throws Exception{
+        Sala sala = salaBuilder.construir();
+        getMockMvc().perform(delete("/api/salas/" + sala.getId()))
+                .andExpect(status().isBadRequest());
     }
 }
