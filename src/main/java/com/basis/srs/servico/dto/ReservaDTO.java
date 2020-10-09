@@ -12,9 +12,9 @@ public class ReservaDTO
 {
     private Integer id;
 
-    private LocalDateTime dataInicio;
+    private LocalDate dataInicio;
 
-    private LocalDateTime dataFim;
+    private LocalDate dataFim;
 
     private Double precoFinal;
 

@@ -22,10 +22,10 @@ public class Reserva implements Serializable
     private Integer id;
 
     @Column(name = "data_inicio")
-    private LocalDateTime dataInicio;
+    private LocalDate dataInicio;
 
     @Column(name = "data_fim")
-    private LocalDateTime dataFim;
+    private LocalDate dataFim;
 
     @Column(name = "preco_final")
     private Double precoFinal;

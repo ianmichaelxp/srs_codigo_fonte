@@ -1,7 +1,9 @@
 package com.basis.srs.web.rest;
 
 import com.basis.srs.builder.EquipamentoBuilder;
+import com.basis.srs.builder.ReservaBuilder;
 import com.basis.srs.builder.SalaBuilder;
+import com.basis.srs.dominio.Reserva;
 import com.basis.srs.dominio.Sala;
 import com.basis.srs.util.IntTestComum;
 import com.basis.srs.util.TestUtil;
@@ -28,6 +30,9 @@ public class SalaRecursoIT extends IntTestComum {
     private SalaBuilder salaBuilder;
     @Autowired
     private EquipamentoBuilder equipamentoBuilder;
+    @Autowired
+    private ReservaBuilder reservaBuilder;
+
 
     @BeforeEach
     public void limparBanco(){
@@ -65,7 +70,7 @@ public class SalaRecursoIT extends IntTestComum {
     @Test
     public void buscarComIdInvalido() throws Exception{
         Sala sala = salaBuilder.construir();
-        getMockMvc().perform(get("/api/salas/" + sala.getId()))
+        getMockMvc().perform(get("/api/salas/" + 220))
                 .andExpect(status().isBadRequest());
     }
 
@@ -90,8 +95,16 @@ public class SalaRecursoIT extends IntTestComum {
 
     @Test
     public void deletarComReservaCadastrada() throws Exception{
-        Sala sala = salaBuilder.construir();
+        Reserva reserva = reservaBuilder.construirEntidade();
+        Sala sala = salaBuilder.construirEntidade();
         getMockMvc().perform(delete("/api/salas/" + sala.getId()))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void deletarComIdInvalido() throws Exception{
+        Sala sala = salaBuilder.construir();
+        getMockMvc().perform(delete("/api/salas/" + 220))
                 .andExpect(status().isBadRequest());
     }
 }
