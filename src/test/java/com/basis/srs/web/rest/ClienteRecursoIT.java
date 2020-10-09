@@ -1,6 +1,7 @@
 package com.basis.srs.web.rest;
 
 import com.basis.srs.builder.ClienteBuilder;
+import com.basis.srs.builder.ReservaBuilder;
 import com.basis.srs.dominio.Cliente;
 import com.basis.srs.util.IntTestComum;
 import com.basis.srs.util.TestUtil;
@@ -17,15 +18,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @Transactional
-public class ClienteRecursoIT extends IntTestComum
-{
+public class ClienteRecursoIT extends IntTestComum {
     @Autowired
     private ClienteBuilder clienteBuilder;
 
+    @Autowired
+    private ReservaBuilder reservaBuilder;
+
     @BeforeEach
-    public void limparBanco()
-    {
+    public void limparBanco() {
         clienteBuilder.limparBanco();
+        reservaBuilder.limparBanco();
+    }
+
+    public void testeJaCadastrado(Cliente cliente) throws Exception
+    {
+        getMockMvc().perform((post("/api/clientes/"))
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(clienteBuilder.converterToDto(cliente))))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -78,16 +89,43 @@ public class ClienteRecursoIT extends IntTestComum
     public void cpfJaCadastrado() throws Exception
     {
         Cliente cliente = clienteBuilder.construir();
-        getMockMvc().perform((post("/api/clientes/"))
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(clienteBuilder.converterToDto(cliente))))
-                .andExpect(status().isBadRequest());
+        cliente.setRg("1231111");
+        cliente.setEmail("daniel123@gmail.com");
+        testeJaCadastrado(cliente);
+    }
+
+    @Test
+    public void rgJaCadastrado() throws Exception
+    {
+        Cliente cliente = clienteBuilder.construir();
+        cliente.setCpf("98781769083");
+        cliente.setEmail("daniel123@gmail.com");
+        testeJaCadastrado(cliente);
+    }
+
+    @Test
+    public void emailJaCadastrado() throws Exception
+    {
+        Cliente cliente = clienteBuilder.construir();
+        cliente.setCpf("98781769083");
+        cliente.setRg("1231111");
+        testeJaCadastrado(cliente);
     }
 
     @Test
     public void idNaoExistente() throws Exception
     {
-        getMockMvc().perform((get("/api/clientes/"+1)))
+        getMockMvc().perform((get("/api/clientes/" + 1)))
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    public void clienteComReserva() throws Exception
+    {
+        reservaBuilder.construir();
+        getMockMvc().perform(delete("/api/clientes/"+ reservaBuilder.obterPorId(1)))
+                .andExpect(status().isBadRequest());
+    }
+
+
 }

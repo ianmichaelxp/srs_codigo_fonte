@@ -36,13 +36,12 @@ public class ClienteServicos
     public ClienteDTO salvarCliente(ClienteDTO clienteDTO)
     {
         List<Cliente> clientes = clienteRepositorio.findAll();
-        clientes.forEach(cliente ->
-        {
-            if (cliente.getCpf().equals(clienteDTO.getCpf()) || cliente.getRg().equals(clienteDTO.getRg()))
-            {
-                throw new RegraNegocioException("Cliente já cadastrado");
-            }
-        });
+        if(clienteRepositorio.existsByCpf(clienteDTO.getCpf()))
+            throw new RegraNegocioException("Cpf já cadastrado");
+        if(clienteRepositorio.existsByRg(clienteDTO.getRg()))
+            throw new RegraNegocioException("Rg já cadastrado");
+        if(clienteRepositorio.existsByEmail(clienteDTO.getEmail()))
+            throw new RegraNegocioException("Email já cadastrado");
         Cliente cliente = clienteRepositorio.save(clienteMapper.toEntity(clienteDTO));
         return clienteMapper.toDto(cliente);
     }

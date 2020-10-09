@@ -2,6 +2,7 @@ package com.basis.srs.servico.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -32,8 +33,8 @@ public class ClienteDTO
     @Size(max = 7, min = 7)
     private String rg;
 
+    @CPF
     @NotNull
-    @Size(max = 11, min = 11)
     private String cpf;
 
     @Email
