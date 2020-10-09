@@ -1,16 +1,13 @@
 package com.basis.srs.servico;
 
 import com.basis.srs.dominio.Cliente;
-import com.basis.srs.dominio.Reserva;
 import com.basis.srs.repositorio.ClienteRepositorio;
-import com.basis.srs.repositorio.ReservaRepositorio;
 import com.basis.srs.servico.dto.ClienteDTO;
-import com.basis.srs.servico.excecao.RegraNegocioException;
 import com.basis.srs.servico.mapper.ClienteMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -18,46 +15,26 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ClienteServicos
 {
-    private final ClienteRepositorio clienteRepositorio;
-    private final ClienteMapper clienteMapper;
-    private final ReservaRepositorio reservaRepositorio;
+    private final ClienteRepositorio repositorio;
+    private final ClienteMapper mapper;
 
     public List<ClienteDTO> listarClientes()
     {
-        return clienteMapper.toDto(clienteRepositorio.findAll());
+        return mapper.toDto(repositorio.findAll());
     }
 
     public ClienteDTO obterPorId(Integer id)
     {
-        return clienteMapper.toDto(clienteRepositorio.findById(id)
-                .orElseThrow(() -> new RegraNegocioException("Usuário não encontrado")));
+        return mapper.toDto(repositorio.findById(id).orElse(null));
     }
 
-    public ClienteDTO salvarCliente(ClienteDTO clienteDTO)
+    public Cliente salvarCliente(ClienteDTO cliente)
     {
-        List<Cliente> clientes = clienteRepositorio.findAll();
-        clientes.forEach(cliente ->
-        {
-            if (cliente.getCpf().equals(clienteDTO.getCpf()) || cliente.getRg().equals(clienteDTO.getRg()))
-            {
-                throw new RegraNegocioException("Cliente já cadastrado");
-            }
-        });
-        Cliente cliente = clienteRepositorio.save(clienteMapper.toEntity(clienteDTO));
-        return clienteMapper.toDto(cliente);
+        return  repositorio.save(mapper.toEntity(cliente));
     }
     
     public void removerCliente(Integer id)
     {
-        List<Reserva> reservas = reservaRepositorio.findAll();
-        reservas.forEach(reserva ->
-        {
-            if (reserva.getCliente().getId().equals(id))
-            {
-                throw new RegraNegocioException("Reserva existente no nome do Cliente");
-            }
-        });
-        obterPorId(id);
-        clienteRepositorio.deleteById(id);
+        repositorio.deleteById(id);
     }
 }

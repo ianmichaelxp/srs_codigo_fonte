@@ -30,6 +30,8 @@ public class Sala implements Serializable
     @Column(name = "preco_diario")
     private Double precoDiario;
 
-    @OneToMany(mappedBy = "sala")
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
     private List<SalaEquipamento> equipamentos;
+
+
 }
