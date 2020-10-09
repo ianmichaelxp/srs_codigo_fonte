@@ -2,6 +2,7 @@ package com.basis.srs.servico.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -35,7 +36,7 @@ public class ClienteDTO
     private String rg;
 
     @NotNull
-    @Size(min = 11,max = 11)
+    @CPF(message= "cpf invalido")
     private String cpf;
 
     @Email
