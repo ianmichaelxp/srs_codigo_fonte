@@ -2,15 +2,17 @@ package com.basis.srs.dominio;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "cliente")
-public class Cliente
+public class Cliente implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cliente")
@@ -25,7 +27,7 @@ public class Cliente
     private String endereco;
 
     @Column(name = "data_nascimento")
-    private Date dataNasc;
+    private LocalDate dataNasc;
 
     @Column(name = "telefone")
     private String telefone;
