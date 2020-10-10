@@ -4,6 +4,7 @@ import br.com.basis.sgp.servico.exception.RegraNegocioException;
 import com.basis.srs.dominio.Reserva;
 import com.basis.srs.dominio.Sala;
 import com.basis.srs.dominio.SalaEquipamento;
+import com.basis.srs.repositorio.EquipamentoRepositorio;
 import com.basis.srs.repositorio.ReservaRepositorio;
 import com.basis.srs.repositorio.SalaEquipamentoRepositorio;
 import com.basis.srs.repositorio.SalaRepositorio;
@@ -24,6 +25,7 @@ public class SalaServicos
     private final SalaEquipamentoRepositorio salaEquipamentoRepositorio;
     private final ReservaRepositorio reservaRepositorio;
     private final SalaMapper salaMapper;
+    private final EquipamentoRepositorio equipamentoRepositorio;
 
     public List<SalaDTO> listarSalas()
     {
@@ -44,9 +46,14 @@ public class SalaServicos
         salaRepositorio.save(sala);
         equipamentos.forEach(equipamento ->
         {
-           equipamento.setSala(sala);
+            if(salaEquipamentoRepositorio.existsByEquipamento(equipamento.getEquipamento())){
+                throw new RegraNegocioException("Equipamento já existe em outra sala");
+            }
+
+            equipamento.setSala(sala);
            equipamento.getSalaEquipamentoPK().setIdSala(sala.getId());
         });
+
         salaEquipamentoRepositorio.saveAll(equipamentos);
         return salaMapper.toDto(sala);
     }
@@ -55,16 +62,9 @@ public class SalaServicos
     {
         Sala sala = salaRepositorio.findById(id).orElseThrow(()-> new RegraNegocioException("Sala não encontrada"));
         salaEquipamentoRepositorio.deleteInBatch(sala.getEquipamentos());
-
-        List<Reserva> reservas = reservaRepositorio.findAll();
-        reservas.forEach(reserva ->
-                {
-                    if (reserva.getSala().getId().equals(id))
-                    {
-                        throw new RegraNegocioException("Não pode remover sala quando há uma reserva cadastrada");
-                    }
-                });
-        obterPorId(id);
+        if(reservaRepositorio.existsBySala(sala)){
+            throw new RegraNegocioException("Sala não pode ser removido, pois está reservada");
+        }
         salaRepositorio.deleteById(id);
     }
 }

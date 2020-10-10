@@ -3,8 +3,10 @@ package com.basis.srs.web.rest;
 import com.basis.srs.builder.EquipamentoBuilder;
 import com.basis.srs.builder.ReservaBuilder;
 import com.basis.srs.builder.SalaBuilder;
+import com.basis.srs.dominio.Equipamento;
 import com.basis.srs.dominio.Reserva;
 import com.basis.srs.dominio.Sala;
+import com.basis.srs.dominio.SalaEquipamento;
 import com.basis.srs.util.IntTestComum;
 import com.basis.srs.util.TestUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,6 +59,20 @@ public class SalaRecursoIT extends IntTestComum {
                 .content(TestUtil.convertObjectToJsonBytes(salaBuilder.converterToDTO(sala))
                 ))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void salvarSalaComEquipamentoIndisponivel() throws Exception{
+        Sala sala = salaBuilder.construirEntidade();
+        getMockMvc().perform(post("/api/salas")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(salaBuilder.converterToDTO(sala))
+                ));
+        getMockMvc().perform(post("/api/salas")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(salaBuilder.converterToDTO(sala))
+                ))
+                .andExpect(status().isBadRequest());
     }
 
     @Test

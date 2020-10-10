@@ -36,7 +36,7 @@ public class ClienteDTO
     private String rg;
 
     @NotNull
-    @CPF(message= "cpf invalido")
+    @CPF(message= "CPF invalido")
     private String cpf;
 
     @Email
