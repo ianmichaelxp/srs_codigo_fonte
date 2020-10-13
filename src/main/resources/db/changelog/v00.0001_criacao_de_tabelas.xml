@@ -7,11 +7,16 @@
     <changeSet id= "1" author="daniel.pinheiro">
         <createTable  tableName="cliente">
             <column  name="id"  type="number"  >
+<<<<<<< HEAD
                 <constraints nullable="false"/>
+=======
+                <constraints  primaryKey="true"  nullable="false"/>
+>>>>>>> f99a033b0674891d3110d1dcf0a43e9c70c7532e
             </column>
             <column  name="nome"  type="varchar(120)">
                 <constraints  nullable="false"/>
             </column>
+<<<<<<< HEAD
             <column name="endereco" type="varchar(255)">
             <constraints  nullable="false"/>
             </column>
@@ -21,12 +26,18 @@
             <column name="telefone" type="varchar(11)">
                 <constraints  nullable="false"/>
             </column>
+=======
+            <column name="endereco" type="text"/>
+            <column name="data_nasc" type="date"/>
+            <column name="telefone" type="varchar(11)"/>
+>>>>>>> f99a033b0674891d3110d1dcf0a43e9c70c7532e
             <column name = "rg" type="varchar(7)">
                 <constraints  nullable="false"/>
             </column>
             <column name = "cpf" type="varchar(11)">
                 <constraints  nullable="false"/>
             </column>
+<<<<<<< HEAD
             <column name = "email" type="varchar(255)">
                 <constraints  nullable="false"/>
             </column>
@@ -63,12 +74,37 @@
         <createTable tableName="sala">
             <column  name="id"  type="number" >
                 <constraints  nullable="false"/>
+=======
+            <column name = "email" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet  id="2" author="Ian Michael">
+        <createTable  tableName="equipamento">
+            <column  name="id"  type="number" >
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="nome"  type="varchar(255)"/>
+            <column  name="id_tipo_equipamento"  type="number"/>
+            <column  name="tipo"  type="number"/>
+            <column  name="preco_diario"  type="double"/>
+            <column  name="equipamento_obrigatorio" type="number"/>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="3" author="Matheus Henrique">
+        <createTable tableName="sala">
+            <column  name="id"  type="number" >
+                <constraints  primaryKey="true"  nullable="false"/>
+>>>>>>> f99a033b0674891d3110d1dcf0a43e9c70c7532e
             </column>
             <column  name="descricao"  type="text"/>
             <column  name="id_tipo_sala" type="number"/>
             <column  name="capacidade_pessoas"  type="number"/>
             <column  name="preco_diario"  type="double"/>
         </createTable>
+<<<<<<< HEAD
         <addPrimaryKey tableName="sala" columnNames="id" constraintName="pk_sala_id"/>
     </changeSet>
 
@@ -121,6 +157,39 @@
     </changeSet>
 
     <changeSet id="7" author="matheus.henrique">
+=======
+    </changeSet>
+
+    <changeSet id="4" author="Mateus Ribeiro">
+        <createTable  tableName = "reserva">
+            <column  name="id"  type="number">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="preco_final"  type="double"/>
+            <column  name="data_inicio"  type= "timestamp"/>
+            <column  name="data_fim"  type="timestamp"/>
+            <column  name="id_cliente"  type="number"/>
+            <column  name="id_sala"  type="number"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="5" author="Mateus Ribeiro">
+        <createTable  tableName = "tipo_sala">
+            <column  name="id"  type="number">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="descricao"  type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="6" author="Mateus Ribeiro">
+        <createTable  tableName = "tipo_equipamento">
+            <column  name="id"  type="number">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="descricao"  type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="7" author="">
+>>>>>>> f99a033b0674891d3110d1dcf0a43e9c70c7532e
         <addForeignKeyConstraint baseTableName="sala" baseColumnNames="id_tipo_sala" constraintName="fk_sala_tipo_sala"
                                  referencedTableName="tipo_sala"
                                  referencedColumnNames="id" />
@@ -136,7 +205,11 @@
                                  constraintName="fk_reserva_sala" referencedTableName="sala"
                                  referencedColumnNames="id"/>
     </changeSet>
+<<<<<<< HEAD
     <changeSet id="8" author="ian.michael">
+=======
+    <changeSet id="8" author="">
+>>>>>>> f99a033b0674891d3110d1dcf0a43e9c70c7532e
         <insert tableName="tipo_equipamento">
             <column  name="id"  value="1"/>
             <column  name="descricao"  value="movel"/>
@@ -150,7 +223,11 @@
             <column  name="descricao"  value="informatica"/>
         </insert>
     </changeSet>
+<<<<<<< HEAD
     <changeSet id="9" author="matheus.henrique">
+=======
+    <changeSet id="9" author="">
+>>>>>>> f99a033b0674891d3110d1dcf0a43e9c70c7532e
         <insert tableName="tipo_sala">
             <column  name="id"  value="1"/>
             <column  name="descricao"  value="sala de reuniao"/>
@@ -172,7 +249,11 @@
             <column  name="descricao"  value="auditorio"/>
         </insert>
     </changeSet>
+<<<<<<< HEAD
     <changeSet  author="matheus.henrique"  id="10">
+=======
+    <changeSet  author="liquibase-docs"  id="10">
+>>>>>>> f99a033b0674891d3110d1dcf0a43e9c70c7532e
         <createSequence  cacheSize="20"
                          cycle="false"
                          incrementBy="1"
@@ -194,7 +275,11 @@
                          sequenceName="seq_reserva"
                          startValue="1"/>
     </changeSet>
+<<<<<<< HEAD
     <changeSet  id="11" author="matheus.henrique">
+=======
+    <changeSet  id="11" author="Ian Michael">
+>>>>>>> f99a033b0674891d3110d1dcf0a43e9c70c7532e
         <createTable  tableName="sala_equipamento">
 
             <column  name="id_sala"  type="number" >

@@ -12,14 +12,23 @@ spring:
         hikari:
             poolName: Hikari
 <<<<<<< HEAD
+<<<<<<< HEAD
             auto_commit: false
 =======
             auto-commit: false
 >>>>>>> 8faed6e89a8087475c1ef5e3e30fddb8ea58e219
+=======
+            auto-commit: false
+
+>>>>>>> f99a033b0674891d3110d1dcf0a43e9c70c7532e
     jackson:
         date-format: yyyy-MM-dd
         deserialization:
             fail-on-unknown-properties: false
+<<<<<<< HEAD
+=======
+
+>>>>>>> f99a033b0674891d3110d1dcf0a43e9c70c7532e
     jpa:
 #        database-platform: io.github.jhipster.domain.util.FixedPostgreSQL95Dialect
         database: POSTGRESQL
