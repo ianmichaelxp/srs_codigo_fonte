@@ -1,0 +1,78 @@
+<div class="ui-g">
+    <p-panel header="Clientes" >
+        <div style="margin-bottom: 20px">
+            <p-menubar [model] = "itens"></p-menubar>
+            
+        </div>
+        <p-table [value]="clientes" [columns]="cols" [paginator]="true" [rows]="10">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns">
+                        {{col.header}}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-cliente let-columns = "columns">
+                <tr [pSelectableRow]="cliente">
+                    <td *ngFor="let col of columns">
+                        {{cliente[col.field]}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-panel>
+    <p-dialog header="Novo Cliente"
+    [responsive]="true"
+    [(visible)]="displaySaveDialog" 
+    [modal] = true>
+        <div class="p-grid ui-fluid">
+            <div class="p-col-4">
+                <label for="nome">Nome</label>
+            </div>
+            <div class="p-col-8">
+                <input pInputText id="nome" [(ngModel)]="cliente.nome" />
+            </div>
+            <div class="p-col-4">
+                <label for="endereco">Endereco</label>
+            </div>
+            <div class="p-col-8">
+                <input pInputText id="endereco" [(ngModel)]="cliente.endereco" />
+            </div>
+            <div class="p-col-4">
+                <label for="dataNasc">Data de Nascimento</label>
+            </div>
+            <div class="p-col-8">
+                <input pInputText id="dataNasc" [(ngModel)]="cliente.dataNasc" />
+            </div>
+            <div class="p-col-4">
+                <label for="telefone">Telefone</label>
+            </div>
+            <div class="p-col-8">
+                <input pInputText id="telefone" [(ngModel)]="cliente.telefone"/>
+            </div>
+            <div class="p-col-4">
+                <label for="rg">RG</label>
+            </div>
+            <div class="p-col-8">
+                <input pInputText id="rg" [(ngModel)]="cliente.rg"/>
+            </div>
+            <div class="p-col-4">
+                <label for="cpf">CPF</label>
+            </div>
+            <div class="p-col-8">
+                <input pInputText id="cpf" [(ngModel)]="cliente.cpf"/>
+            </div>
+            <div class="p-col-4">
+                <label for="email">Email</label>
+            </div>
+            <div class="p-col-8">
+                <input pInputText id="email" [(ngModel)]="cliente.email"/>
+            </div>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button type="button" pButton icon="pi pi-check" (click)="save()" label="Save"></button>
+            </div>
+        </p-footer>
+    </p-dialog>
+</div>
