@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -25,6 +26,9 @@ import {DialogModule} from 'primeng/dialog';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 import {AccordionModule} from 'primeng/accordion';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {ToastModule} from 'primeng/toast';
 
 @NgModule({
     declarations: [
@@ -60,11 +64,14 @@ import {AccordionModule} from 'primeng/accordion';
         DialogModule,
         InputTextModule,
         ButtonModule,
-        AccordionModule
+        AccordionModule,
+        MessagesModule,
+        MessageModule,
+        ToastModule
         
     ],
     providers: [
-        { provide: LocationStrategy, useClass: HashLocationStrategy }
+        { provide: LocationStrategy, useClass: HashLocationStrategy }, MessageService
     ],
     bootstrap: [AppComponent]
 })

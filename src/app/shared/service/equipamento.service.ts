@@ -1,14 +1,14 @@
+import { EquipamentoModel } from './../model/equipamento.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { EquipamentoModel } from '../model/equipamento.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EquipamentoService {
 
-  apiUrl: "localhost:8080/api/equipamentos";
+  apiUrl:string = "http://localhost:8080/api/equipamentos/";
 
   httpOptions = {
     headers: new HttpHeaders({ 
@@ -17,10 +17,24 @@ export class EquipamentoService {
   };
 
   constructor(
-    private httpClient: HttpClient
+    private httpEquipamento: HttpClient
   ) { }
 
-  public getEquipamentos(): Observable<EquipamentoModel> {
-    return this.httpClient.get<EquipamentoModel>(this.apiUrl);
+  public getEquipamentos(): Observable<any> {
+    return this.httpEquipamento.get(this.apiUrl);
+  }
+
+  public save(equipamento: EquipamentoModel): Observable<any> {
+    return this.httpEquipamento.post(this.apiUrl,JSON.stringify(equipamento),this.httpOptions);
+  }
+
+  public delete(equipamento: EquipamentoModel): Observable<any>
+  {
+    return this.httpEquipamento.delete(this.apiUrl+"/"+equipamento.id);
+  }
+
+  public edit(equipamento: EquipamentoModel): Observable<EquipamentoModel> {
+    return this.httpEquipamento.put<EquipamentoModel>(this.apiUrl, JSON.stringify(equipamento), this.httpOptions);
+    // return this.httpEquipamento.put<EquipamentoModel>(this.apiUrl,equipamento);
   }
 }

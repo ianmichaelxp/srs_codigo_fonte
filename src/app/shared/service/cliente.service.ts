@@ -23,8 +23,20 @@ export class ClienteService {
     return this.httpClient.get(this.apiUrl);
   }
 
+  public getClientePorId(id:number): Observable<any>{
+    return this.httpClient.get(this.apiUrl+ '/' + id);
+  }
+
   public save(cliente: ClienteModel): Observable<any> {
     return this.httpClient.post(this.apiUrl,JSON.stringify(cliente),this.httpOptions);
   }
+  public delete(cliente: ClienteModel): Observable<any> {
+      return this.httpClient.delete(this.apiUrl + '/' + cliente.id);
+  }
+  
+  public edit(cliente: ClienteModel): Observable<any> {
+    return this.httpClient.put(this.apiUrl,JSON.stringify(cliente), this.httpOptions);
+  }
+
 
 }

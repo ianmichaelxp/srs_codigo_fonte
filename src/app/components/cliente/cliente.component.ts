@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { ClienteModel } from 'src/app/shared/model/cliente.model';
 import { ClienteService } from 'src/app/shared/service/cliente.service';
 
@@ -15,6 +15,7 @@ export class ClienteComponent implements OnInit {
   itens: MenuItem[];
   cols: any[];
   displaySaveDialog: boolean = false;
+  displayEditDialog: boolean = false;
   cliente: ClienteModel = {
     id: null,
     nome: null,
@@ -26,7 +27,19 @@ export class ClienteComponent implements OnInit {
     email: null
   };
   
-  constructor(private clienteService: ClienteService) { 
+  selectedCliente: ClienteModel ={
+    id: null,
+    nome: null,
+    endereco: null,
+    dataNasc: null,
+    telefone: null,
+    rg: null,
+    cpf: null,
+    email: null
+  }
+
+  constructor(private clienteService: ClienteService,
+    private messageService: MessageService) { 
 
   }
 
@@ -45,7 +58,7 @@ export class ClienteComponent implements OnInit {
   ]
     this.itens = [
       {label:"Novo",
-      icon:"pi-user-plus",
+      icon:"pi pi-fw pi-plus",
       command: ()=> this.showSaveDialog()
       }
     ]
@@ -69,19 +82,57 @@ export class ClienteComponent implements OnInit {
   save(){
     this.clienteService.save(this.cliente).subscribe(
       (result:any)=>{
+        let cliente = result as ClienteModel;
+        this.clientes.push(cliente);
+        this.messageService.add({severity: 'success',
+        summary:"Resultado",detail:"Cliente salvo com sucesso"});
         this.displaySaveDialog =false;
-        this.getAll();
       },
       error=> {
-        console.log(error);
+        this.messageService.add({severity: 'error',summary:"Error",
+        detail:"Cliente não pode ser adicionado, verifique os dados e tente novamente"})
       }
       )
 
   }
-
-  showSaveDialog(){
-    this.displaySaveDialog =true;
-
+  edit(cliente: ClienteModel)
+  {
+    this.clienteService.edit(cliente).subscribe(
+      ()=> {
+        this.displayEditDialog = false;
+        this.getAll();
+        this.cliente = new ClienteModel;
+        this.messageService.add({severity: 'success',
+        summary:"Resultado",detail:"Cliente editado com sucesso"});
+      },
+      error =>
+      {
+        console.log(error);
+      }      
+    )
   }
- 
+
+  delete(cliente:ClienteModel){
+    this.clienteService.delete(cliente).subscribe(
+      ()=>{
+        this.getAll();
+        this.messageService.add({severity: 'warn', 
+        summary:'Resultado',detail:'Cliente removido'})
+      },
+      error=> {
+        console.log(error);
+      }
+      
+    )
+    
+  }
+
+  showEditDialog(cliente: ClienteModel)
+  {
+    this.displayEditDialog = true;
+    this.cliente = cliente;
+  }
+  showSaveDialog(){
+    this.displaySaveDialog = true;
+  }
 }

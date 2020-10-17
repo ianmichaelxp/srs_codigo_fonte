@@ -1,15 +1,20 @@
-<div class="ui-g">
+<div class="card">
+    <p-toast></p-toast>
     <p-panel header="Clientes" >
-        <div style="margin-bottom: 20px">
-            <p-menubar [model] = "itens"></p-menubar>
+        <div style="margin-bottom: 20px; ">
+            <p-menubar [model] = "itens">
+            </p-menubar>
             
         </div>
-        <p-table [value]="clientes" [columns]="cols" [paginator]="true" [rows]="10">
+        <p-table #dt [value]="clientes" [responsive]= "true" [columns]="cols" 
+        [paginator]="true" [rows]="7" [rowHover]="true" [showCurrentPageReport]="true"
+        style = "overflow-x: auto;">
             <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th *ngFor="let col of columns">
+                    <th *ngFor="let col of columns" style="justify-content: center;">
                         {{col.header}}
                     </th>
+                <th style="width:8rem; justify-content: center;" >Opções</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-cliente let-columns = "columns">
@@ -17,14 +22,25 @@
                     <td *ngFor="let col of columns">
                         {{cliente[col.field]}}
                     </td>
+                    <td style="text-align: center;">
+                        <span style="float: center">
+                            <button pButton type="button" (click)="showEditDialog(cliente)">
+                                <i class="pi pi-pencil" style="padding-top: 2px;"></i>
+                                <span style="padding-left: 5px;">Editar</span>
+                            </button>
+                            <button pButton type="button" style="margin-left: 10px;" (click)= "delete(cliente)">
+                                <i class="pi pi-trash" style="padding-top: 2px; padding-left: 5px;"></i>
+                                <span style="padding-left: 5px;">Excluir</span>
+                            </button>
+                        </span>
+                    </td>
                 </tr>
             </ng-template>
         </p-table>
     </p-panel>
     <p-dialog header="Novo Cliente"
     [responsive]="true"
-    [(visible)]="displaySaveDialog" 
-    [modal] = true>
+    [(visible)]="displaySaveDialog">
         <div class="p-grid ui-fluid">
             <div class="p-col-4">
                 <label for="nome">Nome</label>
@@ -71,7 +87,66 @@
         </div>
         <p-footer>
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
-                <button type="button" pButton icon="pi pi-check" (click)="save()" label="Save"></button>
+                <button type="button" pButton icon="pi pi-check" 
+                (click)="save()" label="Salvar"
+                style="background-color: rgb(68, 68, 219); color: white;"
+                ></button>
+            </div>
+        </p-footer>
+    </p-dialog>
+    <p-dialog header="Novo Cliente"
+    [responsive]="true"
+    [(visible)]="displayEditDialog">
+        <div class="dialog">
+            <div class="test">
+                <label for="nome">Nome</label>
+            </div>
+            <div class="test">
+                <input pInputText id="nome" [(ngModel)]="cliente.nome" />
+            </div>
+            <div class="test">
+                <label for="endereco">Endereco</label>
+            </div>
+            <div class="test">
+                <input pInputText id="endereco" [(ngModel)]="cliente.endereco" />
+            </div>
+            <div class="test">
+                <label for="dataNasc">Data de Nascimento</label>
+            </div>
+            <div class="test">
+                <input pInputText id="dataNasc" [(ngModel)]="cliente.dataNasc" />
+            </div>
+            <div class="test">
+                <label for="telefone">Telefone</label>
+            </div>
+            <div class="test">
+                <input pInputText id="telefone" [(ngModel)]="cliente.telefone"/>
+            </div>
+            <div class="test">
+                <label for="rg">RG</label>
+            </div>
+            <div class="test">
+                <input pInputText id="rg" [(ngModel)]="cliente.rg"/>
+            </div>
+            <div class="test">
+                <label for="cpf">CPF</label>
+            </div>
+            <div class="test">
+                <input pInputText id="cpf" [(ngModel)]="cliente.cpf"/>
+            </div>
+            <div class="test">
+                <label for="email">Email</label>
+            </div>
+            <div class="test">
+                <input pInputText id="email" [(ngModel)]="cliente.email"/>
+            </div>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button type="button" pButton icon="pi pi-check" 
+                (click)="edit(cliente)" label="Editar"
+                style="background-color: black; color: white;"
+                ></button>
             </div>
         </p-footer>
     </p-dialog>
