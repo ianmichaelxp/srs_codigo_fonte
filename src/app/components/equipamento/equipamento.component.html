@@ -1,7 +1,9 @@
+<html lang="pt-br">
 <div class="ui-g">
     <p-panel header="Equipamentos" >
         <div style="margin-bottom: 20px">
             <p-menubar [model] = "itens"></p-menubar>
+            
         </div>
         <p-table [value]="equipamentos" [columns]="cols" [paginator]="true" [rows]="7" [responsive]="true">
             <ng-template pTemplate="header" let-columns>
@@ -14,7 +16,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-equipamento let-columns = "columns">
                 <tr [pSelectableRow]="equipamento">
-                    <td *ngFor="let col of columns">
+                    <td *ngFor="let col of columns" class="break">
                         {{equipamento[col.field]}}
                     </td>
                     <td style="text-align: center;">
@@ -44,12 +46,12 @@
                 <p-dropdown [options]="tiposEquipamentos" [(ngModel)]="equipamento.idTipoEquipamento"></p-dropdown>
             </div>
             <div class="test">
-                <input pInputText id="precoDiario" placeholder="Preço diario" [(ngModel)]="equipamento.precoDiario"/>
+                <input pInputText id="precoDiario" placeholder="Preço diario" [(ngModel)]="equipamento.precoDiario" type="number" min ="1" step="0.01"/>
             </div>
         </div>
         <p-footer>
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
-                <button type="button" pButton icon="pi pi-check" (click)="save()" label="Save"></button>
+                <button type="button" pButton icon="pi pi-check" (click)="save()" label="Salvar"></button>
             </div>
         </p-footer>
     </p-dialog>
@@ -64,14 +66,15 @@
                 <p-dropdown [options]="tiposEquipamentos" [(ngModel)]="equipamento.idTipoEquipamento"></p-dropdown>
             </div>
             <div class="test">
-                <input pInputText id="precoDiario" placeholder="Preço diario" [(ngModel)]="equipamento.precoDiario"/>
+                <input pInputText id="precoDiario" placeholder="Preço diario" [(ngModel)]="equipamento.precoDiario" type="number"/>
             </div>
         </div>
         <p-footer>
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
-                <button type="button" pButton icon="pi pi-check" (click)="editEquipWithButton(equipamento)" label="Edit"></button>
+                <button type="button" pButton icon="pi pi-check" (click)="editEquipWithButton()" label="Editar"></button>
             </div>
         </p-footer>
     </p-dialog>
 </div>
 <p-toast></p-toast>
+</html>

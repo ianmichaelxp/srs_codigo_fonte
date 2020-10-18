@@ -18,6 +18,7 @@ export class EquipamentoComponent implements OnInit {
   displaySaveDialog: boolean = false;
   displayEditDialog: boolean = false;
   equipamentoSelecionados : EquipamentoModel;
+  equipamentoEditado: EquipamentoModel;
 
   tiposEquipamentos: SelectItem[];
   tipoObrigatorio: SelectItem[];
@@ -47,10 +48,10 @@ export class EquipamentoComponent implements OnInit {
     this.getAll();
     this.cols = 
     [
-    {field:"id", header: "ID"},
-    {field:"nome",header:"NOME"},  
-    {field:"precoDiario",header:"PREÇO DIARIO"},
-    {field:"tipoEquipamento", header:"TIPO EQUIPAMENTO"}
+    {field:"id", header: "Id"},
+    {field:"nome",header:"Nome"},  
+    {field:"precoDiario",header:"Preço Diário"},
+    {field:"tipoEquipamento", header:"Tipo equipamento"}
     
     ]
     this.itens = [
@@ -93,13 +94,13 @@ export class EquipamentoComponent implements OnInit {
   showSaveDialog(){
     this.equipamento = new EquipamentoModel;
     this.displaySaveDialog =true;
-
   }
 
   showEditDialog(equipamento: EquipamentoModel)
   {
     this.displayEditDialog = true;
     this.equipamento = equipamento;
+    this.getAll();
   }
 
   deleteEquipWithButton(equipamento: EquipamentoModel) {
@@ -113,12 +114,12 @@ export class EquipamentoComponent implements OnInit {
       }      
     )
   }
-  editEquipWithButton(equipamento: EquipamentoModel)
+  editEquipWithButton()
   {
-    this.equipamentoService.edit(equipamento).subscribe(
+    this.equipamentoService.edit(this.equipamento).subscribe(
       ()=> {
-        this.displayEditDialog = false;
         this.getAll();
+        this.displayEditDialog = false;
         this.equipamento = new EquipamentoModel;
       },
       error =>

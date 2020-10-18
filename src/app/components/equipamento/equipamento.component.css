@@ -7,3 +7,12 @@
     padding-top: 5px;
     padding-bottom: 10px;
 }
+td.break
+{
+    word-wrap: break-word;
+    max-width: 1px;
+    -webkit-hyphens: auto; 
+    -moz-hyphens: auto;
+    -ms-hyphens: auto; 
+    hyphens: auto;
+}
