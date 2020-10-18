@@ -5,7 +5,7 @@
             <p-menubar [model] = "itens"></p-menubar>
             
         </div>
-        <p-table [value]="equipamentos" [columns]="cols" [paginator]="true" [rows]="7" [responsive]="true">
+        <p-table #dt [value]="equipamentos" [columns]="cols" [paginator]="true" [rows]="7" [responsive]="true" [rowHover]="true" [showCurrentPageReport]="true">
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th *ngFor="let col of columns">
@@ -66,7 +66,7 @@
                 <p-dropdown [options]="tiposEquipamentos" [(ngModel)]="equipamento.idTipoEquipamento"></p-dropdown>
             </div>
             <div class="test">
-                <input pInputText id="precoDiario" placeholder="Preço diario" [(ngModel)]="equipamento.precoDiario" type="number"/>
+                <input pInputText id="precoDiario" placeholder="Preço diario" [(ngModel)]="equipamento.precoDiario" type="number" min ="1" step="0.01"/>
             </div>
         </div>
         <p-footer>

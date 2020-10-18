@@ -1,8 +1,9 @@
+import { Component, OnInit } from '@angular/core';
+import { MenuItem, MessageService } from 'primeng/api';
+import { SelectItem } from 'primeng/api';
+
 import { EquipamentoService } from './../../shared/service/equipamento.service';
 import { EquipamentoModel, TipoEquipamento} from './../../shared/model/equipamento.model';
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import {SelectItem} from 'primeng/api';
 
 @Component({
   selector: 'app-equipamento',
@@ -33,7 +34,7 @@ export class EquipamentoComponent implements OnInit {
   };
  
   
-  constructor(private equipamentoService: EquipamentoService) { 
+  constructor(private equipamentoService: EquipamentoService, private messageService: MessageService) { 
     this.tiposEquipamentos = 
     [
       {label:'Tipo Equipamento: ', value:null},
@@ -81,12 +82,18 @@ export class EquipamentoComponent implements OnInit {
   save(){
     this.equipamentoService.save(this.equipamento).subscribe(
       (result:any)=>{
-        this.getAll();
         this.displaySaveDialog =false;
         this.equipamento = new EquipamentoModel;
+
+        let equipamento = result as EquipamentoModel;
+        this.equipamentos.push(equipamento);
+        this.messageService.add({severity: 'success',
+        summary:"Resultado",detail:"Equipamento salvo com sucesso"});
+        this.displaySaveDialog =false;
       },
       error=> {
-        console.log(error);
+        this.messageService.add({severity: 'error',summary:"Error",
+        detail:"Cliente não pode ser adicionado, verifique os dados e tente novamente"})
       }
       )
 
@@ -106,25 +113,31 @@ export class EquipamentoComponent implements OnInit {
   deleteEquipWithButton(equipamento: EquipamentoModel) {
     this.equipamentoService.delete(equipamento).subscribe(
       () => {
+        this.messageService.add({severity: 'success',
+        summary:"Resultado",detail:"Equipamento removido com sucesso"});
         this.getAll();
       },  
       error =>
       {
-        console.log(error);
-      }      
+        this.messageService.add({severity: 'error',summary:"Error",
+        detail:"Equipamento não pode ser removido, verifique os dados e tente novamente"})
+      }     
     )
   }
   editEquipWithButton()
   {
     this.equipamentoService.edit(this.equipamento).subscribe(
       ()=> {
-        this.getAll();
         this.displayEditDialog = false;
         this.equipamento = new EquipamentoModel;
+        this.messageService.add({severity: 'success',
+        summary:"Resultado",detail:"Equipamento editado com sucesso"});
+        this.getAll();
       },
       error =>
       {
-        console.log(error);
+        this.messageService.add({severity: 'error',summary:"Error",
+        detail:"Equipamento não pode ser editado, verifique os dados e tente novamente"})
       }      
     )
   }
