@@ -5,7 +5,6 @@ import com.basis.srs.servico.dto.EquipamentoDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-
 @Mapper(componentModel = "spring", uses = {})
 public interface EquipamentoMapper extends EntityMapper<EquipamentoDTO, Equipamento>
 {

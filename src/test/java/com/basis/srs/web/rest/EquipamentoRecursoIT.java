@@ -1,7 +1,10 @@
 package com.basis.srs.web.rest;
 
 import com.basis.srs.builder.EquipamentoBuilder;
+import com.basis.srs.builder.SalaBuilder;
 import com.basis.srs.dominio.Equipamento;
+import com.basis.srs.dominio.Sala;
+import com.basis.srs.dominio.SalaEquipamento;
 import com.basis.srs.util.IntTestComum;
 import com.basis.srs.util.TestUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,10 +29,13 @@ public class EquipamentoRecursoIT extends IntTestComum {
     @Autowired
     private EquipamentoBuilder equipamentoBuilder;
 
+    @Autowired
+    private SalaBuilder salaBuilder;
+
     @BeforeEach
     public void restaurarBanco()
     {
-        equipamentoBuilder.restaurarBanco();
+        equipamentoBuilder.limparBanco();
     }
 
     @Test
@@ -52,12 +58,29 @@ public class EquipamentoRecursoIT extends IntTestComum {
     }
 
     @Test
-    public void buscar() throws Exception{
+    public void buscarTodos() throws Exception{
         Equipamento equipamento = equipamentoBuilder.construir();
         getMockMvc().perform(get("/api/equipamentos/" + equipamento.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(equipamento.getId()));
     }
+
+    @Test
+    public void buscarPorId() throws Exception {
+        Equipamento equipamento = equipamentoBuilder.construir();
+
+        getMockMvc().perform(get("/api/equipamentos/"+equipamento.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(equipamento.getId()));
+    }
+
+    @Test
+    public void buscarPorIdInvalido() throws Exception {
+        getMockMvc().perform(get("/api/equipamentos/33321"))
+                .andExpect(status().isBadRequest());
+    }
+
+
 
     @Test
     public void editar() throws Exception{
@@ -71,9 +94,18 @@ public class EquipamentoRecursoIT extends IntTestComum {
     }
 
     @Test
-    public void deletar() throws Exception{
+    public void deletarEquipamento() throws Exception{
         Equipamento equipamento = equipamentoBuilder.construir();
         getMockMvc().perform(delete("/api/equipamentos/" + equipamento.getId()))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    public void deletarEquipamentoObrigatorio() throws Exception {
+        Sala sala = salaBuilder.construir();
+        SalaEquipamento salaEquipamento = sala.getEquipamentos().get(0);
+        getMockMvc().perform(delete("/api/equipamentos/"+salaEquipamento.getEquipamento().getId()))
+                .andExpect(status().isBadRequest());
+    }
+
 }

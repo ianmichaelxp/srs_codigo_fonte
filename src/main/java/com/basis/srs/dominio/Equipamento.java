@@ -29,4 +29,5 @@ public class Equipamento implements Serializable
 
     @Column(name="equipamento_obrigatorio")
     private Integer equipamentoObrigatorio;
+
 }

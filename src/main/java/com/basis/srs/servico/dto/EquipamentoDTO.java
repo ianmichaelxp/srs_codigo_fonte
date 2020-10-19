@@ -1,9 +1,7 @@
 package com.basis.srs.servico.dto;
-import com.basis.srs.dominio.TipoEquipamento;
 
 import lombok.Getter;
 import lombok.Setter;
-
 
 import javax.validation.constraints.*;
 
@@ -15,20 +13,19 @@ public class EquipamentoDTO
 
     @NotNull
     @NotBlank
-    @Size(min = 0, max = 255)
+    @Size(max=255)
     private String nome;
 
-    @Min(value = 1)
     @NotNull
+    @Min(1)
+    @Max(3)
     private Integer idTipoEquipamento;
 
     @NotNull
-    @Min(value = 0)
     private Double precoDiario;
 
     @NotNull
-    @Min(value = 0)
-    @Max(value = 1)
+    @Min(0)
+    @Max(1)
     private Integer equipamentoObrigatorio;
-
 }

@@ -38,7 +38,7 @@ public abstract class ConstrutorDeEntidade<E> {
      * @param customizacao customizacao
      * @return entidade customizada
      */
-    public ConstrutorDeEntidade<E> customizar(CustomizacaoEntidade<E> customizacao) {
+    public com.basis.srs.builder.ConstrutorDeEntidade<E> customizar(CustomizacaoEntidade<E> customizacao) {
         this.customizacao = customizacao;
         return this;
     }
@@ -50,7 +50,7 @@ public abstract class ConstrutorDeEntidade<E> {
      * @return entidade construída
      * @throws ParseException Exceção a ser lançada
      */
-    public abstract E construirEntidade() throws ParseException;
+    protected abstract E construirEntidade() throws ParseException;
 
     /**
      * Este método deve persistir e retornar a entidade recebida no parametro
@@ -94,5 +94,4 @@ public abstract class ConstrutorDeEntidade<E> {
         this.customizacao = customizacao;
     }
 
-    public abstract EquipamentoDTO converterToDto(Equipamento equipamento);
 }

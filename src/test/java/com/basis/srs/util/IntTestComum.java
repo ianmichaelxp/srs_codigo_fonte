@@ -1,6 +1,6 @@
 package com.basis.srs.util;
 
-import com.basis.srs.SistemaDeReservaDeSalasApplication;
+import com.basis.srs.SistemaDeReservasDeSalasApplication;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.persistence.EntityManager;
 
-@SpringBootTest(classes = SistemaDeReservaDeSalasApplication.class)
+@SpringBootTest(classes = SistemaDeReservasDeSalasApplication.class)
 @ExtendWith(SpringExtension.class)
 public abstract class IntTestComum {
 

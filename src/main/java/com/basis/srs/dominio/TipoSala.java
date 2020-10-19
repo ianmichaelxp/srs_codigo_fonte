@@ -8,8 +8,8 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-@Table(name = "tipo_equipamento")
-public class TipoEquipamento implements Serializable 
+@Table(name = "tipo_sala")
+public class TipoSala implements Serializable
 {
     @Id
     @Column(name = "id")
