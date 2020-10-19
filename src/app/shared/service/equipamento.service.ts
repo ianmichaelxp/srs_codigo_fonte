@@ -35,6 +35,5 @@ export class EquipamentoService {
 
   public edit(equipamento: EquipamentoModel): Observable<EquipamentoModel> {
     return this.httpEquipamento.put<EquipamentoModel>(this.apiUrl, JSON.stringify(equipamento), this.httpOptions);
-    // return this.httpEquipamento.put<EquipamentoModel>(this.apiUrl,equipamento);
   }
 }

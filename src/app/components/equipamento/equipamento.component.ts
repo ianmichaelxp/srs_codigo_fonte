@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
-import { SelectItem } from 'primeng/api';
+import { MenuItem, MessageService,SelectItem,ConfirmationService } from 'primeng/api';
 
 import { EquipamentoService } from './../../shared/service/equipamento.service';
 import { EquipamentoModel, TipoEquipamento} from './../../shared/model/equipamento.model';
@@ -28,19 +27,17 @@ export class EquipamentoComponent implements OnInit {
     id: null,
     nome: null,
     idTipoEquipamento: null,
-    precoDiario: null,
-    tipoEquipamento: null,
-    obrigatorio: null
+    precoDiario: null
   };
  
   
-  constructor(private equipamentoService: EquipamentoService, private messageService: MessageService) { 
+  constructor(private equipamentoService: EquipamentoService, private messageService: MessageService, private confirmationService: ConfirmationService) { 
     this.tiposEquipamentos = 
     [
       {label:'Tipo Equipamento: ', value:null},
-      {label:'Movel', value: 1},
-      {label:'Eletrodomesticos', value:2},
-      {label:'Informatica', value: 3},
+      {label:'Móvel', value: 1},
+      {label:'Eletrodomésticos', value:2},
+      {label:'Informática', value: 3},
     ]
   }
 
@@ -49,29 +46,38 @@ export class EquipamentoComponent implements OnInit {
     this.getAll();
     this.cols = 
     [
-    {field:"id", header: "Id"},
-    {field:"nome",header:"Nome"},  
-    {field:"precoDiario",header:"Preço Diário"},
-    {field:"tipoEquipamento", header:"Tipo equipamento"}
-    
+      {field:"id", header: "Id"},
+      {field:"nome",header:"Nome"},  
+      {field:"precoDiario",header:"Preço Diário"},
+      {field:"idTipoEquipamento", header:"Tipo equipamento"}
     ]
-    this.itens = [
-      {label:"Novo",
-      icon:"pi pi-desktop",
-      command: ()=> this.showSaveDialog()
+    this.itens = 
+    [
+      {
+        label:"Novo",
+        icon:"pi pi-desktop",
+        command: ()=> this.showSaveDialog()
       }
     ]
   }
+
+  confirm(equipamento: EquipamentoModel) {
+    this.confirmationService.confirm({
+        message: 'Você tem certeza que deseja excluir este equipamento?',
+        accept: () => {
+            this.deleteEquipWithButton(equipamento);
+        },
+        reject: () => {
+          this.displayEditDialog = false;
+          this.displaySaveDialog = false;
+        }
+    });
+}
+
   getAll(){
     this.equipamentoService.getEquipamentos().subscribe(
       (result:any)=> {
-        let equipamentos: EquipamentoModel[] = [];
-        for(let i=0;i<result.length;i++){
-          let equipamento = result[i] as EquipamentoModel; 
-          equipamento.tipoEquipamento = TipoEquipamento[equipamento.idTipoEquipamento];
-          equipamentos.push(equipamento);
-        }
-        this.equipamentos = equipamentos;
+        this.equipamentos = result;
       },
       error => {
         console.log(error);
@@ -90,13 +96,13 @@ export class EquipamentoComponent implements OnInit {
         this.messageService.add({severity: 'success',
         summary:"Resultado",detail:"Equipamento salvo com sucesso"});
         this.displaySaveDialog =false;
+        this.getAll();
       },
       error=> {
         this.messageService.add({severity: 'error',summary:"Error",
         detail:"Cliente não pode ser adicionado, verifique os dados e tente novamente"})
       }
       )
-
   }
   showSaveDialog(){
     this.equipamento = new EquipamentoModel;
@@ -141,5 +147,14 @@ export class EquipamentoComponent implements OnInit {
       }      
     )
   }
+  getTipoEquipamento(id: number)
+  {
+    return TipoEquipamento[id];
+  }
+  getTipoEquipamentoNome(nome: string)
+  {
+    return TipoEquipamento[nome];
+  }
+
 }
 

@@ -1,6 +1,6 @@
 .dialog {
     min-width: 6rem;
-    height: 20vw;
+    height: 12vw;
 } 
 .test
 {
@@ -16,3 +16,12 @@ td.break
     -ms-hyphens: auto; 
     hyphens: auto;
 }
+input[type=number] { 
+    -moz-appearance: textfield;
+    appearance: textfield;
+ 
+}
+td{
+    text-align: center;
+}
+ 

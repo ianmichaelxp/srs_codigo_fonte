@@ -3,13 +3,10 @@ export class EquipamentoModel{
     nome:string;
     idTipoEquipamento: number;
     precoDiario: number;
-    tipoEquipamento: string;
-    obrigatorio: string;
 }
-
 export enum TipoEquipamento {
-    "Movel" = 1,
-    "Eletrodomestico",
-    "Informatica"
+    "Móvel" = 1,
+    "Eletrodoméstico",
+    "Informática"
 }
 

@@ -1,31 +1,59 @@
 <html lang="pt-br">
 <div class="ui-g">
-    <p-panel header="Equipamentos" >
+    <p-toast></p-toast>
+    <p-panel header="Equipamentos">
         <div style="margin-bottom: 20px">
-            <p-menubar [model] = "itens"></p-menubar>
-            
+            <p-menubar [model]="itens"></p-menubar>
+
         </div>
-        <p-table #dt [value]="equipamentos" [columns]="cols" [paginator]="true" [rows]="7" [responsive]="true" [rowHover]="true" [showCurrentPageReport]="true">
+        <p-table #dt [value]="equipamentos" [columns]="cols" [paginator]="true" [rows]="7" [responsive]="true"
+            [rowHover]="true" [showCurrentPageReport]="true" [paginator]="true"
+            currentPageReportTemplate="Mostrando de {first} até {last} de {totalRecords} equipamentos" [rows]="10"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading">
             <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th *ngFor="let col of columns">
-                        {{col.header}}
+                    <th>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'id', 'startsWith')"
+                            placeholder="Pesquisar por ID" type="number" min="1">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'nome', 'startsWith')"
+                            placeholder="Pesquisar por nome" class="ui-column-filter">
+                    </th>
+                </tr>
+                <tr>
+                    <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="nome">Nome <p-sortIcon field="nome"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="precoDiario">Preço Diário <p-sortIcon field="precoDiario"></p-sortIcon>
+                    </th>
+                    <th>
+                        <p-dropdown [options]="tiposEquipamentos"
+                            (onChange)="dt.filter($event.value, 'idTipoEquipamento', 'equals')"
+                            styleClass="ui-column-filter" placeholder="Select a Status" [showClear]="true">
+                            <ng-template let-option pTemplate="item">
+                                <span
+                                    [class]="'equipamento-badge idTipoEquipamento-' + option.value">{{option.label}}</span>
+                            </ng-template>
+                        </p-dropdown>
                     </th>
                     <th style="width: 15rem;">Opções</th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-equipamento let-columns = "columns">
+            <ng-template pTemplate="body" let-equipamento let-columns="columns">
                 <tr [pSelectableRow]="equipamento">
-                    <td *ngFor="let col of columns" class="break">
-                        {{equipamento[col.field]}}
-                    </td>
+                    <td>{{equipamento.id}}</td>
+                    <td class="break">{{equipamento.nome}}</td>
+                    <td>R$ {{equipamento.precoDiario}}</td>
+                    <td>{{getTipoEquipamento(equipamento.idTipoEquipamento)}}</td>
                     <td style="text-align: center;">
                         <span style="float: center">
                             <button pButton type="button" (click)="showEditDialog(equipamento)">
                                 <i class="pi pi-pencil" style="padding-top: 6px;"></i>
                                 <span style="padding-left: 5px;">Editar</span>
                             </button>
-                            <button pButton type="button" style="margin-left: 10px;" (click)= "deleteEquipWithButton(equipamento)">
+                            <button pButton type="button" style="margin-left: 10px;" (click)="confirm(equipamento)">
                                 <i class="pi pi-trash" style="padding-top: 6px; padding-left: 5px;"></i>
                                 <span style="padding-left: 5px;">Excluir</span>
                             </button>
@@ -33,48 +61,59 @@
                     </td>
                 </tr>
             </ng-template>
+            <ng-template pTemplate="summary">
+                Existem {{equipamentos?.length}} equipamentos
+            </ng-template>
         </p-table>
     </p-panel>
-    <p-dialog header="Novo Equipamento"
-    [responsive]="true"
-    [(visible)]="displaySaveDialog">
+    <p-dialog header="Novo Equipamento" [responsive]="true" [(visible)]="displaySaveDialog">
         <div class="dialog">
             <div class="test">
-                <input pInputText id="nome" placeholder="Nome"[(ngModel)]="equipamento.nome"/>
+                <input pInputText id="nome" placeholder="Nome" [(ngModel)]="equipamento.nome" />
             </div>
             <div class="test">
                 <p-dropdown [options]="tiposEquipamentos" [(ngModel)]="equipamento.idTipoEquipamento"></p-dropdown>
             </div>
             <div class="test">
-                <input pInputText id="precoDiario" placeholder="Preço diario" [(ngModel)]="equipamento.precoDiario" type="number" min ="1" step="0.01"/>
+                R$ <input pInputText id="precoDiario" placeholder="Preço diario" [(ngModel)]="equipamento.precoDiario"
+                    type="number" step="0.01" />
             </div>
         </div>
         <p-footer>
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
-                <button type="button" pButton icon="pi pi-check" (click)="save()" label="Salvar"></button>
+                <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-check" (click)="save()" label="Salvar"></button>
             </div>
         </p-footer>
     </p-dialog>
-    <p-dialog header="Editar Equipamento"
-    [responsive]="true"
-    [(visible)]="displayEditDialog">
+    <p-dialog header="Editar Equipamento" [responsive]="true" [(visible)]="displayEditDialog">
         <div class="dialog">
             <div class="test">
-                <input pInputText id="nome" placeholder="Nome"[(ngModel)]="equipamento.nome"/>
+                <input pInputText id="nome" placeholder="Nome" [(ngModel)]="equipamento.nome" />
             </div>
             <div class="test">
                 <p-dropdown [options]="tiposEquipamentos" [(ngModel)]="equipamento.idTipoEquipamento"></p-dropdown>
             </div>
             <div class="test">
-                <input pInputText id="precoDiario" placeholder="Preço diario" [(ngModel)]="equipamento.precoDiario" type="number" min ="1" step="0.01"/>
+                R$ <input pInputText id="precoDiario" placeholder="Preço diario" [(ngModel)]="equipamento.precoDiario"
+                    type="number" min="0" step="0.01" />
             </div>
         </div>
         <p-footer>
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
-                <button type="button" pButton icon="pi pi-check" (click)="editEquipWithButton()" label="Editar"></button>
+                <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-check" (click)="editEquipWithButton()"
+                    label="Editar"></button>
             </div>
         </p-footer>
     </p-dialog>
+
+    <p-confirmDialog #cd header="Confirmação" [responsive]="true" [style]="{width: '450px'}"
+        icon="pi pi-exclamation-triangle" width="425">
+        <p-footer>
+            <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-times"
+                label="Não" (click)="cd.reject()"></button>
+            <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-check"
+                label="Sim" (click)="cd.accept()"></button>
+        </p-footer>
+    </p-confirmDialog>
 </div>
-<p-toast></p-toast>
 </html>
