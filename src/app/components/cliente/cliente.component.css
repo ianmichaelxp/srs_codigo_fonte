@@ -5,5 +5,14 @@
 .test
 {
     padding-top: 5px;
-    padding-bottom: 10px;
+    padding-bottom: 10%;
 }
+td.ng-star-inserted{
+    word-wrap: break-word;
+
+}
+/* th.ng-star-inserted{
+    float: left;
+    widht: max-content;
+
+} */

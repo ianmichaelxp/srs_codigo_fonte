@@ -7,10 +7,21 @@ import { ClienteService } from 'src/app/shared/service/cliente.service';
   selector: 'app-cliente',
   templateUrl: './cliente.component.html',
   styleUrls: ['./cliente.component.css']
+  
 })
 export class ClienteComponent implements OnInit {
 
-  clientes: ClienteModel[] = [];
+  clientes: ClienteModel[] = [{
+    id: 1,
+    nome: "null",
+    endereco: "null",
+    dataNasc: new Date(2014, 1, 1),
+    telefone: "83999515180",
+    rg: "1234567",
+    cpf: "70062928406",
+    email: "matheus@gmail.com"
+  }
+  ];
   erro: any;
   itens: MenuItem[];
   cols: any[];
@@ -27,6 +38,7 @@ export class ClienteComponent implements OnInit {
     email: null
   };
   
+
   selectedCliente: ClienteModel ={
     id: null,
     nome: null,
@@ -41,6 +53,11 @@ export class ClienteComponent implements OnInit {
   constructor(private clienteService: ClienteService,
     private messageService: MessageService) { 
 
+  }
+
+  hideDialog(){
+    this.displayEditDialog =false;
+    this.displaySaveDialog = false;
   }
 
   ngOnInit():void

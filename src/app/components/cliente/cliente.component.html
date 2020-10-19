@@ -1,152 +1,161 @@
 <div class="card">
     <p-toast></p-toast>
-    <p-panel header="Clientes" >
+    <p-panel header="Clientes">
         <div style="margin-bottom: 20px; ">
-            <p-menubar [model] = "itens">
+            <p-menubar [model]="itens">
             </p-menubar>
-            
         </div>
-        <p-table #dt [value]="clientes" [responsive]= "true" [columns]="cols" 
-        [paginator]="true" [rows]="7" [rowHover]="true" [showCurrentPageReport]="true"
-        style = "overflow-x: auto;">
+        
+        <p-table #dt [value]="clientes" [responsive]="true" [columns]="cols" [paginator]="true" [rows]="7"
+            [rowHover]="true" [showCurrentPageReport]="true" >
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex p-ai-center p-jc-between">
+                    <h4 class="p-m-0" style="font-size:medium">Gerenciamento de Clientes</h4>
+                </div>
+            </ng-template>
             <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th *ngFor="let col of columns" style="justify-content: center;">
+                    <th *ngFor="let col of columns" >
                         {{col.header}}
                     </th>
-                <th style="width:8rem; justify-content: center;" >Opções</th>
+                    <th style="width:8rem; margin: 0;">OPÇÕES</th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-cliente let-columns = "columns">
-                <tr [pSelectableRow]="cliente">
+            <ng-template pTemplate="body" let-cliente let-columns="columns">
+                <tr [pSelectableRow]="cliente" style="margin: 0; text-align: center;">
                     <td *ngFor="let col of columns">
                         {{cliente[col.field]}}
                     </td>
                     <td style="text-align: center;">
                         <span style="float: center">
-                            <button pButton type="button" (click)="showEditDialog(cliente)">
+                            <button pButton type="button" (click)="showEditDialog(cliente)" 
+                            style="font-size: 12px; margin-bottom: 10px;">
                                 <i class="pi pi-pencil" style="padding-top: 2px;"></i>
                                 <span style="padding-left: 5px;">Editar</span>
                             </button>
-                            <button pButton type="button" style="margin-left: 10px;" (click)= "delete(cliente)">
-                                <i class="pi pi-trash" style="padding-top: 2px; padding-left: 5px;"></i>
-                                <span style="padding-left: 5px;">Excluir</span>
+                            <button pButton type="button" style="font-size: 12px; margin-top: 10px;" (click)="delete(cliente)">
+                                <i class="pi pi-trash"></i>
+                                <span style="padding-left: 5px; justify-content: center;">Excluir</span>
                             </button>
                         </span>
                     </td>
                 </tr>
             </ng-template>
+            <ng-template pTemplate="summary">
+                <div class="p-d-flex p-ai-center p-jc-between">
+                    Total de {{clientes ? clientes.length : 0 }} clientes.
+                </div>
+            </ng-template>
         </p-table>
     </p-panel>
-    <p-dialog header="Novo Cliente"
-    [responsive]="true"
-    [(visible)]="displaySaveDialog">
+    <p-dialog header="Novo Cliente" [responsive]="true" [(visible)]="displaySaveDialog" [style]="{width: '450px'}"
+        styleClass="p-fluid">
         <div class="p-grid ui-fluid">
             <div class="p-col-4">
                 <label for="nome">Nome</label>
             </div>
             <div class="p-col-8">
-                <input pInputText id="nome" [(ngModel)]="cliente.nome" />
+                <input type="text" pInputText id="nome" [(ngModel)]="cliente.nome" required autofocus />
             </div>
             <div class="p-col-4">
                 <label for="endereco">Endereco</label>
             </div>
             <div class="p-col-8">
-                <input pInputText id="endereco" [(ngModel)]="cliente.endereco" />
+                <input type="text" pInputText id="endereco" [(ngModel)]="cliente.endereco" required autofocus />
             </div>
             <div class="p-col-4">
                 <label for="dataNasc">Data de Nascimento</label>
             </div>
             <div class="p-col-8">
-                <input pInputText id="dataNasc" [(ngModel)]="cliente.dataNasc" />
+                <input type="date" pInputText id="dataNasc" [(ngModel)]="cliente.dataNasc" required autofocus />
             </div>
             <div class="p-col-4">
                 <label for="telefone">Telefone</label>
             </div>
             <div class="p-col-8">
-                <input pInputText id="telefone" [(ngModel)]="cliente.telefone"/>
+                <input type="number" pInputText id="telefone" [(ngModel)]="cliente.telefone" required autofocus />
             </div>
             <div class="p-col-4">
                 <label for="rg">RG</label>
             </div>
             <div class="p-col-8">
-                <input pInputText id="rg" [(ngModel)]="cliente.rg"/>
+                <input type="number" pInputText id="rg" [(ngModel)]="cliente.rg" required autofocus />
             </div>
             <div class="p-col-4">
                 <label for="cpf">CPF</label>
             </div>
             <div class="p-col-8">
-                <input pInputText id="cpf" [(ngModel)]="cliente.cpf"/>
+                <input type="number" pInputText id="cpf" [(ngModel)]="cliente.cpf" required autofocus />
             </div>
             <div class="p-col-4">
                 <label for="email">Email</label>
             </div>
             <div class="p-col-8">
-                <input pInputText id="email" [(ngModel)]="cliente.email"/>
+                <input type="email" pInputText id="email" [(ngModel)]="cliente.email" />
             </div>
         </div>
         <p-footer>
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
-                <button type="button" pButton icon="pi pi-check" 
-                (click)="save()" label="Salvar"
-                style="background-color: rgb(68, 68, 219); color: white;"
-                ></button>
+                <button type="button" pButton icon="pi pi-check" (click)="save()" label="Salvar"
+                    style="background-color: rgb(44, 44, 44); color: white;"></button>
+                <button type="button" pButton icon="pi pi-check" (click)="hideDialog()" label="Cancelar"
+                    style="background-color: rgb(44, 44, 44); color: white; float: left;"></button>
             </div>
+
         </p-footer>
     </p-dialog>
-    <p-dialog header="Novo Cliente"
-    [responsive]="true"
-    [(visible)]="displayEditDialog">
-        <div class="dialog">
-            <div class="test">
+    <p-dialog header="Editar Cliente" [responsive]="true" [(visible)]="displayEditDialog" [style]="{width: '450px'}"
+        styleClass="p-fluid">
+        <div class="p-grid ui-fluid">
+            <div class="p-col-4">
                 <label for="nome">Nome</label>
             </div>
-            <div class="test">
-                <input pInputText id="nome" [(ngModel)]="cliente.nome" />
+            <div class="p-col-8">
+                <input type="text" pInputText id="nome" [(ngModel)]="cliente.nome" required autofocus />
             </div>
-            <div class="test">
+            <div class="p-col-4">
                 <label for="endereco">Endereco</label>
             </div>
-            <div class="test">
-                <input pInputText id="endereco" [(ngModel)]="cliente.endereco" />
+            <div class="p-col-8">
+                <input type="text" pInputText id="endereco" [(ngModel)]="cliente.endereco" required autofocus />
             </div>
-            <div class="test">
+            <div class="p-col-4">
                 <label for="dataNasc">Data de Nascimento</label>
             </div>
-            <div class="test">
-                <input pInputText id="dataNasc" [(ngModel)]="cliente.dataNasc" />
+            <div class="p-col-8">
+                <input type="date" pInputText id="dataNasc" [(ngModel)]="cliente.dataNasc" required autofocus />
             </div>
-            <div class="test">
+            <div class="p-col-4">
                 <label for="telefone">Telefone</label>
             </div>
-            <div class="test">
-                <input pInputText id="telefone" [(ngModel)]="cliente.telefone"/>
+            <div class="p-col-8">
+                <input type="number" pInputText id="telefone" [(ngModel)]="cliente.telefone" required autofocus />
             </div>
-            <div class="test">
+            <div class="p-col-4">
                 <label for="rg">RG</label>
             </div>
-            <div class="test">
-                <input pInputText id="rg" [(ngModel)]="cliente.rg"/>
+            <div class="p-col-8">
+                <input type="number" pInputText id="rg" [(ngModel)]="cliente.rg" required autofocus />
             </div>
-            <div class="test">
+            <div class="p-col-4">
                 <label for="cpf">CPF</label>
             </div>
-            <div class="test">
-                <input pInputText id="cpf" [(ngModel)]="cliente.cpf"/>
+            <div class="p-col-8">
+                <input type="number" pInputText id="cpf" [(ngModel)]="cliente.cpf" required autofocus />
             </div>
-            <div class="test">
+            <div class="p-col-4">
                 <label for="email">Email</label>
             </div>
-            <div class="test">
-                <input pInputText id="email" [(ngModel)]="cliente.email"/>
+            <div class="p-col-8">
+                <input type="email" pInputText id="email" [(ngModel)]="cliente.email" />
             </div>
         </div>
         <p-footer>
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
-                <button type="button" pButton icon="pi pi-check" 
-                (click)="edit(cliente)" label="Editar"
-                style="background-color: black; color: white;"
-                ></button>
+                <button type="button" pButton icon="pi pi-check" (click)="edit(cliente)" label="Editar"
+                    style="background-color: rgb(44, 44, 44);color: white;"></button>
+                <button type="button" pButton icon="pi pi-check" (click)="hideDialog()" label="Cancelar"
+                    style="background-color: rgb(44, 44, 44); color: white; float: left;"></button>
             </div>
         </p-footer>
     </p-dialog>
