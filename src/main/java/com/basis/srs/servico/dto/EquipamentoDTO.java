@@ -3,10 +3,7 @@ package com.basis.srs.servico.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
@@ -15,6 +12,7 @@ public class EquipamentoDTO
     private Integer id;
 
     @NotNull
+    @NotBlank
     @Size(max=255)
     private String nome;
 
@@ -27,5 +25,7 @@ public class EquipamentoDTO
     private Double precoDiario;
 
     @NotNull
+    @Min(0)
+    @Max(1)
     private Integer equipamentoObrigatorio;
 }

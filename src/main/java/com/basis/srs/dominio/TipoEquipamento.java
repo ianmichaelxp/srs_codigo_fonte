@@ -12,6 +12,7 @@ import java.io.Serializable;
 public class TipoEquipamento implements Serializable 
 {
     @Id
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "descricao")

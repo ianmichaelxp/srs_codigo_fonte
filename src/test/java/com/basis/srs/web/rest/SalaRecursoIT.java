@@ -3,10 +3,8 @@ package com.basis.srs.web.rest;
 import com.basis.srs.builder.EquipamentoBuilder;
 import com.basis.srs.builder.ReservaBuilder;
 import com.basis.srs.builder.SalaBuilder;
-import com.basis.srs.dominio.Equipamento;
 import com.basis.srs.dominio.Reserva;
 import com.basis.srs.dominio.Sala;
-import com.basis.srs.dominio.SalaEquipamento;
 import com.basis.srs.util.IntTestComum;
 import com.basis.srs.util.TestUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,11 +33,9 @@ public class SalaRecursoIT extends IntTestComum {
     @Autowired
     private ReservaBuilder reservaBuilder;
 
-
     @BeforeEach
-    public void limparBanco(){
-
-        equipamentoBuilder.limparBanco();
+    public void limparBanco()
+    {
         salaBuilder.limparBanco();
     }
 

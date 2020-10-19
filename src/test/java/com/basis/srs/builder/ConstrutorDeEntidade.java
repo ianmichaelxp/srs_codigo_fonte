@@ -1,5 +1,8 @@
 package com.basis.srs.builder;
 
+import com.basis.srs.dominio.Equipamento;
+import com.basis.srs.servico.dto.EquipamentoDTO;
+
 import java.text.ParseException;
 import java.util.Collection;
 
@@ -90,4 +93,5 @@ public abstract class ConstrutorDeEntidade<E> {
     public void setCustomizacao(CustomizacaoEntidade<E> customizacao) {
         this.customizacao = customizacao;
     }
+
 }

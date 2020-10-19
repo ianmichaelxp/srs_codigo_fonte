@@ -29,6 +29,6 @@ public class SalaDTO
     @Max(5)
     private Integer idTipoSala;
 
-    @NotNull
+
     private List<SalaEquipamentoDTO> equipamentos;
 }

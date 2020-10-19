@@ -4,7 +4,6 @@ import com.basis.srs.dominio.*;
 import com.basis.srs.repositorio.SalaRepositorio;
 import com.basis.srs.servico.SalaServicos;
 import com.basis.srs.servico.dto.SalaDTO;
-import com.basis.srs.servico.dto.SalaEquipamentoDTO;
 import com.basis.srs.servico.mapper.SalaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

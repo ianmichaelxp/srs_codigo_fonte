@@ -2,10 +2,12 @@ package com.basis.srs.builder;
 
 
 import com.basis.srs.dominio.Cliente;
+import com.basis.srs.dominio.Equipamento;
 import com.basis.srs.dominio.Reserva;
 import com.basis.srs.dominio.Sala;
 import com.basis.srs.repositorio.ReservaRepositorio;
 import com.basis.srs.servico.ReservaServicos;
+import com.basis.srs.servico.dto.EquipamentoDTO;
 import com.basis.srs.servico.dto.ReservaDTO;
 import com.basis.srs.servico.mapper.ReservaMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.basis.srs.servico;
 
-import br.com.basis.sgp.servico.exception.RegraNegocioException;
-import com.basis.srs.dominio.Reserva;
+import com.basis.srs.dominio.Equipamento;
+import com.basis.srs.servico.dto.SalaEquipamentoDTO;
 import com.basis.srs.dominio.Sala;
 import com.basis.srs.dominio.SalaEquipamento;
 import com.basis.srs.repositorio.EquipamentoRepositorio;
@@ -9,6 +9,7 @@ import com.basis.srs.repositorio.ReservaRepositorio;
 import com.basis.srs.repositorio.SalaEquipamentoRepositorio;
 import com.basis.srs.repositorio.SalaRepositorio;
 import com.basis.srs.servico.dto.SalaDTO;
+import com.basis.srs.servico.excecao.RegraNegocioException;
 import com.basis.srs.servico.mapper.SalaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,21 +41,43 @@ public class SalaServicos
 
     public SalaDTO salvarSala(SalaDTO salaDTO)
     {
+        if (salaDTO.getId() != null) {
+            Sala sala = salaRepositorio.findById(salaMapper.toEntity(salaDTO).getId()).orElse(null);
+            List<SalaEquipamentoDTO> salaEquipamentosDTO = salaDTO.getEquipamentos();
+            List<SalaEquipamento> salaEquipamentos = sala.getEquipamentos();
+            salaEquipamentos.forEach(salaEquipamento ->
+            {
+                Equipamento equipamento = equipamentoRepositorio.findById(salaEquipamento.getEquipamento().getId()).orElse(null);
+                if (equipamento.getEquipamentoObrigatorio() == 1)
+                {
+                    salaEquipamentosDTO.forEach(salaEquipamentoDTO ->
+                    {
+                        if(salaEquipamentoDTO.getIdEquipamento() == equipamento.getId())
+                        {
+                            if(salaEquipamentoDTO.getQuantidade() == 0)
+                            {
+                                throw new RegraNegocioException("A sala deve possuir este equipamento!");
+                            }
+                        }
+                    });
+                    throw new RegraNegocioException("Esse equipamento é obrigatório e não pode ser excluído!");
+                }
+            });
+        }
         Sala sala = salaMapper.toEntity(salaDTO);
-        List<SalaEquipamento> equipamentos = sala.getEquipamentos();
+        List<SalaEquipamento> salaEquipamentos = sala.getEquipamentos();
         sala.setEquipamentos(new ArrayList<>());
         salaRepositorio.save(sala);
-        equipamentos.forEach(equipamento ->
+        if (salaEquipamentos != null)
         {
-            if(salaEquipamentoRepositorio.existsByEquipamento(equipamento.getEquipamento())){
-                throw new RegraNegocioException("Equipamento já existe em outra sala");
-            }
-
-            equipamento.setSala(sala);
-           equipamento.getSalaEquipamentoPK().setIdSala(sala.getId());
-        });
-
-        salaEquipamentoRepositorio.saveAll(equipamentos);
+            salaEquipamentos.forEach(salaEquipamento ->
+            {
+                salaEquipamento.setSala(sala);
+                salaEquipamento.getSalaEquipamentoPK().setIdSala(sala.getId());
+            });
+            salaEquipamentoRepositorio.saveAll(salaEquipamentos);
+        }
+        sala.setEquipamentos(salaEquipamentos);
         return salaMapper.toDto(sala);
     }
 

@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface SalaEquipamentoRepositorio extends JpaRepository<SalaEquipamento, SalaEquipamentoPK>
 {
     boolean existsByEquipamento(Equipamento equipamento);
+
+    boolean existsByEquipamentoId(Integer id);
 }

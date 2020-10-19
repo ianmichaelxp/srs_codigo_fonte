@@ -1,14 +1,15 @@
 package com.basis.srs.servico;
 
 import com.basis.srs.dominio.Equipamento;
-import com.basis.srs.dominio.SalaEquipamento;
 import com.basis.srs.repositorio.EquipamentoRepositorio;
 import com.basis.srs.repositorio.SalaEquipamentoRepositorio;
 import com.basis.srs.servico.dto.EquipamentoDTO;
+import com.basis.srs.servico.excecao.RegraNegocioException;
 import com.basis.srs.servico.mapper.EquipamentoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -24,31 +25,32 @@ public class EquipamentoServicos
 
     public List<EquipamentoDTO> listarEquipamentos()
     {
-        return equipamentoMapper.toDto(equipamentoRepositorio.findAll());
+        List<EquipamentoDTO> equipamentosDTO = equipamentoMapper.toDto(equipamentoRepositorio.findAll());
+        return equipamentosDTO;
     }
 
     public EquipamentoDTO obterPorId(Integer id)
     {
-        return equipamentoMapper.toDto(equipamentoRepositorio.findById(id).orElse(null));
+        EquipamentoDTO equipamentoDTO = equipamentoMapper.toDto(equipamentoRepositorio.findById(id).orElseThrow(()-> new RegraNegocioException("Equipamento não encontrado!")));
+        return equipamentoDTO;
     }
 
-    public EquipamentoDTO salvarEquipamento(EquipamentoDTO equipamentoDTO)
+    public EquipamentoDTO salvarEquipamento(EquipamentoDTO dto)
     {
-        Equipamento equipamento = equipamentoMapper.toEntity(equipamentoDTO);
+        Equipamento equipamento = equipamentoMapper.toEntity(dto);
         equipamentoRepositorio.save(equipamento);
-        return equipamentoMapper.toDto(equipamento);
+        EquipamentoDTO equipamentoDTO = equipamentoMapper.toDto(equipamento);
+        return equipamentoDTO;
     };
 
     public void removerEquipamento(Integer id)
     {
-        List<SalaEquipamento> salaEquipamentos = salaEquipamentoRepositorio.findAll();
-        salaEquipamentos.forEach(salaEquipamento ->
         {
-            if (salaEquipamento.getEquipamento().getId().equals(id))
+            if (salaEquipamentoRepositorio.existsByEquipamentoId(id))
             {
-                salaEquipamentoRepositorio.delete(salaEquipamento);
+                throw new RegraNegocioException("Esse equipamento é obrigatório e não pode ser excluído!");
             }
-        });
+        }
         equipamentoRepositorio.deleteById(id);
     }
 }

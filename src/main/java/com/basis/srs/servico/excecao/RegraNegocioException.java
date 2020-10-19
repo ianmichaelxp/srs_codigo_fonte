@@ -1,4 +1,4 @@
-package br.com.basis.sgp.servico.exception;
+package com.basis.srs.servico.excecao;
 
 
 import org.springframework.http.HttpStatus;
@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class RegraNegocioException extends RuntimeException {
 
     public RegraNegocioException(final String message) {
-        this(message, null);
-    }
+        this(message, null); }
 
     public RegraNegocioException(final String message, final Throwable cause) {
         super(message, cause);
