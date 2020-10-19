@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { ClienteModel } from 'src/app/shared/model/cliente.model';
 import { ClienteService } from 'src/app/shared/service/cliente.service';
+import {ConfirmationService} from 'primeng/api';
+
 
 @Component({
   selector: 'app-cliente',
@@ -51,7 +53,8 @@ export class ClienteComponent implements OnInit {
   }
 
   constructor(private clienteService: ClienteService,
-    private messageService: MessageService) { 
+    private messageService: MessageService, private confirmationService: ConfirmationService
+    ) { 
 
   }
 
@@ -59,6 +62,18 @@ export class ClienteComponent implements OnInit {
     this.displayEditDialog =false;
     this.displaySaveDialog = false;
   }
+
+  confirm(cliente: ClienteModel) {
+    this.confirmationService.confirm({
+        message: 'Você tem certeza que deseja excluir este cliente?',
+        accept: () => {
+            this.delete(cliente);
+        },
+        reject: () => {
+          this.hideDialog();
+        }
+    });
+}
 
   ngOnInit():void
   { 
@@ -83,12 +98,7 @@ export class ClienteComponent implements OnInit {
   getAll(){
     this.clienteService.getClientes().subscribe(
       (result:any)=> {
-        let clientes: ClienteModel[] = [];
-        for(let i=0;i<result.length;i++){
-          let cliente = result[i] as ClienteModel;
-          clientes.push(cliente);
-        }
-        this.clientes = clientes;
+        this.clientes = result;
       },
       error => {
         console.log(error);
@@ -103,7 +113,7 @@ export class ClienteComponent implements OnInit {
         this.clientes.push(cliente);
         this.messageService.add({severity: 'success',
         summary:"Resultado",detail:"Cliente salvo com sucesso"});
-        this.displaySaveDialog =false;
+        this.hideDialog();
       },
       error=> {
         this.messageService.add({severity: 'error',summary:"Error",

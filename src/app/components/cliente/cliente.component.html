@@ -5,19 +5,47 @@
             <p-menubar [model]="itens">
             </p-menubar>
         </div>
-        
-        <p-table #dt [value]="clientes" [responsive]="true" [columns]="cols" [paginator]="true" [rows]="7"
-            [rowHover]="true" [showCurrentPageReport]="true" >
+
+        <p-table #dt [value]="clientes" [responsive]="true" [columns]="cols" [paginator]="true" [rows]="10"
+            [rowHover]="true" [showCurrentPageReport]="true"  [rowsPerPageOptions]="[10,25,50]" [loading]="loading">
             <ng-template pTemplate="caption">
                 <div class="p-d-flex p-ai-center p-jc-between">
-                    <h4 class="p-m-0" style="font-size:medium">Gerenciamento de Clientes</h4>
+                    <h4 class="p-m-0" style="font-size:medium; padding-top:10px; ">Gerenciamento de Clientes</h4>
                 </div>
             </ng-template>
             <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th *ngFor="let col of columns" >
-                        {{col.header}}
+                    <th>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'id', 'startsWith')"
+                            placeholder="Buscar por id" class="ui-column-filter">
                     </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'nome', 'startsWith')"
+                            placeholder="Buscar por nome" class="ui-column-filter">
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'cpf', 'startsWith')"
+                            placeholder="Buscar por cpf" class="ui-column-filter">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'startsWith')"
+                            placeholder="Buscar por email" class="ui-column-filter">
+                    </th>
+                </tr>
+
+                <tr>
+                    <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+                    <th pSortableColumn="nome">NOME <p-sortIcon field="nome"></p-sortIcon></th>
+                    <th pSortableColumn="endereco">ENDEREÇO <p-sortIcon field="endereco"></p-sortIcon></th>
+                    <th pSortableColumn="dataNasc">DATA DE NASCIMENTO <p-sortIcon field="dataNasc"></p-sortIcon></th>
+                    <th pSortableColumn="telefone">TELEFONE<p-sortIcon field="telefone"></p-sortIcon></th>
+                    <th pSortableColumn="rg">RG<p-sortIcon field="rg"></p-sortIcon></th>
+                    <th pSortableColumn="cpf">CPF<p-sortIcon field="cpf"></p-sortIcon></th>
+                    <th pSortableColumn="email">EMAIL<p-sortIcon field="email"></p-sortIcon></th>
                     <th style="width:8rem; margin: 0;">OPÇÕES</th>
                 </tr>
             </ng-template>
@@ -28,12 +56,13 @@
                     </td>
                     <td style="text-align: center;">
                         <span style="float: center">
-                            <button pButton type="button" (click)="showEditDialog(cliente)" 
-                            style="font-size: 13px; padding-top: 5px;">
+                            <button pButton type="button" (click)="showEditDialog(cliente)"
+                                style="font-size: 13px; padding-top: 5px;">
                                 <i class="pi pi-pencil" style="padding-top: 2px;"></i>
                                 <span style="padding-left: 5px;">Editar</span>
                             </button>
-                            <button pButton type="button" style="font-size: 13px; padding-top: 5px; margin-top: 15px;" (click)="delete(cliente)">
+                            <button pButton type="button" style="font-size: 13px; padding-top: 5px; margin-top: 15px;"
+                                (click)="confirm(cliente)">
                                 <i class="pi pi-trash"></i>
                                 <span style="padding-left: 5px; justify-content: center;">Excluir</span>
                             </button>
@@ -98,8 +127,6 @@
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
                 <button type="button" pButton icon="pi pi-check" (click)="save()" label="Salvar"
                     style="background-color: rgb(44, 44, 44); color: white;"></button>
-                <button type="button" pButton icon="pi pi-times" (click)="hideDialog()" label="Cancelar"
-                    style="background-color: rgb(44, 44, 44); color: white; float: left;"></button>
             </div>
 
         </p-footer>
@@ -154,9 +181,16 @@
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
                 <button type="button" pButton icon="pi pi-check" (click)="edit(cliente)" label="Editar"
                     style="background-color: rgb(44, 44, 44);color: white;"></button>
-                <button type="button" pButton icon="pi pi-times" (click)="hideDialog()" label="Cancelar"
-                    style="background-color: rgb(44, 44, 44); color: white; float: left;"></button>
             </div>
         </p-footer>
     </p-dialog>
+    <p-confirmDialog #cd header="Confirmação" [responsive]="true" [style]="{width: '450px'}"
+        icon="pi pi-exclamation-triangle" width="425">
+        <p-footer>
+            <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-times"
+                label="Não" (click)="cd.reject()"></button>
+            <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-check"
+                label="Sim" (click)="cd.accept()"></button>
+        </p-footer>
+    </p-confirmDialog>
 </div>
