@@ -29,11 +29,11 @@
                     <td style="text-align: center;">
                         <span style="float: center">
                             <button pButton type="button" (click)="showEditDialog(cliente)" 
-                            style="font-size: 12px; margin-bottom: 10px;">
+                            style="font-size: 13px; padding-top: 5px;">
                                 <i class="pi pi-pencil" style="padding-top: 2px;"></i>
                                 <span style="padding-left: 5px;">Editar</span>
                             </button>
-                            <button pButton type="button" style="font-size: 12px; margin-top: 10px;" (click)="delete(cliente)">
+                            <button pButton type="button" style="font-size: 13px; padding-top: 5px; margin-top: 15px;" (click)="delete(cliente)">
                                 <i class="pi pi-trash"></i>
                                 <span style="padding-left: 5px; justify-content: center;">Excluir</span>
                             </button>
@@ -98,7 +98,7 @@
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
                 <button type="button" pButton icon="pi pi-check" (click)="save()" label="Salvar"
                     style="background-color: rgb(44, 44, 44); color: white;"></button>
-                <button type="button" pButton icon="pi pi-check" (click)="hideDialog()" label="Cancelar"
+                <button type="button" pButton icon="pi pi-times" (click)="hideDialog()" label="Cancelar"
                     style="background-color: rgb(44, 44, 44); color: white; float: left;"></button>
             </div>
 
@@ -154,7 +154,7 @@
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
                 <button type="button" pButton icon="pi pi-check" (click)="edit(cliente)" label="Editar"
                     style="background-color: rgb(44, 44, 44);color: white;"></button>
-                <button type="button" pButton icon="pi pi-check" (click)="hideDialog()" label="Cancelar"
+                <button type="button" pButton icon="pi pi-times" (click)="hideDialog()" label="Cancelar"
                     style="background-color: rgb(44, 44, 44); color: white; float: left;"></button>
             </div>
         </p-footer>
