@@ -1,4 +1,5 @@
 <html lang="pt-br">
+
 <div class="ui-g">
     <p-toast></p-toast>
     <p-panel header="Equipamentos">
@@ -9,16 +10,16 @@
         <p-table #dt [value]="equipamentos" [columns]="cols" [paginator]="true" [rows]="7" [responsive]="true"
             [rowHover]="true" [showCurrentPageReport]="true" [paginator]="true"
             currentPageReportTemplate="Mostrando de {first} até {last} de {totalRecords} equipamentos" [rows]="10"
-            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading">
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]">
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'id', 'startsWith')"
-                            placeholder="Pesquisar por ID" type="number" min="1">
-                    </th>
+                            placeholder="Pesquisar por id" class="ui-column-filter" pKeyFilter="int">
+                    </th> 
                     <th>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'nome', 'startsWith')"
-                            placeholder="Pesquisar por nome" class="ui-column-filter">
+                            placeholder="Pesquisar por nome" class="ui-column-filter" maxlength="255" pKeyFilter="alphanum">
                     </th>
                 </tr>
                 <tr>
@@ -68,46 +69,46 @@
     </p-panel>
     <p-dialog header="Novo Equipamento" [responsive]="true" [(visible)]="displaySaveDialog">
         <div class="dialog">
-            <div class="test">
-                <input pInputText id="nome" placeholder="Nome" [(ngModel)]="equipamento.nome" />
+            <div class="test">                
+                <input pInputText id="nome" placeholder="Nome" [(ngModel)]="equipamento.nome" pKeyFilter="alphanum" maxlength="255" ng-model="required"/> 
             </div>
             <div class="test">
                 <p-dropdown [options]="tiposEquipamentos" [(ngModel)]="equipamento.idTipoEquipamento"></p-dropdown>
             </div>
             <div class="test">
-                R$ <input pInputText id="precoDiario" placeholder="Preço diario" [(ngModel)]="equipamento.precoDiario"
-                    type="number" step="0.01" />
+                <p-inputNumber id="precoDiario" [(ngModel)]="equipamento.precoDiario" mode="currency" 
+                currency="BRL" locale="pt-BR" placeholder = "Preço diario" maxlength="12" minFractionDigits="1" min= "1"></p-inputNumber>
             </div>
         </div>
         <p-footer>
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
-                <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-check" (click)="save()" label="Salvar"></button>
+                <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-check"
+                    (click)="save()" label="Salvar"></button>
             </div>
         </p-footer>
     </p-dialog>
     <p-dialog header="Editar Equipamento" [responsive]="true" [(visible)]="displayEditDialog">
         <div class="dialog">
             <div class="test">
-                <input pInputText id="nome" placeholder="Nome" [(ngModel)]="equipamento.nome" />
+                <input pInputText id="nome" placeholder="Nome" [(ngModel)]="equipamento.nome" pKeyFilter="alphanum" maxlength="255"/>
             </div>
             <div class="test">
                 <p-dropdown [options]="tiposEquipamentos" [(ngModel)]="equipamento.idTipoEquipamento"></p-dropdown>
             </div>
             <div class="test">
-                R$ <input pInputText id="precoDiario" placeholder="Preço diario" [(ngModel)]="equipamento.precoDiario"
-                    type="number" min="0" step="0.01" />
+                <p-inputNumber id="precoDiario" [(ngModel)]="equipamento.precoDiario" mode="currency" 
+                currency="BRL" locale="pt-BR" placeholder = "Preço diario" maxlength="12"></p-inputNumber>
             </div>
         </div>
         <p-footer>
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
-                <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-check" (click)="editEquipWithButton()"
-                    label="Editar"></button>
+                <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-check"
+                    (click)="editEquipWithButton()" label="Editar"></button>
             </div>
         </p-footer>
     </p-dialog>
 
-    <p-confirmDialog #cd header="Confirmação" [responsive]="true" [style]="{width: '450px'}"
-        icon="pi pi-exclamation-triangle" width="425">
+    <p-confirmDialog #cd header="Confirmação" [style]="{width: '450px'}" icon="pi pi-exclamation-triangle" width="425">
         <p-footer>
             <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-times"
                 label="Não" (click)="cd.reject()"></button>

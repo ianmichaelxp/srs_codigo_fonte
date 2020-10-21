@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem, MessageService,SelectItem,ConfirmationService } from 'primeng/api';
+import { MenuItem, MessageService, SelectItem, ConfirmationService } from 'primeng/api';
 
 import { EquipamentoService } from './../../shared/service/equipamento.service';
-import { EquipamentoModel, TipoEquipamento} from './../../shared/model/equipamento.model';
+import { EquipamentoModel, TipoEquipamento } from './../../shared/model/equipamento.model';
 
 @Component({
   selector: 'app-equipamento',
   templateUrl: './equipamento.component.html',
-  styleUrls: ['./equipamento.component.css']
+  styleUrls: ['./equipamento.component.css'],
 })
 export class EquipamentoComponent implements OnInit {
 
@@ -17,11 +17,8 @@ export class EquipamentoComponent implements OnInit {
   cols: any[];
   displaySaveDialog: boolean = false;
   displayEditDialog: boolean = false;
-  equipamentoSelecionados : EquipamentoModel;
-  equipamentoEditado: EquipamentoModel;
-
   tiposEquipamentos: SelectItem[];
-  tipoObrigatorio: SelectItem[];
+  errors: boolean = false;
 
   equipamento: EquipamentoModel = {
     id: null,
@@ -29,88 +26,79 @@ export class EquipamentoComponent implements OnInit {
     idTipoEquipamento: null,
     precoDiario: null
   };
- 
-  
-  constructor(private equipamentoService: EquipamentoService, private messageService: MessageService, private confirmationService: ConfirmationService) { 
-    this.tiposEquipamentos = 
-    [
-      {label:'Tipo Equipamento: ', value:null},
-      {label:'Móvel', value: 1},
-      {label:'Eletrodomésticos', value:2},
-      {label:'Informática', value: 3},
-    ]
+
+
+  constructor(private equipamentoService: EquipamentoService, private messageService: MessageService, private confirmationService: ConfirmationService) {
+    this.tiposEquipamentos =
+      [
+        { label: 'Tipo Equipamento: ', value: null },
+        { label: 'Móvel', value: 1 },
+        { label: 'Eletrodomésticos', value: 2 },
+        { label: 'Informática', value: 3 },
+      ]
   }
 
-  ngOnInit():void
-  { 
+  ngOnInit(): void {
     this.getAll();
-    this.cols = 
-    [
-      {field:"id", header: "Id"},
-      {field:"nome",header:"Nome"},  
-      {field:"precoDiario",header:"Preço Diário"},
-      {field:"idTipoEquipamento", header:"Tipo equipamento"}
-    ]
-    this.itens = 
-    [
-      {
-        label:"Novo",
-        icon:"pi pi-desktop",
-        command: ()=> this.showSaveDialog()
-      }
-    ]
+    this.itens =
+      [
+        {
+          label: "Novo",
+          icon: "pi pi-desktop",
+          command: () => this.showSaveDialog()
+        }
+      ]
   }
 
   confirm(equipamento: EquipamentoModel) {
     this.confirmationService.confirm({
-        message: 'Você tem certeza que deseja excluir este equipamento?',
-        accept: () => {
-            this.deleteEquipWithButton(equipamento);
-        },
-        reject: () => {
-          this.displayEditDialog = false;
-          this.displaySaveDialog = false;
-        }
+      message: 'Você tem certeza que deseja excluir este equipamento?',
+      accept: () => {
+        this.deleteEquipWithButton(equipamento);
+      },
+      reject: () => {
+        this.displayEditDialog = false;
+        this.displaySaveDialog = false;
+      }
     });
-}
+  }
 
-  getAll(){
+  getAll() {
     this.equipamentoService.getEquipamentos().subscribe(
-      (result:any)=> {
+      (result: any) => {
         this.equipamentos = result;
       },
       error => {
         console.log(error);
       }
-    ) 
+    )
   }
 
-  save(){
-    this.equipamentoService.save(this.equipamento).subscribe(
-      (result:any)=>{
-        this.displaySaveDialog =false;
-        this.equipamento = new EquipamentoModel;
+  save() {
+    if (!this.verifyErrors()) {
+      this.equipamentoService.save(this.equipamento).subscribe(
+        (result: any) => {
+          this.displaySaveDialog = false;
+          this.equipamento = new EquipamentoModel;
 
-        let equipamento = result as EquipamentoModel;
-        this.equipamentos.push(equipamento);
-        this.messageService.add({severity: 'success',
-        summary:"Resultado",detail:"Equipamento salvo com sucesso"});
-        this.displaySaveDialog =false;
-        this.getAll();
-      },
-      error=> {
-        this.messageService.add({severity: 'error',summary:"Error",
-        detail:"Cliente não pode ser adicionado, verifique os dados e tente novamente"})
-      }
+          let equipamento = result as EquipamentoModel;
+          this.equipamentos.push(equipamento);
+          this.messageService.add({
+            severity: 'success',
+            summary: "Resultado", detail: "Equipamento salvo com sucesso"
+          });
+          this.displaySaveDialog = false;
+          this.getAll();
+        },
       )
+    }
   }
-  showSaveDialog(){
+  showSaveDialog() {
     this.equipamento = new EquipamentoModel;
-    this.displaySaveDialog =true;
+    this.displaySaveDialog = true;
   }
 
-  showEditDialog(equipamento: EquipamentoModel)
-  {
+  showEditDialog(equipamento: EquipamentoModel) {
     this.displayEditDialog = true;
     this.equipamento = equipamento;
     this.getAll();
@@ -119,42 +107,61 @@ export class EquipamentoComponent implements OnInit {
   deleteEquipWithButton(equipamento: EquipamentoModel) {
     this.equipamentoService.delete(equipamento).subscribe(
       () => {
-        this.messageService.add({severity: 'success',
-        summary:"Resultado",detail:"Equipamento removido com sucesso"});
-        this.getAll();
-      },  
-      error =>
-      {
-        this.messageService.add({severity: 'error',summary:"Error",
-        detail:"Equipamento não pode ser removido, verifique os dados e tente novamente"})
-      }     
-    )
-  }
-  editEquipWithButton()
-  {
-    this.equipamentoService.edit(this.equipamento).subscribe(
-      ()=> {
-        this.displayEditDialog = false;
-        this.equipamento = new EquipamentoModel;
-        this.messageService.add({severity: 'success',
-        summary:"Resultado",detail:"Equipamento editado com sucesso"});
+        this.messageService.add({
+          severity: 'success',
+          summary: "Resultado", detail: "Equipamento removido com sucesso"
+        });
         this.getAll();
       },
-      error =>
-      {
-        this.messageService.add({severity: 'error',summary:"Error",
-        detail:"Equipamento não pode ser editado, verifique os dados e tente novamente"})
-      }      
+      error => {
+        this.messageService.add({
+          severity: 'error', summary: "Error",
+          detail: "Equipamento não pode ser removido, verifique os dados e tente novamente"
+        })
+      }
     )
   }
-  getTipoEquipamento(id: number)
-  {
+  editEquipWithButton() {
+    if (!this.verifyErrors()) {
+      this.equipamentoService.edit(this.equipamento).subscribe(
+        () => {
+          this.displayEditDialog = false;
+          this.equipamento = new EquipamentoModel;
+          this.messageService.add({
+            severity: 'success',
+            summary: "Resultado", detail: "Equipamento editado com sucesso"
+          });
+          this.getAll();
+        },
+        error => {
+          this.messageService.add({
+            severity: 'error', summary: "Error",
+            detail: "Equipamento não pode ser editado, verifique os dados e tente novamente"
+          })
+        }
+      )
+    }
+  }
+  getTipoEquipamento(id: number) {
     return TipoEquipamento[id];
   }
-  getTipoEquipamentoNome(nome: string)
-  {
+  getTipoEquipamentoNome(nome: string) {
     return TipoEquipamento[nome];
   }
 
+  verifyErrors(): boolean {
+    try {
+      if (this.equipamento.nome === undefined || this.equipamento.nome === null || this.equipamento.nome === "") throw "Nome vazio";
+      if (this.equipamento.idTipoEquipamento == null) throw "Tipo nulo";
+      if (this.equipamento.precoDiario == null) throw "Preço vazio";
+    } catch (err) {
+      this.messageService.add({
+        severity: 'error', summary: "Erro",
+        detail: err
+      });
+      return this.errors = true;
+    }
+    return this.errors = false;
+  }
 }
 
