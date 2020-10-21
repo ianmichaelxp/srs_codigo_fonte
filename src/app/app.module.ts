@@ -30,6 +30,9 @@ import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {ToastModule} from 'primeng/toast';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {KeyFilterModule} from 'primeng/keyfilter';
+
 
 @NgModule({
     declarations: [
@@ -41,7 +44,6 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
         ClienteComponent,
         EquipamentoComponent,
         ReservaComponent
-        
     ],
     imports: [
         BlockUIModule.forRoot({
@@ -69,8 +71,9 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
         MessagesModule,
         MessageModule,
         ToastModule,
-        ConfirmDialogModule
-        
+        ConfirmDialogModule,
+        InputNumberModule,
+        KeyFilterModule,        
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy }, MessageService, ConfirmationService
