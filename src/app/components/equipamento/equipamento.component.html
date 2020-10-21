@@ -7,7 +7,7 @@
             <p-menubar [model]="itens"></p-menubar>
 
         </div>
-        <p-table #dt [value]="equipamentos" [columns]="cols" [paginator]="true" [rows]="7" [responsive]="true"
+        <p-table #dt [value]="equipamentos" [columns]="cols" [paginator]="true" [rows]="7"
             [rowHover]="true" [showCurrentPageReport]="true" [paginator]="true"
             currentPageReportTemplate="Mostrando de {first} até {last} de {totalRecords} equipamentos" [rows]="10"
             [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]">
@@ -19,7 +19,7 @@
                     </th> 
                     <th>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'nome', 'startsWith')"
-                            placeholder="Pesquisar por nome" class="ui-column-filter" maxlength="255" pKeyFilter="alphanum">
+                            placeholder="Pesquisar por nome" class="ui-column-filter" maxlength="255">
                     </th>
                 </tr>
                 <tr>
@@ -67,17 +67,17 @@
             </ng-template>
         </p-table>
     </p-panel>
-    <p-dialog header="Novo Equipamento" [responsive]="true" [(visible)]="displaySaveDialog">
+    <p-dialog header="Novo Equipamento" [(visible)]="displaySaveDialog">
         <div class="dialog">
             <div class="test">                
-                <input pInputText id="nome" placeholder="Nome" [(ngModel)]="equipamento.nome" pKeyFilter="alphanum" maxlength="255" ng-model="required"/> 
+                <input pInputText id="nome" placeholder="Nome" [(ngModel)]="equipamento.nome" maxlength="255"/> 
             </div>
             <div class="test">
                 <p-dropdown [options]="tiposEquipamentos" [(ngModel)]="equipamento.idTipoEquipamento"></p-dropdown>
             </div>
             <div class="test">
                 <p-inputNumber id="precoDiario" [(ngModel)]="equipamento.precoDiario" mode="currency" 
-                currency="BRL" locale="pt-BR" placeholder = "Preço diario" maxlength="12" minFractionDigits="1" min= "1"></p-inputNumber>
+                currency="BRL" locale="pt-BR" placeholder = "Preço diario" maxlength="12" min= "0.01"></p-inputNumber>
             </div>
         </div>
         <p-footer>
@@ -87,17 +87,17 @@
             </div>
         </p-footer>
     </p-dialog>
-    <p-dialog header="Editar Equipamento" [responsive]="true" [(visible)]="displayEditDialog">
+    <p-dialog header="Editar Equipamento" [(visible)]="displayEditDialog">
         <div class="dialog">
             <div class="test">
-                <input pInputText id="nome" placeholder="Nome" [(ngModel)]="equipamento.nome" pKeyFilter="alphanum" maxlength="255"/>
+                <input pInputText id="nome" placeholder="Nome" [(ngModel)]="equipamento.nome" maxlength="255"/>
             </div>
             <div class="test">
                 <p-dropdown [options]="tiposEquipamentos" [(ngModel)]="equipamento.idTipoEquipamento"></p-dropdown>
             </div>
             <div class="test">
                 <p-inputNumber id="precoDiario" [(ngModel)]="equipamento.precoDiario" mode="currency" 
-                currency="BRL" locale="pt-BR" placeholder = "Preço diario" maxlength="12"></p-inputNumber>
+                currency="BRL" locale="pt-BR" placeholder = "Preço diario" maxlength="12" min= "0.01"></p-inputNumber>
             </div>
         </div>
         <p-footer>

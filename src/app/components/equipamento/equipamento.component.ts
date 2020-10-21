@@ -18,7 +18,6 @@ export class EquipamentoComponent implements OnInit {
   displaySaveDialog: boolean = false;
   displayEditDialog: boolean = false;
   tiposEquipamentos: SelectItem[];
-  errors: boolean = false;
 
   equipamento: EquipamentoModel = {
     id: null,
@@ -159,9 +158,9 @@ export class EquipamentoComponent implements OnInit {
         severity: 'error', summary: "Erro",
         detail: err
       });
-      return this.errors = true;
+      return true;
     }
-    return this.errors = false;
+    return false;
   }
 }
 
