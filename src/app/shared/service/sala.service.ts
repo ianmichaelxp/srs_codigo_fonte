@@ -8,20 +8,31 @@ import { Observable } from 'rxjs';
 })
 export class SalaService {
 
-  apiUrl: "localhost:8080/api/salas";
+  apiUrl = "http://localhost:8080/api/salas";
 
   httpOptions = {
-    headers: new HttpHeaders({ 
+    headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
   };
 
   constructor(
-    private httpClient: HttpClient
+    private httpSalas: HttpClient
   ) { }
 
-  public getSalas(): Observable<SalaModel> {
-    return this.httpClient.get<SalaModel>(this.apiUrl);
+  public getSalas(): Observable<any> {
+    return this.httpSalas.get(this.apiUrl);
   }
 
+  public save(sala: SalaModel): Observable<any> {
+    return this.httpSalas.post(this.apiUrl, JSON.stringify(sala), this.httpOptions);
+  }
+
+  public delete(sala: SalaModel): Observable<any> {
+    return this.httpSalas.delete(this.apiUrl + "/" + sala.id);
+  }
+
+  public edit(sala: SalaModel): Observable<SalaModel> {
+    return this.httpSalas.put<SalaModel>(this.apiUrl, JSON.stringify(sala), this.httpOptions);
+  }
 }

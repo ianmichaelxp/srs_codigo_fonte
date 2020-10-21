@@ -1,4 +1,4 @@
-<div class="ui-g">
+<div class="card">
     <p-toast></p-toast>
     <p-panel header="Clientes">
         <div style="margin-bottom: 20px; ">
@@ -7,7 +7,12 @@
         </div>
 
         <p-table #dt [value]="clientes" [responsive]="true" [columns]="cols" [paginator]="true" [rows]="10"
-            [rowHover]="true" [showCurrentPageReport]="true"  [rowsPerPageOptions]="[10,25,50]">
+            [rowHover]="true" [showCurrentPageReport]="true"  [rowsPerPageOptions]="[10,25,50]" [loading]="loading">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex p-ai-center p-jc-between">
+                    <h4 class="p-m-0" style="font-size:medium; padding-top:10px; ">Gerenciamento de Clientes</h4>
+                </div>
+            </ng-template>
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th>
@@ -115,33 +120,47 @@
     <p-dialog header="Editar Cliente" [responsive]="true" [(visible)]="displayEditDialog" [style]="{width: '450px'}"
         styleClass="p-fluid">
         <div class="p-grid ui-fluid">
-            <div class="inputCliente">
+            <div class="p-col-4">
                 <label for="nome">Nome</label>
-                <input type="text" placeholder="ex: Joaquim Silveira" pInputText id="nome" [(ngModel)]="cliente.nome" required autofocus />
             </div>
-            <div class="inputCliente">
-                <label for="endereço">Endereço</label>
-                <input type="text" placeholder="ex: Rua João Pessoa" pInputText id="endereco" [(ngModel)]="cliente.endereco" required autofocus />
+            <div class="p-col-8">
+                <input type="text" pInputText id="nome" [(ngModel)]="cliente.nome" required autofocus />
             </div>
-            <div class="inputCliente">
+            <div class="p-col-4">
+                <label for="endereco">Endereco</label>
+            </div>
+            <div class="p-col-8">
+                <input type="text" pInputText id="endereco" [(ngModel)]="cliente.endereco" required autofocus />
+            </div>
+            <div class="p-col-4">
                 <label for="dataNasc">Data de Nascimento</label>
+            </div>
+            <div class="p-col-8">
                 <input type="date" pInputText id="dataNasc" [(ngModel)]="cliente.dataNasc" required autofocus />
             </div>
-            <div class="inputCliente">
+            <div class="p-col-4">
                 <label for="telefone">Telefone</label>
-                <p-inputMask placeholder="(99)99999-9999" [(ngModel)]="cliente.telefone" mask="(99)99999-9999"></p-inputMask>
             </div>
-            <div class="inputCliente">
+            <div class="p-col-8">
+                <p-inputMask [(ngModel)]="cliente.telefone" mask="(83)99999-9999"></p-inputMask>
+            </div>
+            <div class="p-col-4">
                 <label for="rg">RG</label>
-                <p-inputMask [(ngModel)]="cliente.rg" placeholder="9.999.999" mask="9.999.999"></p-inputMask>
             </div>
-            <div class="inputCliente">
+            <div class="p-col-8">
+                <input type="number" pInputText id="rg" [(ngModel)]="cliente.rg" required autofocus />
+            </div>
+            <div class="p-col-4">
                 <label for="cpf">CPF</label>
-                <p-inputMask [(ngModel)]="cliente.cpf" placeholder="999.999.999-99" mask="999.999.999-99"></p-inputMask>
             </div>
-            <div class="inputCliente">
+            <div class="p-col-8">
+                <input type="number" pInputText id="cpf" [(ngModel)]="cliente.cpf" required autofocus />
+            </div>
+            <div class="p-col-4">
                 <label for="email">Email</label>
-                <input type="email" pInputText placeholder="ex: joaquinsilveira@email.com" id="email" [(ngModel)]="cliente.email"   />
+            </div>
+            <div class="p-col-8">
+                <input type="email" pInputText id="email" [(ngModel)]="cliente.email" />
             </div>
         </div>
         <p-footer>

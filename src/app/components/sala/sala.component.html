@@ -1,1 +1,59 @@
-<p>sala works!</p>
+<html lang="pt-br">
+<div class="ui-g">
+    <p-toast></p-toast>
+    <p-panel header="Salas">
+        <div style="margin-bottom: 20px">
+            <p-menubar [model]="itens"></p-menubar>
+        </div>
+        <p-table #dt [value]="salas" [columns]="cols" [paginator]="true" [rows]="7" [responsive]="true"
+            [rowHover]="true" [showCurrentPageReport]="true" [paginator]="true"
+            currentPageReportTemplate="Mostrando de {first} até {last} de {totalRecords} salas" [rows]="10"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th>
+                        Descrição
+                    </th>
+                    <th>
+                        Capacidade de pessoas
+                    </th>
+                    <th>
+                        Preço diário
+                    </th>
+                    <th>
+                        Tipo sala
+                    </th>
+                    <th>
+                        Equipamentos
+                    </th>
+                    <th style="width: 15rem;">Opções</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-sala let-columns="columns">
+                <tr [pSelectableRow]="sala" style="text-align: center;">
+                    <td>{{sala.descricao}}</td>
+                    <td>{{sala.capacidadePessoas}}</td>
+                    <td>{{sala.precoDiario}} </td>
+                    <td>{{getTipoSala(sala.idTipoSala)}}</td>
+                    <td> 
+                        <span style="float: center">
+                            <button pButton type="button" (click)="show()">
+                                <i class="pi pi-desktop" style="padding-top: 2px; font-size: 10px;"></i>
+                                <span style="padding-left: 5px; font-size: 14px;">Mostrar Equipamentos</span>
+                            </button>
+                        </span>
+                    </td>
+                    <td style="text-align: center;">
+                        <span style="float: center">
+                            <button pButton type="button" (click)="showEditDialog(equipamento)">
+                                <i class="pi pi-pencil" style="padding-top: 6px;"></i>
+                                <span style="padding-left: 5px;">Editar</span>
+                            </button>
+                            <button pButton type="button" style="margin-left: 10px;" (click)="confirm(equipamento)">
+                                <i class="pi pi-trash" style="padding-top: 6px; padding-left: 5px;"></i>
+                                <span style="padding-left: 5px;">Excluir</span>
+                            </button>
+                        </span>
+                    </td>
+                </tr>
+            </ng-template>
