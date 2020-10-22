@@ -1,12 +1,10 @@
 package com.basis.srs.repositorio;
-import com.basis.srs.dominio.Sala;
+import com.basis.srs.dominio.Equipamento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SalaRepositorio extends JpaRepository<Sala,Integer>
+public interface EquipamentoRepositorio extends JpaRepository<Equipamento,Integer>
 {
-
-    boolean existsById(Integer id);
 
 }

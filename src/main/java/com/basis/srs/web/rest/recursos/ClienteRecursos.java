@@ -1,12 +1,12 @@
 package com.basis.srs.web.rest.recursos;
 
-import com.basis.srs.dominio.Cliente;
 import com.basis.srs.servico.ClienteServicos;
 import com.basis.srs.servico.dto.ClienteDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/clientes")
 @AllArgsConstructor
-public class ClienteRecurso
+public class ClienteRecursos
 {
     public final ClienteServicos servicos;
 
@@ -31,13 +31,14 @@ public class ClienteRecurso
     }
 
     @PutMapping
-    public ResponseEntity<Cliente> atualizarCliente(@RequestBody ClienteDTO cliente)
+    public ResponseEntity<ClienteDTO> atualizarCliente(@Valid @RequestBody ClienteDTO cliente)
     {
         return ResponseEntity.ok(servicos.salvarCliente(cliente));
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> salvarCliente(@RequestBody ClienteDTO cliente) throws URISyntaxException {
+    public ResponseEntity<ClienteDTO> criarCliente(@Valid @RequestBody ClienteDTO cliente) throws URISyntaxException
+    {
         return ResponseEntity.created(new URI("/api/cliente")).body(servicos.salvarCliente(cliente));
     }
 
@@ -47,5 +48,4 @@ public class ClienteRecurso
         servicos.removerCliente(id);
         return ResponseEntity.ok().build();
     }
-
 }

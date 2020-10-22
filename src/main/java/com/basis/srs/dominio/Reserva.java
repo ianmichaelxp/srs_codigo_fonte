@@ -2,31 +2,42 @@ package com.basis.srs.dominio;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.mapping.ToOne;
 
 import javax.persistence.*;
-import java.security.Timestamp;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
 
+@Entity
 @Getter
 @Setter
-@Entity
-@Table
-public class Reserva {
-
+@Table(name = "reserva")
+public class Reserva implements Serializable
+{
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_reserva")
+    @SequenceGenerator(name = "seq_reserva", allocationSize = 1, sequenceName = "seq_reserva")
+    @Column(name = "id")
+    private Integer id;
 
-    private Timestamp dataInicio;
-    private Timestamp dataFim;
+    @Column(name = "data_inicio")
+    private LocalDate dataInicio;
+
+    @Column(name = "data_fim")
+    private LocalDate dataFim;
+
+    @Column(name = "preco_final")
     private Double precoFinal;
+//aqui
+    @OneToMany(mappedBy = "reserva")
+    private List<ReservaEquipamento> equipamentos;
 
-    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_cliente")
     private Cliente cliente;
 
-    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_sala")
     private Sala sala;
-
-
 }

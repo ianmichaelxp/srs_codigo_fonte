@@ -5,7 +5,6 @@ import com.basis.srs.servico.dto.SalaDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-
 @Mapper(componentModel = "spring", uses = {SalaEquipamentoMapper.class})
 public interface SalaMapper extends EntityMapper<SalaDTO, Sala>
 {
@@ -16,5 +15,4 @@ public interface SalaMapper extends EntityMapper<SalaDTO, Sala>
     @Override
     @Mapping(source="tipoSala.id",target = "idTipoSala")
     SalaDTO toDto(Sala sala);
-
 }

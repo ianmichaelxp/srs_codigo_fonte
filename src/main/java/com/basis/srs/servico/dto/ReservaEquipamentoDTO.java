@@ -5,9 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SalaEquipamentoDTO
-{
-    private Integer idSala;
+public class ReservaEquipamentoDTO {
+
+    private Integer idReserva;
 
     private Integer idEquipamento;
 
