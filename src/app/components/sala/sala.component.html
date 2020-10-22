@@ -33,9 +33,9 @@
                 <tr [pSelectableRow]="sala" style="text-align: center;">
                     <td>{{sala.descricao}}</td>
                     <td>{{sala.capacidadePessoas}}</td>
-                    <td>{{sala.precoDiario}} </td>
+                    <td>R$ {{sala.precoDiario}} </td>
                     <td>{{getTipoSala(sala.idTipoSala)}}</td>
-                    <td> 
+                    <td>
                         <span style="float: center">
                             <button pButton type="button" (click)="show(sala)">
                                 <i class="pi pi-desktop" style="padding-top: 2px; font-size: 10px;"></i>
@@ -45,11 +45,11 @@
                     </td>
                     <td style="text-align: center;">
                         <span style="float: center">
-                            <button pButton type="button" (click)="showEditDialog(equipamento)">
+                            <button pButton type="button" (click)="showEditDialog(sala)">
                                 <i class="pi pi-pencil" style="padding-top: 6px;"></i>
                                 <span style="padding-left: 5px;">Editar</span>
                             </button>
-                            <button pButton type="button" style="margin-left: 10px;" (click)="confirm(equipamento)">
+                            <button pButton type="button" style="margin-left: 10px;" (click)="confirm(sala)">
                                 <i class="pi pi-trash" style="padding-top: 6px; padding-left: 5px;"></i>
                                 <span style="padding-left: 5px;">Excluir</span>
                             </button>
@@ -57,3 +57,29 @@
                     </td>
                 </tr>
             </ng-template>
+        </p-table>
+    </p-panel>
+    <p-dialog header="Nova Sala" [(visible)]="displaySaveDialog">
+        <div class="dialog">
+            <div class="divPad">
+                <input pInputText id="descricao" placeholder="Descrição" [(ngModel)]="sala.descricao" maxlength="255" />
+            </div>
+            <div class="divPad">
+                <input pInputText id="capacidadePessoas" placeholder="Capacidade de Pessoas"
+                    [(ngModel)]="sala.capacidadePessoas" />
+            </div>
+            <div class="divPad">
+                <input pInputText id="precoDiario" placeholder="Preço Diario" [(ngModel)]="sala.precoDiario" />
+            </div>
+            <div class="divPad">
+                <p-dropdown [options]="tiposSalas" [(ngModel)]="sala.idTipoSala"></p-dropdown>
+            </div>
+
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-check"
+                    (click)="save()" label="Salvar"></button>
+            </div>
+        </p-footer>
+    </p-dialog>

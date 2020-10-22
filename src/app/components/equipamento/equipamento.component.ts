@@ -28,13 +28,7 @@ export class EquipamentoComponent implements OnInit {
 
 
   constructor(private equipamentoService: EquipamentoService, private messageService: MessageService, private confirmationService: ConfirmationService) {
-    this.tiposEquipamentos =
-      [
-        { label: 'Tipo Equipamento: ', value: null },
-        { label: 'Móvel', value: 1 },
-        { label: 'Eletrodomésticos', value: 2 },
-        { label: 'Informática', value: 3 },
-      ]
+    this.tiposEquipamentos = equipamentoService.getTipoEquipamentos(this.tiposEquipamentos);
   }
 
   ngOnInit(): void {
@@ -115,7 +109,7 @@ export class EquipamentoComponent implements OnInit {
       error => {
         this.messageService.add({
           severity: 'error', summary: "Error",
-          detail: "Equipamento não pode ser removido, verifique os dados e tente novamente"
+          detail: "Equipamento não pode ser removido"
         })
       }
     )

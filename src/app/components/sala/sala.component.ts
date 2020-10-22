@@ -32,6 +32,18 @@ export class SalaComponent implements OnInit {
     equipamentos: null
   };
 
+  ngOnInit(): void {
+    this.getAll();
+    this.itens =
+      [
+        {
+          label: "Novo",
+          icon: "pi pi-plus",
+          command: () => this.showSaveDialog()
+        }
+      ]
+  }
+
   constructor(private salaService: SalaService, private messageService: MessageService, 
     private confirmationService: ConfirmationService,public dialogService: DialogService,
     private salaEquipamentoService : SalaEquipamentoService) {
@@ -47,23 +59,31 @@ export class SalaComponent implements OnInit {
       ]
   }
 
-  ngOnInit(): void {
-    this.getAll();
-    this.itens =
-      [
-        {
-          label: "Novo",
-          icon: "pi pi-desktop",
-          command: () => this.showSaveDialog()
-        }
-      ]
+  confirm(sala : SalaModel) {
+        this.deleteWithButton(sala);
+  }
+  deleteWithButton(sala: SalaModel) {
+    this.salaService.delete(sala).subscribe(
+      () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: "Resultado", detail: "Sala removida com sucesso"
+        });
+        this.getAll();
+      },
+      error => {
+        this.messageService.add({
+          severity: 'error', summary: "Error",
+          detail: "Sala não pode ser removida"
+        })
+      }
+    )
   }
 
   show(sala: SalaModel){
     this.salaEquipamentoService.getEquipamentos(sala.equipamentos);
     const ref = this.dialogService.open(SalaEquipamentoComponent, {
-      header: 'Equipamentos',
-      width: '50%', 
+      width: '80%', 
       modal:false
   });
   }
@@ -78,8 +98,21 @@ export class SalaComponent implements OnInit {
       }
     )
   }
-  showSaveDialog(): void {
-    throw new Error('Method not implemented.');
+
+  save(){
+    this.salaService.save(this.sala).subscribe(
+      (result: any) => {
+        this.sala = new SalaModel;
+        let sala = result as SalaModel;
+          this.salas.push(sala);
+          this.messageService.add({
+            severity: 'success',
+            summary: "Resultado", detail: "Sala salva com sucesso"
+          });
+          this.displaySaveDialog = false;
+          this.getAll();
+      }
+    )
   }
   
   getTipoSala(id: number)
@@ -90,6 +123,11 @@ export class SalaComponent implements OnInit {
   getTipoSalaNome(nome: string)
   {
     return TipoSala[nome];
+  }
+
+  showSaveDialog() {
+    this.sala = new SalaModel;
+    this.displaySaveDialog = true;
   }
 
 }

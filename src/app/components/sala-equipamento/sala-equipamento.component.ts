@@ -3,6 +3,7 @@ import { EquipamentoService } from './../../shared/service/equipamento.service';
 import { EquipamentoModel, TipoEquipamento } from './../../shared/model/equipamento.model';
 import { Component, OnInit, Output } from '@angular/core';
 import { SalaEquipamento } from 'src/app/shared/model/sala.model';
+import { SelectItem } from 'primeng';
 
 @Component({
   selector: 'app-sala-equipamento',
@@ -11,8 +12,10 @@ import { SalaEquipamento } from 'src/app/shared/model/sala.model';
 })
 export class SalaEquipamentoComponent implements OnInit {
   
-
-  constructor(private equipamentoService: EquipamentoService, private salaEquipamentoService: SalaEquipamentoService) { }
+  tiposEquipamentos: SelectItem[];
+  constructor(private equipamentoService: EquipamentoService, private salaEquipamentoService: SalaEquipamentoService) {
+    this.tiposEquipamentos = equipamentoService.getTipoEquipamentos(this.tiposEquipamentos); 
+  }
 
   equipamentos: EquipamentoModel[];
 

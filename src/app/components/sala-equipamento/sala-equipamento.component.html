@@ -1,12 +1,6 @@
 <html lang="pt-br">
-
-<div class="ui-g">
     <p-toast></p-toast>
     <p-panel header="Equipamentos">
-        <div style="margin-bottom: 20px">
-            <p-menubar [model]="itens"></p-menubar>
-
-        </div>
         <p-table #dt [value]="equipamentos" [columns]="cols" [paginator]="true" [rows]="7"
             [rowHover]="true" [showCurrentPageReport]="true" [paginator]="true"
             currentPageReportTemplate="Mostrando de {first} até {last} de {totalRecords} equipamentos" [rows]="10"
@@ -55,5 +49,4 @@
             </ng-template>
         </p-table>
     </p-panel>
-</div>
 </html>
