@@ -1,3 +1,4 @@
+import { SalaEquipamentoComponent } from './components/sala-equipamento/sala-equipamento.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -44,8 +45,7 @@ import {InputMaskModule} from 'primeng/inputmask';
         ClienteComponent,
         EquipamentoComponent,
         ReservaComponent,
-        
-        
+        SalaEquipamentoComponent    
         
     ],
     imports: [
