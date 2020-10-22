@@ -23,4 +23,18 @@ export class ReservaService {
   public getReservas(): Observable<ReservaModel> {
     return this.httpClient.get<ReservaModel>(this.apiUrl);
   }
+  public getReservaPorId(id:number): Observable<any>{
+    return this.httpClient.get(this.apiUrl+ '/' + id);
+  }
+
+  public save(reserva: ReservaModel): Observable<any> {
+    return this.httpClient.post(this.apiUrl,JSON.stringify(reserva),this.httpOptions);
+  }
+  public delete(reserva: ReservaModel): Observable<any> {
+      return this.httpClient.delete(this.apiUrl + '/' + reserva.id);
+  }
+  
+  public edit(reserva: ReservaModel): Observable<any> {
+    return this.httpClient.put(this.apiUrl,JSON.stringify(reserva), this.httpOptions);
+  }
 }

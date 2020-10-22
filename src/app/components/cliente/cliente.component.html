@@ -1,19 +1,15 @@
 <div class="ui-g">
     <p-toast></p-toast>
     <p-panel header="Clientes">
-        <div style="margin-bottom: 20px; ">
+        <div style="margin-bottom: 20px;">
             <p-menubar [model]="itens">
             </p-menubar>
         </div>
 
-        <p-table #dt [value]="clientes" [responsive]="true" [columns]="cols" [paginator]="true" [rows]="10"
+        <p-table #dt [value]="clientes" [columns]="cols" [paginator]="true" [rows]="10"
             [rowHover]="true" [showCurrentPageReport]="true"  [rowsPerPageOptions]="[10,25,50]">
             <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'id', 'startsWith')"
-                            placeholder="Buscar por id" class="ui-column-filter">
-                    </th>
                     <th>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'nome', 'startsWith')"
                             placeholder="Buscar por nome" class="ui-column-filter">
@@ -32,23 +28,26 @@
                     </th>
                 </tr>
 
-                <tr>
-                    <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
-                    <th pSortableColumn="nome">NOME <p-sortIcon field="nome"></p-sortIcon></th>
+                <tr style="font-size: 14px;">
+                    <th pSortableColumn="nome" >NOME <p-sortIcon field="nome"></p-sortIcon></th>
                     <th pSortableColumn="endereco">ENDEREÇO <p-sortIcon field="endereco"></p-sortIcon></th>
                     <th pSortableColumn="dataNasc">DATA DE NASCIMENTO <p-sortIcon field="dataNasc"></p-sortIcon></th>
                     <th pSortableColumn="telefone">TELEFONE<p-sortIcon field="telefone"></p-sortIcon></th>
-                    <th pSortableColumn="rg">RG<p-sortIcon field="rg"></p-sortIcon></th>
+                    <th pSortableColumn="rg" >RG<p-sortIcon field="rg"></p-sortIcon></th>
                     <th pSortableColumn="cpf">CPF<p-sortIcon field="cpf"></p-sortIcon></th>
                     <th pSortableColumn="email">EMAIL<p-sortIcon field="email"></p-sortIcon></th>
                     <th style="width:8rem; margin: 0;">OPÇÕES</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-cliente let-columns="columns">
-                <tr [pSelectableRow]="cliente" style="margin: 0; text-align: center;">
-                    <td *ngFor="let col of columns">
-                        {{cliente[col.field]}}
-                    </td>
+                <tr [pSelectableRow]="cliente" style="margin: 0; text-align: center; word-wrap: break-word;">
+                    <td>{{cliente.nome}}</td>
+                    <td>{{cliente.endereco}}</td>
+                    <td>{{cliente.dataNasc}}</td>
+                    <td>{{cliente.telefone}}</td>
+                    <td>{{cliente.rg}}</td>
+                    <td>{{cliente.cpf}}</td>
+                    <td>{{cliente.email}}</td>
                     <td style="text-align: center;">
                         <span style="float: center">
                             <button pButton type="button" (click)="showEditDialog(cliente)"

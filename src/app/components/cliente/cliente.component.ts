@@ -167,6 +167,7 @@ export class ClienteComponent implements OnInit {
   {
     this.displayEditDialog = true;
     this.cliente = cliente;
+    this.getAll();
   }
   showSaveDialog(){
     this.cliente = new ClienteModel;
