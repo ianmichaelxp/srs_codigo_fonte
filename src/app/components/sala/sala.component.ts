@@ -1,9 +1,11 @@
+import { SalaEquipamentoService } from './../../shared/service/salaEquipamento.service';
+import { SalaEquipamentoComponent } from './../sala-equipamento/sala-equipamento.component';
+
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SalaService } from './../../shared/service/sala.service';
-import { SalaEquipamento, SalaModel, TipoSala } from './../../shared/model/sala.model';
+import { SalaModel, TipoSala } from './../../shared/model/sala.model';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService, SelectItem, ConfirmationService } from 'primeng/api';
-
 
 @Component({
   selector: 'app-sala',
@@ -12,19 +14,7 @@ import { MenuItem, MessageService, SelectItem, ConfirmationService } from 'prime
 })
 export class SalaComponent implements OnInit {
 
-  salas: SalaModel[] = [
-    {id: 1,
-    descricao: "Sala grande",
-    capacidadePessoas: 25,
-    precoDiario: 50.00,
-    idTipoSala: 1,
-    equipamentos: [{
-      idSala:1,
-      idEquipamento:2,
-      quantidade: 10
-    }]
-  }
-  ];
+  salas: SalaModel[] = [];
   erro: any;
   itens: MenuItem[];
   cols: any[];
@@ -42,9 +32,9 @@ export class SalaComponent implements OnInit {
     equipamentos: null
   };
 
-  constructor(private salaService: SalaService, 
-    private messageService: MessageService, 
-    private confirmationService: ConfirmationService,public dialogService: DialogService) {
+  constructor(private salaService: SalaService, private messageService: MessageService, 
+    private confirmationService: ConfirmationService,public dialogService: DialogService,
+    private salaEquipamentoService : SalaEquipamentoService) {
     
       this.tiposSalas =
       [
@@ -69,8 +59,9 @@ export class SalaComponent implements OnInit {
       ]
   }
 
-  show(){
-    const ref = this.dialogService.open(SalaEquipamento, {
+  show(sala: SalaModel){
+    this.salaEquipamentoService.getEquipamentos(sala.equipamentos);
+    const ref = this.dialogService.open(SalaEquipamentoComponent, {
       header: 'Equipamentos',
       width: '50%', 
       modal:false

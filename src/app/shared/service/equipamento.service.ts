@@ -24,6 +24,11 @@ export class EquipamentoService {
     return this.httpEquipamento.get(this.apiUrl);
   }
 
+  public getById(id: number): Observable<any>
+  {
+    return this.httpEquipamento.get(this.apiUrl+"/"+id);
+  }
+
   public save(equipamento: EquipamentoModel): Observable<any> {
     return this.httpEquipamento.post(this.apiUrl,JSON.stringify(equipamento),this.httpOptions);
   }
