@@ -48,7 +48,7 @@ public class SalaServicos
             salaEquipamentos.forEach(salaEquipamento ->
             {
                 Equipamento equipamento = equipamentoRepositorio.findById(salaEquipamento.getEquipamento().getId()).orElse(null);
-                if (equipamento.getEquipamentoObrigatorio() == 1)
+                if (salaEquipamentoRepositorio.existsByEquipamento(equipamento))
                 {
                     salaEquipamentosDTO.forEach(salaEquipamentoDTO ->
                     {

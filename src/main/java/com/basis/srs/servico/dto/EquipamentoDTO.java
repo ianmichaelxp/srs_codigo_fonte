@@ -24,8 +24,4 @@ public class EquipamentoDTO
     @NotNull
     private Double precoDiario;
 
-    @NotNull
-    @Min(0)
-    @Max(1)
-    private Integer equipamentoObrigatorio;
 }

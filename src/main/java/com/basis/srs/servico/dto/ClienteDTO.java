@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Setter
 public class ClienteDTO
 {
-    @NotNull
+    
     private Integer id;
 
     @NotNull
