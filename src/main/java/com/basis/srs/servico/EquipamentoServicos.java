@@ -50,13 +50,16 @@ public class EquipamentoServicos
 
         if(equipamentoRepositorio.existsByNome(equipamentoDTO.getNome()))
         {
-            Equipamento equipamento = equipamentoRepositorio.findByNome(equipamentoDTO.getNome());
+            List<Equipamento> equipamentos = equipamentoRepositorio.findByNome(equipamentoDTO.getNome());
 
-            if(equipamentoEntity.getPrecoDiario().equals(equipamento.getPrecoDiario()) &&
-                    equipamentoEntity.getTipoEquipamento().getId().equals(equipamento.getTipoEquipamento().getId()))
+            equipamentos.forEach(equipamento ->
             {
-                throw new RegraNegocioException("Este equipamento já existe");
-            }
+                if(equipamento.getNome().equals(equipamentoDTO.getNome()) && equipamentoDTO.getPrecoDiario().equals(equipamento.getPrecoDiario()) &&
+                        equipamentoEntity.getTipoEquipamento().getId().equals(equipamento.getTipoEquipamento().getId()))
+                {
+                    throw new RegraNegocioException("Este equipamento já existe");
+                }
+            });
         }
     }
 

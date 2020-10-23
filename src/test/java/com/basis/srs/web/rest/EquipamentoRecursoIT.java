@@ -100,8 +100,6 @@ public class EquipamentoRecursoIT extends IntTestComum {
                 .andExpect(status().isBadRequest());
     }
 
-
-
     @Test
     public void editar() throws Exception{
         Equipamento equipamento = equipamentoBuilder.construir();
