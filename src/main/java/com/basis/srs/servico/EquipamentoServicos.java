@@ -1,5 +1,6 @@
 package com.basis.srs.servico;
 import com.basis.srs.dominio.Sala;
+import com.basis.srs.dominio.TipoEquipamento;
 import com.basis.srs.servico.exception.RegraNegocioException;
 import com.basis.srs.dominio.Equipamento;
 import com.basis.srs.repositorio.EquipamentoRepositorio;
@@ -38,10 +39,26 @@ public class EquipamentoServicos
     public EquipamentoDTO salvarEquipamento(EquipamentoDTO dto)
     {
         Equipamento equipamento = equipamentoMapper.toEntity(dto);
+        if(dto.getId() == null) existeEquipamento(equipamento, dto);
         equipamentoRepositorio.save(equipamento);
         EquipamentoDTO equipamentoDTO = equipamentoMapper.toDto(equipamento);
         return equipamentoDTO;
-    };
+    }
+
+
+    public void existeEquipamento(Equipamento equipamentoEntity, EquipamentoDTO equipamentoDTO){
+
+        if(equipamentoRepositorio.existsByNome(equipamentoDTO.getNome()))
+        {
+            Equipamento equipamento = equipamentoRepositorio.findByNome(equipamentoDTO.getNome());
+
+            if(equipamentoEntity.getPrecoDiario().equals(equipamento.getPrecoDiario()) &&
+                    equipamentoEntity.getTipoEquipamento().getId().equals(equipamento.getTipoEquipamento().getId()))
+            {
+                throw new RegraNegocioException("Este equipamento já existe");
+            }
+        }
+    }
 
     public void removerEquipamento(Integer id)
     {

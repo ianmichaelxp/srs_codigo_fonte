@@ -27,7 +27,4 @@ public class Equipamento implements Serializable
     @Column(name="preco_diario")
     private Double precoDiario;
 
-    @Column(name="equipamento_obrigatorio")
-    private Integer equipamentoObrigatorio;
-
 }

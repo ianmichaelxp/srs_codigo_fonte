@@ -22,10 +22,7 @@ public class EquipamentoDTO
     private Integer idTipoEquipamento;
 
     @NotNull
+    @Positive
     private Double precoDiario;
 
-    @NotNull
-    @Min(0)
-    @Max(1)
-    private Integer equipamentoObrigatorio;
 }

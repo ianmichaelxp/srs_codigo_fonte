@@ -5,6 +5,7 @@ import com.basis.srs.builder.SalaBuilder;
 import com.basis.srs.dominio.Equipamento;
 import com.basis.srs.dominio.Sala;
 import com.basis.srs.dominio.SalaEquipamento;
+import com.basis.srs.dominio.TipoEquipamento;
 import com.basis.srs.util.IntTestComum;
 import com.basis.srs.util.TestUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +14,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -55,6 +58,23 @@ public class EquipamentoRecursoIT extends IntTestComum {
                     equipamentoBuilder.converterToDto(equipamento))
             ))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void salvarEquipamentoJaCadastrado() throws Exception {
+
+        Equipamento equipamento = equipamentoBuilder.construirEntidade();
+        getMockMvc().perform(post("/api/equipamentos")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(
+                        equipamentoBuilder.converterToDto(equipamento))
+                ));
+        getMockMvc().perform(post("/api/equipamentos")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(
+                        equipamentoBuilder.converterToDto(equipamento))
+                ))
+                .andExpect(status().isBadRequest());
     }
 
     @Test

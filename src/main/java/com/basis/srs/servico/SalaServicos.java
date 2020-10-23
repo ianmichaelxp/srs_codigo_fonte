@@ -1,3 +1,4 @@
+//
 package com.basis.srs.servico;
 
 import com.basis.srs.dominio.Equipamento;
@@ -42,29 +43,6 @@ public class SalaServicos
 
     public SalaDTO salvarSala(SalaDTO salaDTO)
     {
-        if (salaDTO.getId() != null) {
-            Sala sala = salaRepositorio.findById(salaMapper.toEntity(salaDTO).getId()).orElse(null);
-            List<SalaEquipamentoDTO> salaEquipamentosDTO = salaDTO.getEquipamentos();
-            List<SalaEquipamento> salaEquipamentos = sala.getEquipamentos();
-            salaEquipamentos.forEach(salaEquipamento ->
-            {
-                Equipamento equipamento = equipamentoRepositorio.findById(salaEquipamento.getEquipamento().getId()).orElse(null);
-                if (equipamento.getEquipamentoObrigatorio() == 1)
-                {
-                    salaEquipamentosDTO.forEach(salaEquipamentoDTO ->
-                    {
-                        if(salaEquipamentoDTO.getIdEquipamento() == equipamento.getId())
-                        {
-                            if(salaEquipamentoDTO.getQuantidade() == 0)
-                            {
-                                throw new RegraNegocioException("A sala deve possuir este equipamento!");
-                            }
-                        }
-                    });
-                    throw new RegraNegocioException("Esse equipamento é obrigatório e não pode ser excluído!");
-                }
-            });
-        }
         Sala sala = salaMapper.toEntity(salaDTO);
         List<SalaEquipamento> salaEquipamentos = sala.getEquipamentos();
         sala.setEquipamentos(new ArrayList<>());
@@ -76,8 +54,8 @@ public class SalaServicos
                 salaEquipamento.setSala(sala);
                 salaEquipamento.getSalaEquipamentoPK().setIdSala(sala.getId());
             });
-            salaEquipamentoRepositorio.saveAll(salaEquipamentos);
         }
+        salaEquipamentoRepositorio.saveAll(salaEquipamentos);
         sala.setEquipamentos(salaEquipamentos);
         return salaMapper.toDto(sala);
     }

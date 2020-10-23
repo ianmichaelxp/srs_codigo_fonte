@@ -12,4 +12,5 @@ public interface SalaEquipamentoRepositorio extends JpaRepository<SalaEquipament
     boolean existsByEquipamento(Equipamento equipamento);
 
     boolean existsByEquipamentoId(Integer id);
+
 }
