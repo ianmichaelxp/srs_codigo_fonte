@@ -1,9 +1,7 @@
 package com.basis.srs.web.rest;
 
 
-import com.basis.srs.builder.ClienteBuilder;
 import com.basis.srs.builder.ReservaBuilder;
-import com.basis.srs.builder.SalaBuilder;
 import com.basis.srs.dominio.Reserva;
 
 import com.basis.srs.util.IntTestComum;
@@ -38,8 +36,6 @@ public class ReservaRecursoIT extends IntTestComum {
 
     @Test
     public void listar() throws Exception {
-
-
         reservaBuilder.construir();
         getMockMvc().perform(get("/api/reservas"))
                 .andExpect(status().isOk());

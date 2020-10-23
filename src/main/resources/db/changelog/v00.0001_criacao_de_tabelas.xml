@@ -215,4 +215,17 @@
                                  constraintName="fk_sala_equipamento_equipamento" referencedTableName="equipamento"
                                  referencedColumnNames="id"/>
     </changeSet>
+    <changeSet id="12" author="autor">
+        <createTable tableName="reserva_equipamento">
+            <column name="id_reserva" type="number">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="id_equipamento" type="number">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="quantidade" type="number"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="reserva_equipamento" baseColumnNames="id_reserva" constraintName="fk_reserva_equipamento_reserva" referencedTableName="reserva" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="reserva_equipamento" baseColumnNames="id_equipamento" constraintName="fk_reserva_equipamento_equipamento" referencedTableName="equipamento" referencedColumnNames="id"/>
+    </changeSet>
 </databaseChangeLog>

@@ -34,4 +34,5 @@ public class Sala implements Serializable
     @OneToMany(mappedBy = "sala")
     private List<SalaEquipamento> equipamentos;
 
+
 }
