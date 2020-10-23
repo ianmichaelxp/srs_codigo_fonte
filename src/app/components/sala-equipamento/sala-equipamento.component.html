@@ -17,8 +17,6 @@
                     </th>
                 </tr>
                 <tr>
-                    <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon>
-                    </th>
                     <th pSortableColumn="nome">Nome <p-sortIcon field="nome"></p-sortIcon>
                     </th>
                     <th pSortableColumn="precoDiario">Preço Diário <p-sortIcon field="precoDiario"></p-sortIcon>
@@ -33,15 +31,15 @@
                             </ng-template>
                         </p-dropdown>
                     </th>
-                    <th style="width: 15rem;">Opções</th>
+                    <th>Quantidade</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-equipamento let-columns="columns">
                 <tr [pSelectableRow]="equipamento">
-                    <td>{{equipamento.id}}</td>
                     <td class="break">{{equipamento.nome}}</td>
                     <td>R$ {{equipamento.precoDiario}}</td>
                     <td>{{getTipoEquipamento(equipamento.idTipoEquipamento)}}</td>
+                    <td>{{equipamento.quantidade}}</td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary">

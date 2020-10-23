@@ -1,7 +1,10 @@
+import { SalaEquipamentoService } from './../../shared/service/salaEquipamento.service';
+import { SalaService } from 'src/app/shared/service/sala.service';
 import { EquipamentoService } from './../../shared/service/equipamento.service';
 import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng';
-import { EquipamentoModel } from 'src/app/shared/model/equipamento.model';
+import { EquipamentoModel, EquipamentoSalaModel, TipoEquipamento } from 'src/app/shared/model/equipamento.model';
+import { SalaEquipamento } from 'src/app/shared/model/sala.model';
 
 @Component({
   selector: 'app-salas-cadastro',
@@ -10,17 +13,22 @@ import { EquipamentoModel } from 'src/app/shared/model/equipamento.model';
 })
 export class SalasCadastroComponent implements OnInit 
 {
+  equipamentos: EquipamentoSalaModel[];
   tiposEquipamentos: SelectItem[];
   cols: any[];
-  equipamentos: EquipamentoModel[] = [];
-  constructor(private equipamentoService : EquipamentoService) 
+  salaEquipamento : SalaEquipamento = {
+    idSala: null,
+    idEquipamento: null,
+    quantidade: null
+}
+  constructor(private equipamentoService : EquipamentoService, private salaEquipamentoService: SalaEquipamentoService) 
   {
-    this.tiposEquipamentos = equipamentoService.getTipoEquipamentos(this.tiposEquipamentos);
   }
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
+    this.tiposEquipamentos = this.equipamentoService.getTipoEquipamentos(this.tiposEquipamentos);
     this.getAll();
   }
-
   getAll() {
     this.equipamentoService.getEquipamentos().subscribe(
       (result: any) => {
@@ -30,5 +38,16 @@ export class SalasCadastroComponent implements OnInit
         console.log(error);
       }
     )
+  }
+  getTipoEquipamento(id: number) {
+    return TipoEquipamento[id];
+  }
+  getTipoEquipamentoNome(nome: string) {
+    return TipoEquipamento[nome];
+  }
+  selecionarEquip(equipamento : EquipamentoSalaModel)
+  {
+    this.salaEquipamentoService.setEquipamentosSelecionados(equipamento);
+    this.salaEquipamento = new SalaEquipamento;
   }
 }

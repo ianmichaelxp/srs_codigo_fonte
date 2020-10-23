@@ -4,7 +4,7 @@ import { SalaEquipamentoComponent } from './../sala-equipamento/sala-equipamento
 
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SalaService } from './../../shared/service/sala.service';
-import { SalaModel, TipoSala } from './../../shared/model/sala.model';
+import { SalaEquipamento, SalaModel, TipoSala } from './../../shared/model/sala.model';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService, SelectItem, ConfirmationService } from 'primeng/api';
 import { EquipamentoComponent } from '../equipamento/equipamento.component';
@@ -25,6 +25,12 @@ export class SalaComponent implements OnInit {
   tiposSalas: SelectItem[];
   ref: DynamicDialogRef;
 
+  salaEquipamento: SalaEquipamento = {
+    idSala: null,
+    idEquipamento: null,
+    quantidade: null
+  }
+
   sala: SalaModel = {
     id: null,
     descricao: null,
@@ -33,6 +39,8 @@ export class SalaComponent implements OnInit {
     idTipoSala: null,
     equipamentos: null
   };
+
+  
 
   ngOnInit(): void {
     this.getAll();
@@ -46,11 +54,11 @@ export class SalaComponent implements OnInit {
       ]
   }
 
-  constructor(private salaService: SalaService, private messageService: MessageService, 
-    private confirmationService: ConfirmationService,public dialogService: DialogService,
-    private salaEquipamentoService : SalaEquipamentoService) {
-    
-      this.tiposSalas =
+  constructor(private salaService: SalaService, private messageService: MessageService,
+    private confirmationService: ConfirmationService, public dialogService: DialogService,
+    private salaEquipamentoService: SalaEquipamentoService) {
+
+    this.tiposSalas =
       [
         { label: 'Tipo Sala: ', value: null },
         { label: 'sala de reunião', value: 1 },
@@ -61,8 +69,8 @@ export class SalaComponent implements OnInit {
       ]
   }
 
-  confirm(sala : SalaModel) {
-        this.deleteWithButton(sala);
+  confirm(sala: SalaModel) {
+    this.deleteWithButton(sala);
   }
   deleteWithButton(sala: SalaModel) {
     this.salaService.delete(sala).subscribe(
@@ -81,20 +89,24 @@ export class SalaComponent implements OnInit {
       }
     )
   }
-  showSalas()
-  {
+  showEquipamentos() {
     const ref = this.dialogService.open(SalasCadastroComponent, {
-      width: '80%', 
-      modal:false
-  });
+      width: '80%',
+      modal: false
+    });
   }
 
-  show(sala: SalaModel){
+  show(sala: SalaModel) {
     this.salaEquipamentoService.getEquipamentos(sala.equipamentos);
     const ref = this.dialogService.open(SalaEquipamentoComponent, {
-      width: '80%', 
-      modal:false
-  });
+      width: '80%',
+      modal: false
+    });
+  }
+
+  getSalaEquipamentoDialog()
+  {
+    
   }
 
   getAll() {
@@ -108,29 +120,26 @@ export class SalaComponent implements OnInit {
     )
   }
 
-  save(){
+  save() {
+    this.sala.equipamentos = this.salaEquipamentoService.getSalaEquipamentos();
     this.salaService.save(this.sala).subscribe(
       (result: any) => {
         this.sala = new SalaModel;
-        let sala = result as SalaModel;
-          this.salas.push(sala);
-          this.messageService.add({
-            severity: 'success',
-            summary: "Resultado", detail: "Sala salva com sucesso"
-          });
-          this.displaySaveDialog = false;
-          this.getAll();
+        this.messageService.add({
+          severity: 'success',
+          summary: "Resultado", detail: "Sala salva com sucesso"
+        });
+        this.displaySaveDialog = false;
+        this.getAll();
       }
     )
   }
-  
-  getTipoSala(id: number)
-  {
+
+  getTipoSala(id: number) {
     return TipoSala[id];
   }
 
-  getTipoSalaNome(nome: string)
-  {
+  getTipoSalaNome(nome: string) {
     return TipoSala[nome];
   }
 
@@ -139,8 +148,6 @@ export class SalaComponent implements OnInit {
     this.displaySaveDialog = true;
   }
 
-  showEditDialog(sala: SalaModel)
-  {
-
+  showEditDialog(sala: SalaModel) {
   }
 }
