@@ -8,8 +8,10 @@ import { EquipamentoModel } from '../model/equipamento.model';
 })
 export class SalaEquipamentoService {
 
-    equipamentos : EquipamentoModel[] = [];
-  constructor(private equipamentoService: EquipamentoService) { }
+  equipamentos : EquipamentoModel[] = [];
+  constructor(private equipamentoService: EquipamentoService) 
+  {
+  }
 
 
   getEquipamentos(salaEquipamentos : SalaEquipamento[])

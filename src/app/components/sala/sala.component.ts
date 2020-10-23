@@ -1,3 +1,4 @@
+import { SalasCadastroComponent } from './../salas-cadastro/salas-cadastro.component';
 import { SalaEquipamentoService } from './../../shared/service/salaEquipamento.service';
 import { SalaEquipamentoComponent } from './../sala-equipamento/sala-equipamento.component';
 
@@ -6,6 +7,7 @@ import { SalaService } from './../../shared/service/sala.service';
 import { SalaModel, TipoSala } from './../../shared/model/sala.model';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService, SelectItem, ConfirmationService } from 'primeng/api';
+import { EquipamentoComponent } from '../equipamento/equipamento.component';
 
 @Component({
   selector: 'app-sala',
@@ -79,6 +81,13 @@ export class SalaComponent implements OnInit {
       }
     )
   }
+  showSalas()
+  {
+    const ref = this.dialogService.open(SalasCadastroComponent, {
+      width: '80%', 
+      modal:false
+  });
+  }
 
   show(sala: SalaModel){
     this.salaEquipamentoService.getEquipamentos(sala.equipamentos);
@@ -130,4 +139,8 @@ export class SalaComponent implements OnInit {
     this.displaySaveDialog = true;
   }
 
+  showEditDialog(sala: SalaModel)
+  {
+
+  }
 }

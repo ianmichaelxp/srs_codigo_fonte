@@ -24,8 +24,9 @@ export class SalaService {
     return this.httpSalas.get(this.apiUrl);
   }
 
-  public getSalaPorId(id:number): Observable<any>{
-    return this.httpSalas.get(this.apiUrl+ '/' + id);
+  public getSalaPorId(id: number): Observable<any>
+  {
+    return this.httpSalas.get(this.apiUrl+"/"+id);
   }
 
   public save(sala: SalaModel): Observable<any> {

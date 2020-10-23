@@ -74,7 +74,12 @@
             <div class="divPad">
                 <p-dropdown [options]="tiposSalas" [(ngModel)]="sala.idTipoSala"></p-dropdown>
             </div>
-
+            <span style="float: center">
+                <button pButton type="button" (click)="showSalas()">
+                    <i class="pi pi-desktop" style="padding-top: 2px; font-size: 10px;"></i>
+                    <span style="padding-left: 5px; font-size: 14px;">Mostrar Equipamentos</span>
+                </button>
+            </span>
         </div>
         <p-footer>
             <div class="ui-dialog-buttonpane ui-helper-clearfix">

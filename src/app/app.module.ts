@@ -34,6 +34,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {DialogService, DynamicDialogModule} from 'primeng/dynamicdialog';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {InputMaskModule} from 'primeng/inputmask';
+import { SalasCadastroComponent } from './components/salas-cadastro/salas-cadastro.component';
 
 @NgModule({
     declarations: [
@@ -45,7 +46,8 @@ import {InputMaskModule} from 'primeng/inputmask';
         ClienteComponent,
         EquipamentoComponent,
         ReservaComponent,
-        SalaEquipamentoComponent    
+        SalaEquipamentoComponent,
+        SalasCadastroComponent    
         
     ],
     imports: [
