@@ -17,13 +17,14 @@ public class EquipamentoRecursos
     private final EquipamentoServicos equipamentoServico;
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<EquipamentoDTO>> listarEquipamentos()
     {
         return ResponseEntity.ok(equipamentoServico.listarEquipamentos());
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<EquipamentoDTO> obterPorId(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<EquipamentoDTO> obterPorId(@PathVariable Integer id)
     {
         return ResponseEntity.ok(equipamentoServico.obterPorId(id));
     }

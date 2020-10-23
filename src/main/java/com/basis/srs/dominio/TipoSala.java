@@ -12,8 +12,6 @@ import java.io.Serializable;
 public class TipoSala implements Serializable
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sala")
-    @SequenceGenerator(name = "seq_sala", allocationSize = 1, sequenceName = "seq_sala")
     @Column(name = "id")
     private Integer id;
 

@@ -5,6 +5,8 @@ import com.basis.srs.servico.dto.ReservaDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/reservas")
 @AllArgsConstructor
+@CrossOrigin({"*"})
 public class ReservaRecursos
 {
     public final ReservaServicos reservaServicos;
@@ -29,13 +32,13 @@ public class ReservaRecursos
     }
 
     @PutMapping
-    public ResponseEntity<ReservaDTO> atualizarReservas(@RequestBody ReservaDTO reservaDTO)
+    public ResponseEntity<ReservaDTO> atualizarReservas(@RequestBody @Valid ReservaDTO reservaDTO)
     {
         return ResponseEntity.ok(reservaServicos.salvarReserva(reservaDTO));
     }
 
     @PostMapping
-    public ResponseEntity<ReservaDTO> criarReserva(@RequestBody ReservaDTO reservaDTO) throws URISyntaxException
+    public ResponseEntity<ReservaDTO> criarReserva(@RequestBody @Valid ReservaDTO reservaDTO) throws URISyntaxException
     {
         return ResponseEntity.created(new URI("/api/reservas")).body(reservaServicos.salvarReserva(reservaDTO));
     }

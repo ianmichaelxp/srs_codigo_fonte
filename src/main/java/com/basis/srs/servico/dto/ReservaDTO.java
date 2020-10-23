@@ -1,22 +1,30 @@
 package com.basis.srs.servico.dto;
 
+import com.basis.srs.dominio.Equipamento;
 import lombok.Getter;
 import lombok.Setter;
-import java.sql.Timestamp;
+
+import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 public class ReservaDTO
 {
     private Integer id;
-
-    private LocalDateTime dataInicio;
-
-    private LocalDateTime dataFim;
-
+    @NotNull
+    @FutureOrPresent
+    private LocalDate dataInicio;
+    @Future
+    private LocalDate dataFim;
+    @NotNull
     private Double precoFinal;
+//aqui
+    @NotNull
+    private List<ReservaEquipamentoDTO> equipamentos;
 
     private Integer idCliente;
 

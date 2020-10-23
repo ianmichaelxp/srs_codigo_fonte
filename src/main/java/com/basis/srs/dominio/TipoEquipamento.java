@@ -13,8 +13,6 @@ public class TipoEquipamento implements Serializable
 {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_equipamento")
-    @SequenceGenerator(name = "seq_equipamento", allocationSize = 1, sequenceName = "seq_equipamento")
     private Integer id;
 
     @Column(name = "descricao")
