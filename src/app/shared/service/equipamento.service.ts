@@ -26,9 +26,9 @@ export class EquipamentoService {
     return this.httpEquipamento.get(this.apiUrl);
   }
 
-  public getById(id: number): Observable<any>
+  public getById(id: number): Observable<EquipamentoModel>
   {
-    return this.httpEquipamento.get(this.apiUrl+"/"+id);
+    return this.httpEquipamento.get<EquipamentoModel>(this.apiUrl+"/"+id);
   }
 
   public save(equipamento: EquipamentoModel): Observable<any> {

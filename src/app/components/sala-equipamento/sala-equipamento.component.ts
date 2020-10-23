@@ -15,13 +15,7 @@ export class SalaEquipamentoComponent implements OnInit {
   tiposEquipamentos: SelectItem[];
   cols: any[];
   equipamentos: EquipamentoSalaModel[];
-  equipamento: EquipamentoSalaModel = {
-    id: null,
-    nome: null,
-    idTipoEquipamento: null,
-    precoDiario: null,
-    quantidade: null
-  };
+  quantidades : number[];
   constructor(private equipamentoService: EquipamentoService, private salaEquipamentoService: SalaEquipamentoService) {
     this.tiposEquipamentos = equipamentoService.getTipoEquipamentos(this.tiposEquipamentos); 
   }

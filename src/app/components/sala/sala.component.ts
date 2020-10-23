@@ -97,7 +97,7 @@ export class SalaComponent implements OnInit {
   }
 
   show(sala: SalaModel) {
-    this.salaEquipamentoService.getEquipamentos(sala.equipamentos);
+    this.salaEquipamentoService.getEquipamentos(sala);
     const ref = this.dialogService.open(SalaEquipamentoComponent, {
       width: '80%',
       modal: false

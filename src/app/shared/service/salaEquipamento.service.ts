@@ -1,6 +1,6 @@
 import { EquipamentoSalaModel } from './../model/equipamento.model';
 import { EquipamentoService } from './equipamento.service';
-import { SalaEquipamento } from './../model/sala.model';
+import { SalaEquipamento, SalaModel } from './../model/sala.model';
 import { Injectable } from '@angular/core';
 import { EquipamentoModel } from '../model/equipamento.model';
 
@@ -10,13 +10,7 @@ import { EquipamentoModel } from '../model/equipamento.model';
 export class SalaEquipamentoService {
 
   equipamentos: EquipamentoSalaModel[];
-  equipamento: EquipamentoSalaModel = {
-    id: null,
-    nome: null,
-    idTipoEquipamento: null,
-    precoDiario: null,
-    quantidade: null
-  };
+  sala : SalaModel;
   equipamentosSelecionados : EquipamentoSalaModel[] = [];
   salaEquipamentos : SalaEquipamento[] = [];
 
@@ -24,20 +18,20 @@ export class SalaEquipamentoService {
   }
 
 
-  getEquipamentos(salaEquipamentos: SalaEquipamento[]): EquipamentoSalaModel[] {
+  getEquipamentos(sala: SalaModel): EquipamentoSalaModel[] {
+    this.sala = sala;
     this.equipamentos = [];
-    salaEquipamentos.forEach(element => {
+    sala.equipamentos.forEach(element => {
       this.setEquipamentosById(element.idEquipamento);
-      this.equipamento.quantidade = element.quantidade;
-      this.equipamentos.push(this.equipamento);
     })
     return this.equipamentos;
   }
 
-  setEquipamentosById(id: number) {
+  private setEquipamentosById(id: number) 
+  {
     this.equipamentoService.getById(id).subscribe(
       (result: any) => {
-        this.equipamento = result
+        this.equipamentos.push(result);
       },
       error => {
         console.log(error);
