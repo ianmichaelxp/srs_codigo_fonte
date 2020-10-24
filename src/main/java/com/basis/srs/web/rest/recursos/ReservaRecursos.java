@@ -31,16 +31,16 @@ public class ReservaRecursos
         return ResponseEntity.ok(reservaServicos.obterPorId(id));
     }
 
-    @PutMapping
-    public ResponseEntity<ReservaDTO> atualizarReservas(@RequestBody @Valid ReservaDTO reservaDTO)
+    @PutMapping("/{id}")
+    public ResponseEntity<ReservaDTO> atualizarReservas(@RequestBody @Valid ReservaDTO reservaDTO, @PathVariable Integer id)
     {
-        return ResponseEntity.ok(reservaServicos.salvarReserva(reservaDTO));
+        return ResponseEntity.ok(reservaServicos.salvarReserva(reservaDTO, id));
     }
 
     @PostMapping
     public ResponseEntity<ReservaDTO> criarReserva(@RequestBody @Valid ReservaDTO reservaDTO) throws URISyntaxException
     {
-        return ResponseEntity.created(new URI("/api/reservas")).body(reservaServicos.salvarReserva(reservaDTO));
+        return ResponseEntity.created(new URI("/api/reservas")).body(reservaServicos.salvarReserva(reservaDTO,null));
     }
 
     @DeleteMapping(value = "/{id}")

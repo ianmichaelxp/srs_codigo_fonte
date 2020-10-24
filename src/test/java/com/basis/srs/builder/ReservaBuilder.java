@@ -63,7 +63,7 @@ public class ReservaBuilder extends ConstrutorDeEntidade<Reserva> {
 
     @Override
     public Reserva persistir(Reserva dto) {
-        return reservaMapper.toEntity(reservaServicos.salvarReserva(reservaMapper.toDto(dto)));
+        return reservaMapper.toEntity(reservaServicos.salvarReserva(reservaMapper.toDto(dto),null));
     }
 
 

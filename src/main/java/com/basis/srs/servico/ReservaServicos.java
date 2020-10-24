@@ -35,8 +35,11 @@ public class ReservaServicos {
         return reservaMapper.toDto(reservaRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Reserva não foi encontrada")));
     }
 
-    public ReservaDTO salvarReserva(ReservaDTO reservaDTO) {
-
+    public ReservaDTO salvarReserva(ReservaDTO reservaDTO, Integer id) {
+        if(id!= null){
+            Reserva reserva = reservaRepositorio.findById(id).orElseThrow(()-> new RegraNegocioException("Reserva não encontrada"));
+            reservaEquipamentoRepositorio.deleteAll(reserva.getEquipamentos());
+        }
         {
             if (!clienteRepositorio.existsById(reservaDTO.getIdCliente())) {
                 throw new RegraNegocioException("Cadastro não pode ser cadastrada sem um cliente");
