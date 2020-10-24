@@ -37,7 +37,7 @@ public class EquipamentoServicos
     public EquipamentoDTO salvarEquipamento(EquipamentoDTO dto)
     {
         Equipamento equipamento = equipamentoMapper.toEntity(dto);
-//        if(dto.getId() == null) existeEquipamento(equipamento, dto);
+        if(dto.getId() == null) existeEquipamento(equipamento, dto);
         equipamentoRepositorio.save(equipamento);
         EquipamentoDTO equipamentoDTO = equipamentoMapper.toDto(equipamento);
         return equipamentoDTO;
