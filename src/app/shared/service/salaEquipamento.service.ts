@@ -13,25 +13,29 @@ export class SalaEquipamentoService {
   sala : SalaModel;
   equipamentosSelecionados : EquipamentoSalaModel[] = [];
   salaEquipamentos : SalaEquipamento[] = [];
+  equipamento : EquipamentoSalaModel;
 
   constructor(private equipamentoService: EquipamentoService) {
   }
 
 
   getEquipamentos(sala: SalaModel): EquipamentoSalaModel[] {
+    this.equipamentosSelecionados = [];
     this.sala = sala;
     this.equipamentos = [];
     sala.equipamentos.forEach(element => {
-      this.setEquipamentosById(element.idEquipamento);
+      this.setEquipamentosById(element.idEquipamento, element);
     })
     return this.equipamentos;
   }
 
-  private setEquipamentosById(id: number) 
+  private setEquipamentosById(id: number, sala : SalaEquipamento) 
   {
     this.equipamentoService.getById(id).subscribe(
       (result: any) => {
-        this.equipamentos.push(result);
+        this.equipamento = result;
+        this.equipamento.quantidade = sala.quantidade;
+        this.equipamentos.push(this.equipamento);
       },
       error => {
         console.log(error);
@@ -41,6 +45,7 @@ export class SalaEquipamentoService {
 
   getSalaEquipamentos()
   {
+    this.salaEquipamentos = [];
     for (let index = 0; index < this.equipamentosSelecionados.length; index++) {
       let salaEquipamento = new SalaEquipamento;
       salaEquipamento.idEquipamento = this.equipamentosSelecionados[index].id;
