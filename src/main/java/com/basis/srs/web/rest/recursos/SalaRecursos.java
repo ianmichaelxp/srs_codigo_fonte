@@ -34,13 +34,13 @@ public class SalaRecursos
     @PostMapping
     public ResponseEntity<SalaDTO> criarSala(@Valid @RequestBody SalaDTO dto) throws URISyntaxException
     {
-        return ResponseEntity.created(new URI("/api/salas/")).body(salaServico.salvarSala(dto));
+        return ResponseEntity.created(new URI("/api/salas/")).body(salaServico.salvarSala(dto, null));
     }
 
-    @PutMapping
-    public ResponseEntity<SalaDTO> atualizarSala(@Valid @RequestBody SalaDTO salaDTO)
+    @PutMapping("/{id}")
+    public ResponseEntity<SalaDTO> atualizarSala(@Valid @RequestBody SalaDTO salaDTO,@PathVariable Integer id)
     {
-        SalaDTO dto = salaServico.salvarSala(salaDTO);
+        SalaDTO dto = salaServico.salvarSala(salaDTO,id);
         return ResponseEntity.ok(dto);
     }
 

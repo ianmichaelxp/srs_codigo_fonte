@@ -1,7 +1,6 @@
 package com.basis.srs.servico;
 
-import com.basis.srs.dominio.Equipamento;
-import com.basis.srs.servico.dto.SalaEquipamentoDTO;
+
 import com.basis.srs.dominio.Sala;
 import com.basis.srs.dominio.SalaEquipamento;
 import com.basis.srs.repositorio.EquipamentoRepositorio;
@@ -39,8 +38,13 @@ public class SalaServicos
                 .orElseThrow(()-> new RegraNegocioException("Sala não Encontrada")));
     }
 
-    public SalaDTO salvarSala(SalaDTO salaDTO)
+    public SalaDTO salvarSala(SalaDTO salaDTO, Integer id)
     {
+        if(id!= null){
+            Sala sala = salaRepositorio.findById(id).orElseThrow(()-> new RegraNegocioException("Sala não encontrada"));
+            salaEquipamentoRepositorio.deleteAll(sala.getEquipamentos());
+        }
+
         Sala sala = salaMapper.toEntity(salaDTO);
         List<SalaEquipamento> salaEquipamentos = sala.getEquipamentos();
         sala.setEquipamentos(new ArrayList<>());
@@ -57,13 +61,14 @@ public class SalaServicos
         return salaMapper.toDto(sala);
     }
 
+
     public void removerSala(Integer id)
     {
         Sala sala = salaRepositorio.findById(id).orElseThrow(()-> new RegraNegocioException("Sala não encontrada"));
         if(reservaRepositorio.existsBySala(sala)){
             throw new RegraNegocioException("Sala não pode ser removido, pois está reservada");
         }
-        salaEquipamentoRepositorio.deleteInBatch(sala.getEquipamentos());
+        salaEquipamentoRepositorio.deleteAll(sala.getEquipamentos());
         salaRepositorio.deleteById(id);
     }
 

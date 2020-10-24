@@ -38,7 +38,7 @@ public class SalaBuilder extends ConstrutorDeEntidade<Sala>{
     @Override
     public Sala construirEntidade() throws ParseException
     {
-        Equipamento equipamentos = equipamentoBuilder.construir();
+        Equipamento equipamento = equipamentoBuilder.construir();
         Sala sala = new Sala();
         sala.setCapacidadePessoas(25);
         sala.setDescricao("Sala média");
@@ -48,7 +48,7 @@ public class SalaBuilder extends ConstrutorDeEntidade<Sala>{
         SalaEquipamento salaEquipamento = new SalaEquipamento();
         salaEquipamento.setSala(sala);
         salaEquipamento.setQuantidade(85);
-        salaEquipamento.setEquipamento(equipamentos);
+        salaEquipamento.setEquipamento(equipamento);
 
         sala.setEquipamentos(Collections.singletonList(salaEquipamento));
         sala.setTipoSala(tipoSala);
@@ -64,7 +64,7 @@ public class SalaBuilder extends ConstrutorDeEntidade<Sala>{
     @Override
     public Sala persistir(Sala sala)
     {
-        SalaDTO dto = salaServicos.salvarSala(salaMapper.toDto(sala));
+        SalaDTO dto = salaServicos.salvarSala(salaMapper.toDto(sala),null);
         return salaMapper.toEntity(dto);
     }
 
