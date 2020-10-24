@@ -1,27 +1,27 @@
-import { SalaEquipamentoService } from './../../shared/service/salaEquipamento.service';
-
 import { EquipamentoService } from './../../shared/service/equipamento.service';
 import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng';
 import { EquipamentoSalaModel, TipoEquipamento } from 'src/app/shared/model/equipamento.model';
-import { SalaEquipamento } from 'src/app/shared/model/sala.model';
+import { ReservaEquipamento } from 'src/app/shared/model/reserva.model';
+import { ReservaEquipamentoService } from 'src/app/shared/service/reserva-equipamento.service';
 
 @Component({
-  selector: 'app-salas-cadastro',
-  templateUrl: './salas-cadastro.component.html',
-  styleUrls: ['./salas-cadastro.component.css']
+  selector: 'app-reservas-cadastro',
+  templateUrl: './reservas-cadastro.component.html',
+  styleUrls: ['./reservas-cadastro.component.css']
 })
-export class SalasCadastroComponent implements OnInit 
-{
+export class ReservasCadastroComponent implements OnInit {
+
   equipamentos: EquipamentoSalaModel[];
   tiposEquipamentos: SelectItem[];
   cols: any[];
-  salaEquipamento : SalaEquipamento = {
-    idSala: null,
+  reservaEquipamento : ReservaEquipamento = {
+    idReserva: null,
     idEquipamento: null,
     quantidade: null
 }
-  constructor(private equipamentoService : EquipamentoService, private salaEquipamentoService: SalaEquipamentoService) 
+  constructor(private equipamentoService : EquipamentoService, 
+    private reservaEquipamentoService: ReservaEquipamentoService) 
   {
   }
   ngOnInit(): void 
@@ -47,7 +47,8 @@ export class SalasCadastroComponent implements OnInit
   }
   selecionarEquip(equipamento : EquipamentoSalaModel)
   {
-    this.salaEquipamentoService.setEquipamentosSelecionados(equipamento);
-    this.salaEquipamento = new SalaEquipamento;
+    this.reservaEquipamentoService.setEquipamentosSelecionados(equipamento);
+    this.reservaEquipamento = new ReservaEquipamento;
   }
+
 }

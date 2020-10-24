@@ -3,7 +3,13 @@ export class ReservaModel{
     dataInicio: Date;
     dataFim: Date;
     precoFinal: number;
+    equipamentos: ReservaEquipamento[];
     idCliente: number;
     idSala: number;
-    equipamentos: any[];
+}
+
+export class ReservaEquipamento{
+    idReserva: number;
+    idEquipamento: number;
+    quantidade: number;
 }

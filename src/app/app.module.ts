@@ -1,3 +1,4 @@
+import { ReservaEquipamentoComponent } from './components/reserva-equipamento/reserva-equipamento.component';
 import { SalaEquipamentoComponent } from './components/sala-equipamento/sala-equipamento.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { BrowserModule } from '@angular/platform-browser';
@@ -34,7 +35,11 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {DialogService, DynamicDialogModule} from 'primeng/dynamicdialog';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {InputMaskModule} from 'primeng/inputmask';
-import { SalasCadastroComponent } from './components/salas-cadastro/salas-cadastro.component';
+import { CPFPipe } from './pipe/cpf.pipe';
+import { TelPipe } from './pipe/tel.pipe';
+import { RgPipe } from './pipe/rg.pipe';
+import { ReservasCadastroComponent } from './components/reservas-cadastro/reservas-cadastro.component';
+
 
 @NgModule({
     declarations: [
@@ -47,7 +52,12 @@ import { SalasCadastroComponent } from './components/salas-cadastro/salas-cadast
         EquipamentoComponent,
         ReservaComponent,
         SalaEquipamentoComponent,
-        SalasCadastroComponent    
+        ReservaEquipamentoComponent,
+        CPFPipe,
+        TelPipe,
+        RgPipe,
+        ReservasCadastroComponent
+
         
     ],
     imports: [

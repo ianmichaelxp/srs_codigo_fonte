@@ -1,7 +1,7 @@
 <div class="ui-g">
     <p-toast></p-toast>
     <p-panel header="Reserva">
-        <div style="margin-bottom: 20px;">
+        <div style="margin-bottom: 40px;height:10px">
             <p-menubar [model]="itens"></p-menubar>
         </div>
         <p-table #dt [value]="reservas" [columns]="cols" [paginator]="true" [rows]="7" [responsive]="true"
@@ -9,38 +9,26 @@
             currentPageReportTemplate="Mostrando de {first} até {last} de {totalRecords} reservas" [rows]="10"
             [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]">
             <ng-template pTemplate="header" let-columns>
-                <tr>
-                    <th>
-                        Data inicio
-                    </th>
-                    <th>
-                        Data fim
-                    </th>
-                    <th>
-                        Preço final
-                    </th>
-                    <th>
-                        Cliente
-                    </th>
-                    <th>
-                        Sala
-                    </th>
-                    <th>
-                        Equipamentos
-                    </th>
+                <tr style="height: 10px;">
+                    <th>Data inicio</th>
+                    <th>Data fim</th>
+                    <th>Preço final</th>
+                    <th>Cliente</th>
+                    <th>Sala</th>
+                    <th>Equipamentos</th>
                     <th style="width: 15rem;">Opções</th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-sala let-columns="columns">
+            <ng-template pTemplate="body" let-reserva let-columns="columns">
                 <tr [pSelectableRow]="reserva" style="text-align: center;">
-                    <td>{{reserva.dataInicio}}</td>
-                    <td>{{reserva.dataFim}}</td>
+                    <td>{{reserva.dataInicio | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{reserva.dataFim | date: 'dd/MM/yyyy'}}</td>
                     <td>R$ {{reserva.precoFinal}} </td>
-                    <td>R$ {{getClientePorId(reserva.idCliente)}} </td>
-                    <td>R$ {{getSalaPorId(reserva.idSala)}} </td>
+                    <td>{{getNomeCliente(reserva.idCliente)}}</td>
+                    <td>{{getDescricaoSala(reserva.idSala)}}</td>
                     <td>
                         <span style="float: center">
-                            <button pButton type="button" (click)="show(sala)">
+                            <button pButton type="button" (click)="show(reserva)">
                                 <i class="pi pi-desktop" style="padding-top: 2px; font-size: 10px;"></i>
                                 <span style="padding-left: 5px; font-size: 14px;">Mostrar Equipamentos</span>
                             </button>
@@ -48,11 +36,11 @@
                     </td>
                     <td style="text-align: center;">
                         <span style="float: center">
-                            <button pButton type="button" (click)="showEditDialog(sala)">
+                            <button pButton type="button" (click)="showEditDialog(reserva)">
                                 <i class="pi pi-pencil" style="padding-top: 6px;"></i>
                                 <span style="padding-left: 5px;">Editar</span>
                             </button>
-                            <button pButton type="button" style="margin-left: 10px;" (click)="confirm(sala)">
+                            <button pButton type="button" style="margin-left: 10px;" (click)="confirm(reserva)">
                                 <i class="pi pi-trash" style="padding-top: 6px; padding-left: 5px;"></i>
                                 <span style="padding-left: 5px;">Excluir</span>
                             </button>
@@ -61,3 +49,43 @@
                 </tr>
             </ng-template>
         </p-table>
+        <p-confirmDialog #cd header="Confirmação" [style]="{width: '450px'}" icon="pi pi-exclamation-triangle" width="425">
+            <p-footer>
+                <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-times"
+                    label="Não" (click)="cd.reject()"></button>
+                <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-check"
+                    label="Sim" (click)="cd.accept()"></button>
+            </p-footer>
+        </p-confirmDialog>
+        <p-dialog header="Nova reserva" [(visible)]="displaySaveDialog">
+            <div class="dialog">
+                <div class="divPad">
+                    <label for="dataInicio">Data de Inicio  </label>
+                    <input pInputText type="date" id="dataInicio" [(ngModel)]="reserva.dataInicio"/>
+                </div>
+                <div class="divPad">
+                    <label for="dataFim">Data Final  </label>
+                    <input pInputText type="date" id="dataFim" [(ngModel)]="reserva.dataFim"/>
+                </div>
+                <div class="divPad">
+                    <label for="idCliente">Cliente  </label>
+                    <input pInputText type="number" id="idCliente" [(ngModel)]="reserva.idCliente"/>
+                </div>                
+                <div class="divPad">
+                    <label for="idSala">Sala  </label>
+                    <input pInputText type="number" id="idSala" [(ngModel)]="reserva.idSala"/>
+                </div>                
+                <span style="float: center">
+                    <button pButton type="button" style="margin-left: 30px;margin-top:20px" (click)="show()">
+                        <i class="pi pi-desktop" style="padding-top: 2px; font-size: 10px;"></i>
+                        <span style="padding-left: 5px; font-size: 14px;">Mostrar Equipamentos</span>
+                    </button>
+                </span>
+            </div>
+            <p-footer>
+                <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                    <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-check"
+                        (click)="save()" label="Salvar"></button>
+                </div>
+            </p-footer>
+        </p-dialog>

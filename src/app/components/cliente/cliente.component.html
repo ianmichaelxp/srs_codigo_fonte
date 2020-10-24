@@ -1,3 +1,4 @@
+<html lang="pt-br">
 <div class="ui-g">
     <p-toast></p-toast>
     <p-panel header="Clientes">
@@ -6,13 +7,13 @@
             </p-menubar>
         </div>
 
-        <p-table #dt [value]="clientes" [columns]="cols" [paginator]="true" [rows]="10"
-            [rowHover]="true" [showCurrentPageReport]="true"  [rowsPerPageOptions]="[10,25,50]">
+        <p-table #dt [value]="clientes" [columns]="cols" [paginator]="true" [rows]="7" [rowHover]="true"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]">
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'nome', 'startsWith')"
-                            placeholder="Buscar por nome" class="ui-column-filter">
+                            placeholder="Buscar por nome" class="ui-column-filter" maxlength="120">
                     </th>
                     <th></th>
                     <th></th>
@@ -20,33 +21,40 @@
                     <th></th>
                     <th>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'cpf', 'startsWith')"
-                            placeholder="Buscar por cpf" class="ui-column-filter">
+                            placeholder="Buscar por cpf" class="ui-column-filter" maxlength="11">
                     </th>
                     <th>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'startsWith')"
-                            placeholder="Buscar por email" class="ui-column-filter">
+                            placeholder="Buscar por email" class="ui-column-filter" maxlength="255">
                     </th>
                 </tr>
 
-                <tr style="font-size: 14px;">
-                    <th pSortableColumn="nome" >NOME <p-sortIcon field="nome"></p-sortIcon></th>
-                    <th pSortableColumn="endereco">ENDEREÇO <p-sortIcon field="endereco"></p-sortIcon></th>
-                    <th pSortableColumn="dataNasc">DATA DE NASCIMENTO <p-sortIcon field="dataNasc"></p-sortIcon></th>
-                    <th pSortableColumn="telefone">TELEFONE<p-sortIcon field="telefone"></p-sortIcon></th>
-                    <th pSortableColumn="rg" >RG<p-sortIcon field="rg"></p-sortIcon></th>
-                    <th pSortableColumn="cpf">CPF<p-sortIcon field="cpf"></p-sortIcon></th>
-                    <th pSortableColumn="email">EMAIL<p-sortIcon field="email"></p-sortIcon></th>
-                    <th style="width:8rem; margin: 0;">OPÇÕES</th>
+                <tr>
+                    <th pSortableColumn="nome">NOME <p-sortIcon field="nome"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="endereco">ENDEREÇO <p-sortIcon field="endereco"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="dataNasc">DATA DE NASCIMENTO <p-sortIcon field="dataNasc"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="telefone">TELEFONE<p-sortIcon field="telefone"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="rg">RG<p-sortIcon field="rg"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="cpf">CPF<p-sortIcon field="cpf"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="email">EMAIL<p-sortIcon field="email"></p-sortIcon>
+                    </th>
+                    <th>OPÇÕES</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-cliente let-columns="columns">
                 <tr [pSelectableRow]="cliente" style="margin: 0; text-align: center; word-wrap: break-word;">
                     <td>{{cliente.nome}}</td>
                     <td>{{cliente.endereco}}</td>
-                    <td>{{cliente.dataNasc}}</td>
-                    <td>{{cliente.telefone}}</td>
-                    <td>{{cliente.rg}}</td>
-                    <td>{{cliente.cpf}}</td>
+                    <td>{{cliente.dataNasc | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{cliente.telefone | tel}}</td>
+                    <td>{{cliente.rg | rg }}</td>
+                    <td>{{ cliente.cpf | CPF }}</td>
                     <td>{{cliente.email}}</td>
                     <td style="text-align: center;">
                         <span style="float: center">
@@ -71,16 +79,18 @@
             </ng-template>
         </p-table>
     </p-panel>
-    <p-dialog header="Novo Cliente" [responsive]="true" [(visible)]="displaySaveDialog" [style]="{width: '450px'}"
+    <p-dialog header="Novo Cliente" [(visible)]="displaySaveDialog" [style]="{width: '450px'}"
         styleClass="p-fluid">
         <div class="p-grid ui-fluid">
             <div class="inputCliente">
                 <label for="nome">Nome</label>
-                <input type="text" placeholder="ex: Joaquim Silveira" pInputText id="nome" [(ngModel)]="cliente.nome" required autofocus />
+                <input type="text" placeholder="ex: Joaquim Silveira" pInputText id="nome" [(ngModel)]="cliente.nome"
+                    required autofocus />
             </div>
             <div class="inputCliente">
                 <label for="endereço">Endereço</label>
-                <input type="text" placeholder="ex: Rua João Pessoa" pInputText id="endereco" [(ngModel)]="cliente.endereco" required autofocus />
+                <input type="text" placeholder="ex: Rua João Pessoa" pInputText id="endereco"
+                    [(ngModel)]="cliente.endereco" required autofocus />
             </div>
             <div class="inputCliente">
                 <label for="dataNasc">Data de Nascimento</label>
@@ -88,7 +98,8 @@
             </div>
             <div class="inputCliente">
                 <label for="telefone">Telefone</label>
-                <p-inputMask placeholder="(99)99999-9999" [(ngModel)]="cliente.telefone" mask="(99)99999-9999"></p-inputMask>
+                <p-inputMask placeholder="(99)99999-9999" [(ngModel)]="cliente.telefone" mask="(99)99999-9999">
+                </p-inputMask>
             </div>
             <div class="inputCliente">
                 <label for="rg">RG</label>
@@ -100,7 +111,8 @@
             </div>
             <div class="inputCliente">
                 <label for="email">Email</label>
-                <input type="email" pInputText placeholder="ex: joaquinsilveira@email.com" id="email" [(ngModel)]="cliente.email"   />
+                <input type="email" pInputText placeholder="ex: joaquinsilveira@email.com" id="email"
+                    [(ngModel)]="cliente.email" />
             </div>
         </div>
         <p-footer>
@@ -111,16 +123,18 @@
 
         </p-footer>
     </p-dialog>
-    <p-dialog header="Editar Cliente" [responsive]="true" [(visible)]="displayEditDialog" [style]="{width: '450px'}"
+    <p-dialog header="Editar Cliente" [(visible)]="displayEditDialog" [style]="{width: '450px'}"
         styleClass="p-fluid">
         <div class="p-grid ui-fluid">
             <div class="inputCliente">
                 <label for="nome">Nome</label>
-                <input type="text" placeholder="ex: Joaquim Silveira" pInputText id="nome" [(ngModel)]="cliente.nome" required autofocus />
+                <input type="text" placeholder="ex: Joaquim Silveira" pInputText id="nome" [(ngModel)]="cliente.nome"
+                    required autofocus maxlength="120"/>
             </div>
             <div class="inputCliente">
                 <label for="endereço">Endereço</label>
-                <input type="text" placeholder="ex: Rua João Pessoa" pInputText id="endereco" [(ngModel)]="cliente.endereco" required autofocus />
+                <input type="text" placeholder="ex: Rua João Pessoa" pInputText id="endereco"
+                    [(ngModel)]="cliente.endereco" required autofocus />
             </div>
             <div class="inputCliente">
                 <label for="dataNasc">Data de Nascimento</label>
@@ -128,7 +142,8 @@
             </div>
             <div class="inputCliente">
                 <label for="telefone">Telefone</label>
-                <p-inputMask placeholder="(99)99999-9999" [(ngModel)]="cliente.telefone" mask="(99)99999-9999"></p-inputMask>
+                <p-inputMask placeholder="(99)99999-9999" [(ngModel)]="cliente.telefone" mask="(99)99999-9999">
+                </p-inputMask>
             </div>
             <div class="inputCliente">
                 <label for="rg">RG</label>
@@ -140,7 +155,8 @@
             </div>
             <div class="inputCliente">
                 <label for="email">Email</label>
-                <input type="email" pInputText placeholder="ex: joaquinsilveira@email.com" id="email" [(ngModel)]="cliente.email"   />
+                <input type="email" pInputText placeholder="ex: joaquinsilveira@email.com" id="email"
+                    [(ngModel)]="cliente.email" />
             </div>
         </div>
         <p-footer>
@@ -150,8 +166,7 @@
             </div>
         </p-footer>
     </p-dialog>
-    <p-confirmDialog #cd header="Confirmação" [style]="{width: '450px'}"
-        icon="pi pi-exclamation-triangle" width="425">
+    <p-confirmDialog #cd header="Confirmação" [style]="{width: '450px'}" icon="pi pi-exclamation-triangle" width="425">
         <p-footer>
             <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-times"
                 label="Não" (click)="cd.reject()"></button>
@@ -160,3 +175,5 @@
         </p-footer>
     </p-confirmDialog>
 </div>
+
+</html>

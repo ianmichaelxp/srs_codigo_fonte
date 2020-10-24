@@ -65,11 +65,11 @@
                 <input pInputText id="descricao" placeholder="Descrição" [(ngModel)]="sala.descricao" maxlength="255" />
             </div>
             <div class="divPad">
-                <p-inputNumber placeholder = "Capacidade de Pessoas" [(ngModel)]="sala.capacidadePessoas" [min]="1" [max]="10000"></p-inputNumber>
+                <input pInputText id="capacidadePessoas" placeholder="Capacidade de Pessoas"
+                    [(ngModel)]="sala.capacidadePessoas" />
             </div>
-            <div class="test">
-                <p-inputNumber id="precoDiario" [(ngModel)]="sala.precoDiario" mode="currency" 
-                currency="BRL" locale="pt-BR" placeholder = "Preço diario" maxlength="12"></p-inputNumber>
+            <div class="divPad">
+                <input pInputText id="precoDiario" placeholder="Preço Diario" [(ngModel)]="sala.precoDiario" />
             </div>
             <div class="divPad">
                 <p-dropdown [options]="tiposSalas" [(ngModel)]="sala.idTipoSala"></p-dropdown>
@@ -88,44 +88,4 @@
             </div>
         </p-footer>
     </p-dialog>
-
-    <p-dialog header="Editar Sala" [(visible)]="displayEditDialog">
-        <div class="dialog">
-            <div class="divPad">
-                <input pInputText id="descricao" placeholder="Descrição" [(ngModel)]="sala.descricao" maxlength="255" />
-            </div>
-            <div class="divPad">
-                <p-inputNumber placeholder = "Capacidade de Pessoas" [(ngModel)]="sala.capacidadePessoas" [min]="1" [max]="10000"></p-inputNumber>
-            </div>
-            <div class="divPad">
-                <p-inputNumber id="precoDiario" [(ngModel)]="sala.precoDiario" mode="currency" 
-                currency="BRL" locale="pt-BR" placeholder = "Preço diario" maxlength="12"></p-inputNumber>
-            </div>
-            <div class="divPad">
-                <p-dropdown [options]="tiposSalas" [(ngModel)]="sala.idTipoSala"></p-dropdown>
-            </div>
-            <span>
-                <button pButton type="button" (click)="showEquipamentos()">
-                    <i class="pi pi-desktop" style="padding-top: 2px; font-size: 10px;"></i>
-                    <span style="padding-left: 5px; font-size: 14px;">Mostrar Equipamentos</span>
-                </button>
-            </span>
-        </div>
-        <p-footer>
-            <div class="ui-dialog-buttonpane ui-helper-clearfix">
-                <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-check"
-                    (click)="editEquipWithButton()" label="Editar"></button>
-            </div>
-        </p-footer>
-    </p-dialog>
-    <p-confirmDialog #cd header="Confirmação" [style]="{width: '450px'}" icon="pi pi-exclamation-triangle" width="425">
-        <p-footer>
-            <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-times"
-                label="Não" (click)="cd.reject()"></button>
-            <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-check"
-                label="Sim" (click)="cd.accept()"></button>
-        </p-footer>
-    </p-confirmDialog>
 </div>
-
-</html>

@@ -8,6 +8,7 @@ import { SalaEquipamento, SalaModel, TipoSala } from './../../shared/model/sala.
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService, SelectItem, ConfirmationService } from 'primeng/api';
 
+
 @Component({
   selector: 'app-sala',
   templateUrl: './sala.component.html',
@@ -39,7 +40,7 @@ export class SalaComponent implements OnInit {
     equipamentos: null
   };
 
-
+  
 
   ngOnInit(): void {
     this.getAll();
@@ -69,16 +70,7 @@ export class SalaComponent implements OnInit {
   }
 
   confirm(sala: SalaModel) {
-    this.confirmationService.confirm({
-      message: 'Você tem certeza que deseja excluir esta sala?',
-      accept: () => {
-        this.deleteWithButton(sala);
-      },
-      reject: () => {
-        this.displayEditDialog = false;
-        this.displaySaveDialog = false;
-      }
-    });
+    this.deleteWithButton(sala);
   }
   deleteWithButton(sala: SalaModel) {
     this.salaService.delete(sala).subscribe(
@@ -112,6 +104,11 @@ export class SalaComponent implements OnInit {
     });
   }
 
+  getSalaEquipamentoDialog()
+  {
+    
+  }
+
   getAll() {
     this.salaService.getSalas().subscribe(
       (result: any) => {
@@ -138,27 +135,6 @@ export class SalaComponent implements OnInit {
     )
   }
 
-  editEquipWithButton() {
-    this.sala.equipamentos = this.salaEquipamentoService.getSalaEquipamentos();
-    this.salaService.edit(this.sala).subscribe(
-      () => {
-        this.displayEditDialog = false;
-        this.sala = new SalaModel;
-        this.messageService.add({
-          severity: 'success',
-          summary: "Resultado", detail: "Equipamento editado com sucesso"
-        });
-        this.getAll();
-      },
-      error => {
-        this.messageService.add({
-          severity: 'error', summary: "Error",
-          detail: "Equipamento não pode ser editado, verifique os dados e tente novamente"
-        })
-      }
-    )
-  }
-
   getTipoSala(id: number) {
     return TipoSala[id];
   }
@@ -173,8 +149,5 @@ export class SalaComponent implements OnInit {
   }
 
   showEditDialog(sala: SalaModel) {
-    this.displayEditDialog = true;
-    this.sala = sala;
-    this.getAll();
   }
 }

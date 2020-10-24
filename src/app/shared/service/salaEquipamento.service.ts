@@ -2,7 +2,7 @@ import { EquipamentoSalaModel } from './../model/equipamento.model';
 import { EquipamentoService } from './equipamento.service';
 import { SalaEquipamento, SalaModel } from './../model/sala.model';
 import { Injectable } from '@angular/core';
-import { EquipamentoModel } from '../model/equipamento.model';
+
 
 @Injectable({
   providedIn: 'root'

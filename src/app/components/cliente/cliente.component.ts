@@ -15,9 +15,9 @@ export class ClienteComponent implements OnInit {
 
   clientes: ClienteModel[] = [{
     id: 1,
-    nome: "null",
-    endereco: "null",
-    dataNasc: new Date(2014, 1, 1),
+    nome: "Matheus Henrique Lima Silva",
+    endereco: "Rua rio de Janeiro",
+    dataNasc: new Date(1996, 4, 21),
     telefone: "83999515180",
     rg: "1234567",
     cpf: "70062928406",
@@ -152,8 +152,8 @@ export class ClienteComponent implements OnInit {
     this.clienteService.delete(cliente).subscribe(
       ()=>{
         this.getAll();
-        this.messageService.add({severity: 'warn', 
-        summary:'Resultado',detail:'Cliente removido'})
+        this.messageService.add({severity: 'sucess', 
+        summary:'Error',detail:'Cliente removido'})
       },
       error=> {
         console.log(error);
