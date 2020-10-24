@@ -19,7 +19,6 @@ td.break
 input[type=number] { 
     -moz-appearance: textfield;
     appearance: textfield;
- 
 }
 td{
     text-align: center;

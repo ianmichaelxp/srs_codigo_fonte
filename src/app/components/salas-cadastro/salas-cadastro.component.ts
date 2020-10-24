@@ -1,9 +1,9 @@
 import { SalaEquipamentoService } from './../../shared/service/salaEquipamento.service';
-
+import { SalaService } from 'src/app/shared/service/sala.service';
 import { EquipamentoService } from './../../shared/service/equipamento.service';
 import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng';
-import { EquipamentoSalaModel, TipoEquipamento } from 'src/app/shared/model/equipamento.model';
+import { EquipamentoModel, EquipamentoSalaModel, TipoEquipamento } from 'src/app/shared/model/equipamento.model';
 import { SalaEquipamento } from 'src/app/shared/model/sala.model';
 
 @Component({

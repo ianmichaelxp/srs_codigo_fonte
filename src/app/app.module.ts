@@ -38,6 +38,7 @@ import {InputMaskModule} from 'primeng/inputmask';
 import { CPFPipe } from './pipe/cpf.pipe';
 import { TelPipe } from './pipe/tel.pipe';
 import { RgPipe } from './pipe/rg.pipe';
+import { SalasCadastroComponent } from './components/salas-cadastro/salas-cadastro.component';
 import { ReservasCadastroComponent } from './components/reservas-cadastro/reservas-cadastro.component';
 
 
@@ -51,14 +52,13 @@ import { ReservasCadastroComponent } from './components/reservas-cadastro/reserv
         ClienteComponent,
         EquipamentoComponent,
         ReservaComponent,
-        SalaEquipamentoComponent,
         ReservaEquipamentoComponent,
         CPFPipe,
         TelPipe,
         RgPipe,
-        ReservasCadastroComponent
-
-        
+        ReservasCadastroComponent,
+        SalaEquipamentoComponent,
+        SalasCadastroComponent        
     ],
     imports: [
         BlockUIModule.forRoot({
@@ -89,8 +89,7 @@ import { ReservasCadastroComponent } from './components/reservas-cadastro/reserv
         ConfirmDialogModule,
         DynamicDialogModule,
         InputNumberModule,
-        InputMaskModule
-        
+        InputMaskModule,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy }, 
