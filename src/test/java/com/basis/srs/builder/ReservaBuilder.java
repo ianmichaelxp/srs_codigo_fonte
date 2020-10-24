@@ -1,9 +1,7 @@
 package com.basis.srs.builder;
 
 
-import com.basis.srs.dominio.Cliente;
-import com.basis.srs.dominio.Reserva;
-import com.basis.srs.dominio.Sala;
+import com.basis.srs.dominio.*;
 import com.basis.srs.repositorio.ReservaRepositorio;
 import com.basis.srs.servico.ReservaServicos;
 import com.basis.srs.servico.dto.ReservaDTO;
@@ -14,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -40,13 +39,25 @@ public class ReservaBuilder extends ConstrutorDeEntidade<Reserva> {
     @Override
     public Reserva construirEntidade() throws ParseException {
         Reserva reserva = new Reserva();
-        reserva.setDataInicio(LocalDate.now());
-        reserva.setDataFim(LocalDate.now());
+        reserva.setDataInicio(LocalDate.now().plusDays(1));
+        reserva.setDataFim(LocalDate.now().plusDays(90));
         reserva.setPrecoFinal(200.00);
+
         Cliente cliente = clienteBuilder.construir();
-        reserva.setCliente(cliente);
         Sala sala = salaBuilder.construir();
+
+        reserva.setCliente(cliente);
         reserva.setSala(sala);
+
+        Equipamento equipamento = equipamentoBuilder.construir();
+
+        ReservaEquipamento reservaEquipamento = new ReservaEquipamento();
+        reservaEquipamento.setEquipamento(equipamento);
+        reservaEquipamento.setReserva(reserva);
+        reservaEquipamento.setQuantidade(2);
+
+        reserva.setEquipamentos(Collections.singletonList(reservaEquipamento));
+
         return reserva;
     }
 
@@ -59,8 +70,6 @@ public class ReservaBuilder extends ConstrutorDeEntidade<Reserva> {
     @Override
     public Collection obterTodos() {
         List<Reserva> reserva = reservaMapper.toEntity(reservaServicos.listarReserva());
-
-
         return reserva;
     }
 

@@ -60,9 +60,6 @@ public class ReservaServicos {
             return reservaMapper.toDto(reserva);
 
         }
-     //   Reserva reservas = reservaRepositorio.save(reservaMapper.toEntity(reservaDTO));
-//        return reservaMapper.toDto(reservas);
-
 
     }
         public void removerReserva(Integer id)
@@ -70,7 +67,6 @@ public class ReservaServicos {
         Reserva reserva = reservaRepositorio.findById(id).orElseThrow(()-> new RegraNegocioException(" não encontrada"));
         reservaEquipamentoRepositorio.deleteAll(reserva.getEquipamentos());
 
-        //obterPorId(id);
         reservaRepositorio.deleteById(id);
     }
 

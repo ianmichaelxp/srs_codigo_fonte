@@ -5,13 +5,19 @@ import com.basis.srs.builder.ReservaBuilder;
 import com.basis.srs.builder.SalaBuilder;
 import com.basis.srs.dominio.Reserva;
 import com.basis.srs.dominio.Sala;
+import com.basis.srs.dominio.SalaEquipamento;
+import com.basis.srs.repositorio.SalaRepositorio;
+import com.basis.srs.servico.dto.ReservaDTO;
+import com.basis.srs.servico.mapper.ReservaMapper;
 import com.basis.srs.util.IntTestComum;
 import com.basis.srs.util.TestUtil;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -27,11 +33,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class SalaRecursoIT extends IntTestComum {
 
     @Autowired
+    private SalaRepositorio salaRepositorio;
+    @Autowired
     private SalaBuilder salaBuilder;
     @Autowired
     private EquipamentoBuilder equipamentoBuilder;
     @Autowired
     private ReservaBuilder reservaBuilder;
+    @Autowired
+    private ReservaMapper reservaMapper;
 
     @BeforeEach
     public void limparBanco()
@@ -41,10 +51,10 @@ public class SalaRecursoIT extends IntTestComum {
 
     @Test
     public void listar() throws Exception{
-        Sala sala = salaBuilder.construir();
+        salaBuilder.construir();
         getMockMvc().perform(get("/api/salas"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*].id", hasSize(1)));
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].id", Matchers.hasSize(1)));
     }
 
     @Test
@@ -55,20 +65,6 @@ public class SalaRecursoIT extends IntTestComum {
                 .content(TestUtil.convertObjectToJsonBytes(salaBuilder.converterToDTO(sala))
                 ))
                 .andExpect(status().isCreated());
-    }
-
-    @Test
-    public void salvarSalaComEquipamentoIndisponivel() throws Exception{
-        Sala sala = salaBuilder.construirEntidade();
-        getMockMvc().perform(post("/api/salas")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(salaBuilder.converterToDTO(sala))
-                ));
-        getMockMvc().perform(post("/api/salas")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(salaBuilder.converterToDTO(sala))
-                ))
-                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -107,10 +103,10 @@ public class SalaRecursoIT extends IntTestComum {
 
     @Test
     public void deletarComReservaCadastrada() throws Exception{
-        Reserva reserva = reservaBuilder.construirEntidade();
-        Sala sala = salaBuilder.construirEntidade();
-        getMockMvc().perform(delete("/api/salas/" + sala.getId()))
-                .andExpect(status().isBadRequest());
+        Reserva reserva = reservaBuilder.construir();
+        ReservaDTO dto = reservaMapper.toDto(reserva);
+        getMockMvc().perform(delete("/api/salas/" + dto.getIdSala()))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
     @Test

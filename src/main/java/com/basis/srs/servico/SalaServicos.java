@@ -41,22 +41,18 @@ public class SalaServicos
 
     public SalaDTO salvarSala(SalaDTO salaDTO)
     {
-        if (salaDTO.getId() != null) {
-           verificarAtualização(salaDTO);
-        }
         Sala sala = salaMapper.toEntity(salaDTO);
         List<SalaEquipamento> salaEquipamentos = sala.getEquipamentos();
         sala.setEquipamentos(new ArrayList<>());
         salaRepositorio.save(sala);
-        if (salaEquipamentos != null)
+
+        salaEquipamentos.forEach(salaEquipamento ->
         {
-            salaEquipamentos.forEach(salaEquipamento ->
-            {
-                salaEquipamento.setSala(sala);
-                salaEquipamento.getSalaEquipamentoPK().setIdSala(sala.getId());
-            });
-            salaEquipamentoRepositorio.saveAll(salaEquipamentos);
-        }
+            salaEquipamento.setSala(sala);
+            salaEquipamento.getSalaEquipamentoPK().setIdSala(sala.getId());
+        });
+        salaEquipamentoRepositorio.saveAll(salaEquipamentos);
+
         sala.setEquipamentos(salaEquipamentos);
         return salaMapper.toDto(sala);
     }
@@ -64,33 +60,11 @@ public class SalaServicos
     public void removerSala(Integer id)
     {
         Sala sala = salaRepositorio.findById(id).orElseThrow(()-> new RegraNegocioException("Sala não encontrada"));
-        salaEquipamentoRepositorio.deleteInBatch(sala.getEquipamentos());
         if(reservaRepositorio.existsBySala(sala)){
             throw new RegraNegocioException("Sala não pode ser removido, pois está reservada");
         }
+        salaEquipamentoRepositorio.deleteInBatch(sala.getEquipamentos());
         salaRepositorio.deleteById(id);
     }
-    private void verificarAtualização(SalaDTO salaDTO){
-        Sala sala = salaRepositorio.findById(salaMapper.toEntity(salaDTO).getId()).orElse(null);
-        List<SalaEquipamentoDTO> salaEquipamentosDTO = salaDTO.getEquipamentos();
-        List<SalaEquipamento> salaEquipamentos = sala.getEquipamentos();
 
-            salaEquipamentos.forEach(salaEquipamento ->
-        {
-            Equipamento equipamento = equipamentoRepositorio.findById(salaEquipamento.getEquipamento().getId()).orElse(null);
-            if (salaEquipamentoRepositorio.existsByEquipamento(equipamento))
-            {
-                salaEquipamentosDTO.forEach(salaEquipamentoDTO ->
-                {
-                    if(salaEquipamentoDTO.getIdEquipamento() == equipamento.getId())
-                    {
-                        if(salaEquipamentoDTO.getQuantidade() == 0)
-                        {
-                            throw new RegraNegocioException("A sala deve possuir este equipamento!");
-                        }
-                    }
-                });
-            }
-        });
-    }
 }

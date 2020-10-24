@@ -1,6 +1,5 @@
 package com.basis.srs.servico.dto;
 
-import com.basis.srs.dominio.Equipamento;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +21,6 @@ public class ReservaDTO
     private LocalDate dataFim;
     @NotNull
     private Double precoFinal;
-//aqui
     @NotNull
     private List<ReservaEquipamentoDTO> equipamentos;
 

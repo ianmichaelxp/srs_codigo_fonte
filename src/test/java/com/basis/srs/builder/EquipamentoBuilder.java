@@ -27,14 +27,13 @@ public class EquipamentoBuilder extends ConstrutorDeEntidade<Equipamento> {
     @Override
     public Equipamento construirEntidade() throws ParseException
     {
-        Equipamento equipamento = new Equipamento();
         TipoEquipamento tipoEquipamento = new TipoEquipamento();
-
-        tipoEquipamento.setId(1);
-        equipamento.setNome("Notebook");
+        tipoEquipamento.setDescricao("Intel i5");
+        tipoEquipamento.setId(3);
+        Equipamento equipamento = new Equipamento();
+        equipamento.setNome("notebook");
+        equipamento.setPrecoDiario(20.00);
         equipamento.setTipoEquipamento(tipoEquipamento);
-        equipamento.setPrecoDiario(50.00);
-
         return equipamento;
     }
 

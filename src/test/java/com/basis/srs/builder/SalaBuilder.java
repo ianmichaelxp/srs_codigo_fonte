@@ -1,6 +1,7 @@
 package com.basis.srs.builder;
 
 import com.basis.srs.dominio.*;
+import com.basis.srs.repositorio.ReservaRepositorio;
 import com.basis.srs.repositorio.SalaRepositorio;
 import com.basis.srs.servico.SalaServicos;
 import com.basis.srs.servico.dto.SalaDTO;
@@ -27,6 +28,9 @@ public class SalaBuilder extends ConstrutorDeEntidade<Sala>{
     @Autowired
     private EquipamentoBuilder equipamentoBuilder;
 
+    @Autowired
+    private ReservaRepositorio reservaRepositorio;
+
     public SalaDTO converterToDTO(Sala sala){
         return salaMapper.toDto(sala);
     }
@@ -34,27 +38,27 @@ public class SalaBuilder extends ConstrutorDeEntidade<Sala>{
     @Override
     public Sala construirEntidade() throws ParseException
     {
-        Equipamento equipamento = equipamentoBuilder.construir();
+        Equipamento equipamentos = equipamentoBuilder.construir();
         Sala sala = new Sala();
+        sala.setCapacidadePessoas(25);
+        sala.setDescricao("Sala média");
+        sala.setPrecoDiario(50.80);
         TipoSala tipoSala = new TipoSala();
         tipoSala.setId(1);
-        tipoSala.setDescricao("aaaa");
         SalaEquipamento salaEquipamento = new SalaEquipamento();
-
-        sala.setCapacidadePessoas(10);
-        sala.setDescricao("Sala de auditorio");
-        sala.setPrecoDiario(90.0);
-        sala.setTipoSala(tipoSala);
-        salaEquipamento.setEquipamento(equipamento);
         salaEquipamento.setSala(sala);
-        salaEquipamento.setQuantidade(2);
+        salaEquipamento.setQuantidade(85);
+        salaEquipamento.setEquipamento(equipamentos);
+
         sala.setEquipamentos(Collections.singletonList(salaEquipamento));
+        sala.setTipoSala(tipoSala);
 
         return sala;
     }
 
     public void limparBanco(){
         salaRepositorio.deleteAll();
+        reservaRepositorio.deleteAll();
     }
 
     @Override

@@ -64,11 +64,11 @@ public class EquipamentoRecursoIT extends IntTestComum {
     public void salvarEquipamentoJaCadastrado() throws Exception {
 
         Equipamento equipamento = equipamentoBuilder.construirEntidade();
-        getMockMvc().perform(post("/api/equipamentos")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(
-                        equipamentoBuilder.converterToDto(equipamento))
-                ));
+//        getMockMvc().perform(post("/api/equipamentos")
+//                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//                .content(TestUtil.convertObjectToJsonBytes(
+//                        equipamentoBuilder.converterToDto(equipamento))
+//                ));
         getMockMvc().perform(post("/api/equipamentos")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(
