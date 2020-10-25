@@ -1,0 +1,36 @@
+<html lang="pt-br">
+<div class="ui-g">
+    <p-toast></p-toast>
+    <p-panel header="Clientes">
+        <div style="margin-bottom: 20px;">
+            <p-menubar [model]="itens">
+            </p-menubar>
+        </div>
+
+        <p-table #dt [value]="clientes" [columns]="cols" [paginator]="true" [rows]="7" [rowHover]="true"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th pSortableColumn="nome">Nome <p-sortIcon field="nome"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="telefone">TELEFONE<p-sortIcon field="telefone"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="cpf">CPF<p-sortIcon field="cpf"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="email">EMAIL<p-sortIcon field="email"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-cliente let-columns="columns">
+                <tr [pSelectableRow]="cliente" style="margin: 0; text-align: center; word-wrap: break-word;">
+                    <td>{{cliente.nome}}</td>
+                    <td>{{cliente.telefone | tel}}</td>
+                    <td>{{ cliente.cpf | CPF }}</td>
+                    <td>{{cliente.email}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-panel>
+</div>
+
+</html>

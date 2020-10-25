@@ -4,10 +4,10 @@
         <div style="margin-bottom: 40px;height:10px">
             <p-menubar [model]="itens"></p-menubar>
         </div>
-        <p-table #dt [value]="reservas" [columns]="cols" [paginator]="true" [rows]="7" [responsive]="true"
-            [rowHover]="true" [showCurrentPageReport]="true" [paginator]="true"
+        <p-table #dt [value]="reservas" [columns]="cols" [paginator]="true" [responsive]="true" [rowHover]="true"
+            [showCurrentPageReport]="true" [paginator]="true"
             currentPageReportTemplate="Mostrando de {first} até {last} de {totalRecords} reservas" [rows]="10"
-            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]">
+            [rowsPerPageOptions]="[10,25,50]">
             <ng-template pTemplate="header" let-columns>
                 <tr style="height: 10px;">
                     <th>Data inicio</th>
@@ -23,72 +23,17 @@
                 <tr [pSelectableRow]="reserva" style="text-align: center;">
                     <td>{{reserva.dataInicio | date: 'dd/MM/yyyy'}}</td>
                     <td>{{reserva.dataFim | date: 'dd/MM/yyyy'}}</td>
-                    <td>R$ {{reserva.precoFinal}} </td>
-                    <td>{{getNomeCliente(reserva.idCliente)}}</td>
-                    <td>{{getDescricaoSala(reserva.idSala)}}</td>
-                    <td>
-                        <span style="float: center">
-                            <button pButton type="button" (click)="show(reserva)">
-                                <i class="pi pi-desktop" style="padding-top: 2px; font-size: 10px;"></i>
-                                <span style="padding-left: 5px; font-size: 14px;">Mostrar Equipamentos</span>
-                            </button>
-                        </span>
-                    </td>
-                    <td style="text-align: center;">
-                        <span style="float: center">
-                            <button pButton type="button" (click)="showEditDialog(reserva)">
-                                <i class="pi pi-pencil" style="padding-top: 6px;"></i>
-                                <span style="padding-left: 5px;">Editar</span>
-                            </button>
-                            <button pButton type="button" style="margin-left: 10px;" (click)="confirm(reserva)">
-                                <i class="pi pi-trash" style="padding-top: 6px; padding-left: 5px;"></i>
-                                <span style="padding-left: 5px;">Excluir</span>
-                            </button>
-                        </span>
-                    </td>
+                    <td>R${{reserva.precoFinal}} </td>
+                    <td><span style="float: center">
+                        <button pButton type="button" (click)="mostrarCliente(reserva.idCliente)">
+                            <i class="pi pi-desktop" style="padding-top: 2px; font-size: 10px;"></i>
+                            <span style="padding-left: 5px; font-size: 14px;">Mostrar</span>
+                        </button>
+                    </span></td>
+                    <td>{{reserva.idSala}}</td>
                 </tr>
             </ng-template>
         </p-table>
-        <p-confirmDialog #cd header="Confirmação" [style]="{width: '450px'}" icon="pi pi-exclamation-triangle"
-            width="425">
-            <p-footer>
-                <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-times"
-                    label="Não" (click)="cd.reject()"></button>
-                <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-check"
-                    label="Sim" (click)="cd.accept()"></button>
-            </p-footer>
-        </p-confirmDialog>
-        <p-dialog header="Nova reserva" [(visible)]="displaySaveDialog">
-            <div class="dialog">
-                <div class="divPad">
-                    <label for="dataInicio">Data de Inicio </label>
-                    <input pInputText type="date" id="dataInicio" [(ngModel)]="reserva.dataInicio" />
-                </div>
-                <div class="divPad">
-                    <label for="dataFim">Data Final </label>
-                    <input pInputText type="date" id="dataFim" [(ngModel)]="reserva.dataFim" />
-                </div>
-                <div class="divPad">
-                    <label for="idCliente">Cliente </label>
-                    <input pInputText type="number" id="idCliente" [(ngModel)]="reserva.idCliente" />
-                </div>
-                <div class="divPad">
-                    <label for="idSala">Sala </label>
-                    <input pInputText type="number" id="idSala" [(ngModel)]="reserva.idSala" />
-                </div>
-                <span style="float: center">
-                    <button pButton type="button" style="margin-left: 30px;margin-top:20px" (click)="show(reserva)">
-                        <i class="pi pi-desktop" style="padding-top: 2px; font-size: 10px;"></i>
-                        <span style="padding-left: 5px; font-size: 14px;">Mostrar Equipamentos</span>
-                    </button>
-                </span>
-            </div>
-            <p-footer>
-                <div class="ui-dialog-buttonpane ui-helper-clearfix">
-                    <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton
-                        icon="pi pi-check" (click)="save()" label="Salvar"></button>
-                </div>
-            </p-footer>
-        </p-dialog>
+
     </p-panel>
 </div>

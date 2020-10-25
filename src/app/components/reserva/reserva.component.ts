@@ -1,3 +1,5 @@
+import { ReservaSalaService } from './../../shared/service/reserva-sala.service';
+import { ReservaClienteComponent } from './../reserva-cliente/reserva-cliente.component';
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, DialogService, DynamicDialogRef, MenuItem, MessageService } from 'primeng';
 import { ClienteModel } from 'src/app/shared/model/cliente.model';
@@ -23,17 +25,9 @@ export class ReservaComponent implements OnInit {
   displaySaveDialog: boolean = false;
   displayEditDialog: boolean = false;
   ref: DynamicDialogRef;
-  cliente :ClienteModel;
+  cliente: ClienteModel = new ClienteModel;
   sala: SalaModel;
-  reserva: ReservaModel = {
-    id: null,
-    dataInicio: null,
-    dataFim: null,
-    precoFinal: null,
-    equipamentos: null,
-    idCliente: null,
-    idSala: null
-  };
+  reserva: ReservaModel = new ReservaModel;
 
   reservaEquipamento: ReservaEquipamento = {
     idReserva: null,
@@ -42,24 +36,25 @@ export class ReservaComponent implements OnInit {
   }
   constructor(private reservaService: ReservaService, private reservaEquipamentoService: ReservaEquipamentoService,
     private clienteService: ClienteService, private salaService: SalaService, public dialogService: DialogService,
-    private messageService: MessageService,private confirmationService: ConfirmationService) { }
+    private messageService: MessageService, private confirmationService: ConfirmationService,
+    private reservaSalaService : ReservaSalaService) { }
 
   ngOnInit(): void {
-    // this.getAll();
+    this.getAll();
     this.itens =
-    [
-      {
-        label: "Novo",
-        icon: "pi pi-plus",
-        command: () => this.showSaveDialog()
-      }
-    ]
+      [
+        {
+          label: "Novo",
+          icon: "pi pi-plus",
+          command: () => this.showSaveDialog()
+        }
+      ]
   }
 
-  getSalaPorId(id:number){
-    
+  getSalaPorId(id: number) {
+
     this.salaService.getSalaPorId(id).subscribe(
-      (result:any) => {
+      (result: any) => {
         this.sala = result;
       },
       error => {
@@ -69,26 +64,25 @@ export class ReservaComponent implements OnInit {
     return this.sala;
   }
 
-  getClientePorId(id:number){
-    this.clienteService.getClientePorId(id).subscribe(
-      (result:any) => {
+  getClientePorId(id: number) {
+    this.clienteService.getById(id).subscribe(
+      (result: any) => {
         this.cliente = result;
       },
       error => {
         console.log(error);
       }
-    );
-    return this.cliente;
+    )
   }
-  getNomeCliente(id:number){
-    let cliente = this.getClientePorId(id);
-    let nome: string = cliente.nome;
-    return nome;
-  }
-  getDescricaoSala(id:number){
-    let sala = this.getSalaPorId(id);
-    let descricao: string = sala.descricao;
-    return descricao;
+
+  mostrarCliente(id : number)
+  {
+    this.reservaSalaService.setId(id);
+    const ref = this.dialogService.open(ReservaClienteComponent, {
+      header : "Cliente",
+      width: '80%',
+      modal: false
+    });
   }
 
   getAll() {
@@ -120,20 +114,20 @@ export class ReservaComponent implements OnInit {
     )
   }
 
-  confirm(reserva : ReservaModel) {
+  confirm(reserva: ReservaModel) {
     this.confirmationService.confirm({
       message: 'Você tem certeza que deseja excluir esta reserva?',
       accept: () => {
-          this.delete(reserva);
+        this.delete(reserva);
       },
       reject: () => {
         this.hideDialog();
       }
-  });
+    });
   }
 
-  hideDialog(){
-    this.displayEditDialog =false;
+  hideDialog() {
+    this.displayEditDialog = false;
     this.displaySaveDialog = false;
   }
 
@@ -144,18 +138,18 @@ export class ReservaComponent implements OnInit {
       modal: false
     });
   }
-  
+
   showSaveDialog() {
     this.reserva = new ReservaModel;
     this.displaySaveDialog = true;
   }
 
 
-  showEditDialog(reserva : ReservaModel)
+  showEditDialog(reserva: ReservaModel)
   {
   }
 
-  save()
+  save() 
   {
   }
 

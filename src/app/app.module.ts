@@ -40,6 +40,7 @@ import { TelPipe } from './pipe/tel.pipe';
 import { RgPipe } from './pipe/rg.pipe';
 import { SalasCadastroComponent } from './components/salas-cadastro/salas-cadastro.component';
 import { ReservasCadastroComponent } from './components/reservas-cadastro/reservas-cadastro.component';
+import { ReservaClienteComponent } from './components/reserva-cliente/reserva-cliente.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { ReservasCadastroComponent } from './components/reservas-cadastro/reserv
         RgPipe,
         ReservasCadastroComponent,
         SalaEquipamentoComponent,
-        SalasCadastroComponent,     
+        SalasCadastroComponent,
+        ReservaClienteComponent,     
     ],
     imports: [
         BlockUIModule.forRoot({

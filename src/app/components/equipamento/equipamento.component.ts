@@ -1,3 +1,4 @@
+import { ClienteService } from './../../shared/service/cliente.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService, SelectItem, ConfirmationService } from 'primeng/api';
 
@@ -10,7 +11,6 @@ import { EquipamentoModel, TipoEquipamento } from './../../shared/model/equipame
   styleUrls: ['./equipamento.component.css'],
 })
 export class EquipamentoComponent implements OnInit {
-
   equipamentos: EquipamentoModel[] = [];
   erro: any;
   itens: MenuItem[];

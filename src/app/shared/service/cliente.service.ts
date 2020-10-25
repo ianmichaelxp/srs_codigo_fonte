@@ -23,8 +23,9 @@ export class ClienteService {
     return this.httpClient.get(this.apiUrl);
   }
 
-  public getClientePorId(id:number): Observable<any>{
-    return this.httpClient.get(this.apiUrl+ '/' + id);
+  public getById(id:number): Observable<ClienteModel>
+  {
+    return this.httpClient.get<ClienteModel>(this.apiUrl+"/"+id);
   }
 
   public save(cliente: ClienteModel): Observable<any> {
