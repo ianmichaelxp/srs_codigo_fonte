@@ -37,13 +37,10 @@
             <ng-template pTemplate="body" let-equipamento let-columns="columns">
                 <tr [pSelectableRow]="equipamento">
                     <td class="break">{{equipamento.nome}}</td>
-                    <td>R$ {{equipamento.precoDiario}}</td>
+                    <td>{{equipamento.precoDiario | currency:'BRL'}}</td>
                     <td>{{getTipoEquipamento(equipamento.idTipoEquipamento)}}</td>
                     <td>{{equipamento.quantidade}}</td>
                 </tr>
-            </ng-template>
-            <ng-template pTemplate="summary">
-                Existem {{equipamentos?.length}} equipamentos
             </ng-template>
         </p-table>
     </p-panel>

@@ -18,10 +18,10 @@
                 </tr>
                 <tr>
                     <th pSortableColumn="descricao">
-                        Descrição <p-sortIcon field="precoDiario"></p-sortIcon>
+                        Descrição <p-sortIcon field="descricao"></p-sortIcon>
                     </th>
                     <th pSortableColumn="capacidadePessoas">
-                        Capacidade de pessoas <p-sortIcon field="precoDiario"></p-sortIcon>
+                        Capacidade de pessoas <p-sortIcon field="capacidadePessoas"></p-sortIcon>
                     </th>
                     <th pSortableColumn= "precoDiario">
                         Preço diário <p-sortIcon field="precoDiario"></p-sortIcon>
@@ -46,7 +46,7 @@
                 <tr [pSelectableRow]="sala" style="text-align: center;">
                     <td>{{sala.descricao}}</td>
                     <td>{{sala.capacidadePessoas}}</td>
-                    <td>R$ {{sala.precoDiario}} </td>
+                    <td>{{sala.precoDiario | currency:'BRL'}} </td>
                     <td>{{getTipoSala(sala.idTipoSala)}}</td>
                     <td>
                         <span style="float: center">

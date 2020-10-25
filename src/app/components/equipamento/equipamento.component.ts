@@ -37,7 +37,7 @@ export class EquipamentoComponent implements OnInit {
       [
         {
           label: "Novo",
-          icon: "pi pi-desktop",
+          icon: "pi pi-plus",
           command: () => this.showSaveDialog()
         }
       ]
