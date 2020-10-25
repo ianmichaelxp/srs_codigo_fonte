@@ -13,3 +13,7 @@ export class EquipamentoSalaModel extends EquipamentoModel{
     quantidade: number;
 }
 
+export class EquipamentoReservaModel extends EquipamentoModel {
+    quantidade: number;
+}
+

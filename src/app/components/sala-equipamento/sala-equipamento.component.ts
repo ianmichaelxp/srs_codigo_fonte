@@ -16,8 +16,11 @@ export class SalaEquipamentoComponent implements OnInit {
   cols: any[];
   equipamentos: EquipamentoSalaModel[];
   quantidades : number[];
-  constructor(private equipamentoService: EquipamentoService, private salaEquipamentoService: SalaEquipamentoService) {
-    this.tiposEquipamentos = equipamentoService.getTipoEquipamentos(this.tiposEquipamentos); 
+  constructor(
+    private equipamentoService: EquipamentoService, 
+    private salaEquipamentoService: SalaEquipamentoService) {
+    this.tiposEquipamentos = equipamentoService
+      .getTipoEquipamentos(this.tiposEquipamentos); 
   }
 
   ngOnInit(): void {
@@ -28,4 +31,3 @@ export class SalaEquipamentoComponent implements OnInit {
     return TipoEquipamento[id];
   }
 }
-
