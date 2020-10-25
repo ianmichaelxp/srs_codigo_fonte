@@ -35,6 +35,12 @@ import {DialogService, DynamicDialogModule} from 'primeng/dynamicdialog';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {InputMaskModule} from 'primeng/inputmask';
 import { SalasCadastroComponent } from './components/salas-cadastro/salas-cadastro.component';
+import { ReservaEquipamentoComponent } from './components/reserva/reserva-equipamento/reserva-equipamento.component';
+import { ReservasCadastroComponent } from './components/reserva/reserva-cadastro/reserva-cadastro.component';
+import { CPFPipe } from 'src/pipe/cpf.pipe';
+import { TelPipe } from 'src/pipe/tel.pipe';
+import { RgPipe } from 'src/pipe/rg.pipe';
+
 
 @NgModule({
     declarations: [
@@ -46,9 +52,13 @@ import { SalasCadastroComponent } from './components/salas-cadastro/salas-cadast
         ClienteComponent,
         EquipamentoComponent,
         ReservaComponent,
+        ReservaEquipamentoComponent,
+        CPFPipe,
+        TelPipe,
+        RgPipe,
+        ReservasCadastroComponent,
         SalaEquipamentoComponent,
-        SalasCadastroComponent    
-        
+        SalasCadastroComponent,     
     ],
     imports: [
         BlockUIModule.forRoot({
@@ -79,8 +89,7 @@ import { SalasCadastroComponent } from './components/salas-cadastro/salas-cadast
         ConfirmDialogModule,
         DynamicDialogModule,
         InputNumberModule,
-        InputMaskModule
-        
+        InputMaskModule,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy }, 
