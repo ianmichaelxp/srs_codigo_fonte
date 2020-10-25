@@ -21,7 +21,38 @@ import { ReservaEquipamentoComponent } from './reserva-equipamento/reserva-equip
 })
 export class ReservaComponent implements OnInit {
 
-  reservas: ReservaModel[] = [];
+  reservas: ReservaModel[] = [
+  { 
+    sala: {
+      capacidadePessoas: 10,
+      descricao: "ok",
+      equipamentos:[],
+      id:1,
+      idTipoSala: 1,
+      precoDiario: 200.00
+    },
+    cliente: {
+      cpf: "12345678909",
+      dataNasc: new Date(1990,10,2),
+      email: "ian@email",
+      endereco: "rua",
+      id:1,
+      nome:"Ian Michael",
+      rg:"1234567",
+      telefone:"33333333"
+
+
+    },
+    dataInicio:  new Date(2021,10,2),
+	  dataFim: new Date(2021,11,12),
+	  precoFinal: 500.00,
+    equipamentos : [{
+        idReserva:50,idEquipamento:1,quantidade:1
+    }],
+    idCliente: 1,
+    idSala: 1
+    
+}];
 
   erro: any;
   itens: MenuItem[];
@@ -107,7 +138,7 @@ export class ReservaComponent implements OnInit {
     });
   }
 
-  showEquipamentosOpcionais(reserva: ReservaModel) {
+  showEquipamentosAdicionais(reserva: ReservaModel) {
     this.reservaEquipamentoService.getEquipamentos(reserva);    
     const ref = this.dialogService.open(ReservaEquipamentoComponent, {
       width: '80%',

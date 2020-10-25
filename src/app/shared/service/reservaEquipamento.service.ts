@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EquipamentoReservaModel, EquipamentoSalaModel } from '../model/equipamento.model';
+import { EquipamentoReservaModel } from '../model/equipamento.model';
 import { ReservaEquipamento, ReservaModel } from '../model/reserva.model';
 import { EquipamentoService } from './equipamento.service';
 

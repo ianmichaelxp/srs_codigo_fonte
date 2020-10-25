@@ -4,7 +4,7 @@ import { EquipamentoReservaModel } from './equipamento.model';
 import { SalaModel } from './sala.model';
 
 export class ReservaModel{
-    id: number;
+    id?: number;
     dataInicio: Date;
     dataFim: Date;
     precoFinal: number;
