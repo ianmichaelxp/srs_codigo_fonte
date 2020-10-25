@@ -125,6 +125,7 @@ export class SalaComponent implements OnInit {
 
   save() {
     this.sala.equipamentos = this.salaEquipamentoService.getSalaEquipamentos();
+    this.salaEquipamentoService.salaEquipamentos = [];
     this.salaService.save(this.sala).subscribe(
       (result: any) => {
         this.sala = new SalaModel;
@@ -139,7 +140,9 @@ export class SalaComponent implements OnInit {
   }
 
   editEquipWithButton() {
+    this.salaEquipamentoService.setSalaEquipamentos(this.sala);
     this.sala.equipamentos = this.salaEquipamentoService.getSalaEquipamentos();
+    this.salaEquipamentoService.salaEquipamentos = [];
     this.salaService.edit(this.sala).subscribe(
       () => {
         this.displayEditDialog = false;

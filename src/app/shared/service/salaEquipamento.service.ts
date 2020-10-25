@@ -43,6 +43,13 @@ export class SalaEquipamentoService {
     )
   }
 
+  setSalaEquipamentos(sala: SalaModel)
+  {
+    sala.equipamentos.forEach(element => {
+      this.salaEquipamentos.push(element);
+    });
+  }
+
   getSalaEquipamentos()
   {
     for (let index = 0; index < this.equipamentosSelecionados.length; index++) {
