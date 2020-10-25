@@ -1,9 +1,9 @@
 package com.basis.srs.servico;
-import com.basis.srs.servico.excecao.RegraNegocioException;
 import com.basis.srs.dominio.Equipamento;
 import com.basis.srs.repositorio.EquipamentoRepositorio;
 import com.basis.srs.repositorio.SalaEquipamentoRepositorio;
 import com.basis.srs.servico.dto.EquipamentoDTO;
+import com.basis.srs.servico.excecao.RegraNegocioException;
 import com.basis.srs.servico.mapper.EquipamentoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,6 +38,9 @@ public class EquipamentoServicos
     {
         Equipamento equipamento = equipamentoMapper.toEntity(dto);
         if(dto.getId() == null) existeEquipamento(equipamento, dto);
+        else{
+
+        }
         equipamentoRepositorio.save(equipamento);
         EquipamentoDTO equipamentoDTO = equipamentoMapper.toDto(equipamento);
         return equipamentoDTO;
@@ -48,13 +51,16 @@ public class EquipamentoServicos
 
         if(equipamentoRepositorio.existsByNome(equipamentoDTO.getNome()))
         {
-            Equipamento equipamento = equipamentoRepositorio.findByNome(equipamentoDTO.getNome());
+            List<Equipamento> equipamentos = equipamentoRepositorio.findByNome(equipamentoDTO.getNome());
 
-            if(equipamentoEntity.getPrecoDiario().equals(equipamento.getPrecoDiario()) &&
-                    equipamentoEntity.getTipoEquipamento().getId().equals(equipamento.getTipoEquipamento().getId()))
+            equipamentos.forEach(equipamento ->
             {
-                throw new RegraNegocioException("Este equipamento já existe");
-            }
+                if(equipamento.getNome().equals(equipamentoDTO.getNome()) && equipamentoDTO.getPrecoDiario().equals(equipamento.getPrecoDiario()) &&
+                        equipamentoEntity.getTipoEquipamento().getId().equals(equipamento.getTipoEquipamento().getId()))
+                {
+                    throw new RegraNegocioException("Este equipamento já existe");
+                }
+            });
         }
     }
 

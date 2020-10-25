@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
@@ -23,6 +24,7 @@ public class ClienteDTO
     private String endereco;
 
     @NotNull
+    @Past
     private LocalDate dataNasc;
 
     @NotNull
