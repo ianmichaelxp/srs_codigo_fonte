@@ -45,7 +45,6 @@ export class SalaEquipamentoService {
 
   getSalaEquipamentos()
   {
-    this.salaEquipamentos = [];
     for (let index = 0; index < this.equipamentosSelecionados.length; index++) {
       let salaEquipamento = new SalaEquipamento;
       salaEquipamento.idEquipamento = this.equipamentosSelecionados[index].id;

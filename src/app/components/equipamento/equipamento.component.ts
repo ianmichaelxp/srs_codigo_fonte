@@ -79,10 +79,16 @@ export class EquipamentoComponent implements OnInit {
           this.messageService.add({
             severity: 'success',
             summary: "Resultado", detail: "Equipamento salvo com sucesso"
-          });
+          }),  
           this.displaySaveDialog = false;
           this.getAll();
         },
+        error => {
+          this.messageService.add({
+            severity: 'error', summary: "Error",
+            detail: "Equipamento não pode ser salvo, verifique os dados e tente novamente"
+          })
+        }
       )
     }
   }

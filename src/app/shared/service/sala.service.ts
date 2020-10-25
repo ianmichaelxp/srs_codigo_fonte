@@ -38,6 +38,6 @@ export class SalaService {
   }
 
   public edit(sala: SalaModel): Observable<SalaModel> {
-    return this.httpSalas.put<SalaModel>(this.apiUrl, JSON.stringify(sala), this.httpOptions);
+    return this.httpSalas.put<SalaModel>(this.apiUrl+"/"+sala.id, JSON.stringify(sala), this.httpOptions);
   }
 }

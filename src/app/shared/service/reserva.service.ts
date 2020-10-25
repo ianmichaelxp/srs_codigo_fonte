@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ReservaService {
 
-  apiUrl: string = "http://localhost:8080/api/reservas";
+  apiUrl = "http://localhost:8080/api/reservas";
 
   httpOptions = {
     headers: new HttpHeaders({ 
@@ -20,8 +20,8 @@ export class ReservaService {
     private httpClient: HttpClient
   ) { }
 
-  public getReservas(): Observable<any> {
-    return this.httpClient.get(this.apiUrl);
+  public getReservas(): Observable<ReservaModel> {
+    return this.httpClient.get<ReservaModel>(this.apiUrl);
   }
   public getReservaPorId(id:number): Observable<any>{
     return this.httpClient.get(this.apiUrl+ '/' + id);

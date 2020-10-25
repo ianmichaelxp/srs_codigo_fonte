@@ -45,7 +45,7 @@ export class ReservaComponent implements OnInit {
     private messageService: MessageService,private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
-    this.getAll();
+    // this.getAll();
     this.itens =
     [
       {
@@ -148,6 +148,15 @@ export class ReservaComponent implements OnInit {
   showSaveDialog() {
     this.reserva = new ReservaModel;
     this.displaySaveDialog = true;
+  }
+
+
+  showEditDialog(reserva : ReservaModel)
+  {
+  }
+
+  save()
+  {
   }
 
 }

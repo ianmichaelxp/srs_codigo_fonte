@@ -1,3 +1,4 @@
+import { ReservaModel } from './../../shared/model/reserva.model';
 import { SalaEquipamentoService } from './../../shared/service/salaEquipamento.service';
 import { SalaService } from 'src/app/shared/service/sala.service';
 import { EquipamentoService } from './../../shared/service/equipamento.service';

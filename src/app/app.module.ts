@@ -58,7 +58,7 @@ import { ReservasCadastroComponent } from './components/reservas-cadastro/reserv
         RgPipe,
         ReservasCadastroComponent,
         SalaEquipamentoComponent,
-        SalasCadastroComponent        
+        SalasCadastroComponent,     
     ],
     imports: [
         BlockUIModule.forRoot({

@@ -9,7 +9,7 @@ import { SelectItem } from 'primeng';
 })
 export class EquipamentoService {
 
-  apiUrl:string = "http://localhost:8080/api/equipamentos/";
+  apiUrl = "http://localhost:8080/api/equipamentos/";
 
   httpOptions = {
     headers: new HttpHeaders({ 

@@ -29,7 +29,7 @@
                     <th>
                     <p-dropdown [options]="tiposSalas" [style]="{'width':'100%','min-width':'100%'}"
                         (onChange)="dt.filter($event.value, 'idTipoSala', 'equals')"
-                        styleClass="ui-column-filter" placeholder="Select a Status">
+                        placeholder="Select a Status">
                         <ng-template let-option pTemplate="item">
                             <span
                                 [class]="'sala-badge idTipoSala-' + option.value">{{option.label}}</span>
