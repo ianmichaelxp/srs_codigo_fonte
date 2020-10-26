@@ -133,7 +133,13 @@ export class SalaComponent implements OnInit {
         this.messageService.add({
           severity: 'success',
           summary: "Resultado", detail: "Sala salva com sucesso"
-        });
+        }),
+        error => {
+          this.messageService.add({
+            severity: 'error', summary: "Error",
+            detail: "Equipamento não pode ser salva, verifique os dados e tente novamente"
+          })
+        }
         this.displaySaveDialog = false;
         this.getAll();
       }

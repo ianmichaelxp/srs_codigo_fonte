@@ -145,10 +145,10 @@ export class ClienteComponent implements OnInit {
         this.messageService.add({severity: 'success',
         summary:"Resultado",detail:"Cliente editado com sucesso"});
       },
-      error =>
-      {
-        console.log(error);
-      }      
+      error=> {
+        this.messageService.add({severity: 'error',summary:"Error",
+        detail:"Cliente não pode ser editado, verifique os dados e tente novamente"})
+      }     
     )
   }
 
@@ -160,7 +160,8 @@ export class ClienteComponent implements OnInit {
         summary:'Error',detail:'Cliente removido'})
       },
       error=> {
-        console.log(error);
+        this.messageService.add({severity: 'error',summary:"Error",
+        detail:"Cliente não pode ser removido pois está cadastrado em uma reserva"})
       }
       
     )

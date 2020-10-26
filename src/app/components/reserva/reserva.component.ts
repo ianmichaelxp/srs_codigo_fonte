@@ -186,7 +186,8 @@ export class ReservaComponent implements OnInit {
     this.setDadosReserva(reserva);
     reserva.precoFinal = this.calculaPrecoFinal(reserva);
     this.reservaEquipamentoService.reservaEquipamentos = [];
-    this.reservaService.edit(reserva).subscribe((result : any)=>{
+    this.reservaService.edit(reserva).subscribe(()=>{
+      this.displayEditDialog = false;
       this.reserva = new ReservaModel;
       this.messageService.add({
         severity: 'success',
