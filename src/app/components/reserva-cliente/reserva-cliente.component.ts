@@ -30,6 +30,6 @@ export class ReservaClienteComponent implements OnInit {
   }
 
   exibirClientes(){
-    this.clientes.push(this.reservaSalaService.getCliente());
+    this.clientes = this.reservaSalaService.getCliente();
   }
 }

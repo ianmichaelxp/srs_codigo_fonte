@@ -30,8 +30,7 @@ export class ReservaSalaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sala = this.reservaSalaService.getSala();
-    this.salas.push(this.sala);
+    this.salas = this.reservaSalaService.getSala();
   }
   getTipoSala(id: number) {
     return TipoSala[id];

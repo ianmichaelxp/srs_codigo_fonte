@@ -10,8 +10,8 @@ import { Injectable, OnInit } from '@angular/core';
 })
 export class ReservaSalaService {
 
-  cliente : ClienteModel;
-  sala: SalaModel;
+  cliente : ClienteModel[];
+  sala: SalaModel[];
   reserva : ReservaModel;
   idCliente : number;
   idSala:number;
@@ -29,19 +29,21 @@ export class ReservaSalaService {
 
   getCliente()
   {
+    this.cliente = [];
     this.clienteService.getById(this.idCliente).subscribe(
       (result : any) => {
-      this.cliente = result;
+      this.cliente.push(result);
       }
     );
     return this.cliente;
   }
   
 
-  getSala(){
+  getSala() : SalaModel[]{
+    this.sala = [];
     this.salaService.getSalaPorId(this.idSala).subscribe(
       (result:any) => {
-        this.sala = result;
+        this.sala.push(result);
       });
       return this.sala;
   }
