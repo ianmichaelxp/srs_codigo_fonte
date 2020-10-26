@@ -2,6 +2,7 @@ import { SalaModel } from './../model/sala.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SelectItem } from 'primeng';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,18 @@ export class SalaService {
 
   public edit(sala: SalaModel): Observable<SalaModel> {
     return this.httpSalas.put<SalaModel>(this.apiUrl+"/"+sala.id, JSON.stringify(sala), this.httpOptions);
+  }
+
+  public getTipoSalas(tiposSalas: SelectItem[]){
+    tiposSalas =
+      [
+        { label: 'Tipo Sala: ', value: null },
+        { label: 'Sala de reunião', value: 1 },
+        { label: 'Sala de trabalho', value: 2 },
+        { label: 'Sala de video', value: 3 },
+        { label: 'Sala de palestras', value: 4 },
+        { label: 'Auditório', value: 5 }
+      ]
+      return tiposSalas;
   }
 }
