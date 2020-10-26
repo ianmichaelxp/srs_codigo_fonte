@@ -2,11 +2,12 @@ package com.basis.srs.dominio;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.mapping.ToOne;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -14,7 +15,6 @@ import java.time.LocalDateTime;
 @Table(name = "reserva")
 public class Reserva implements Serializable
 {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_reserva")
     @SequenceGenerator(name = "seq_reserva", allocationSize = 1, sequenceName = "seq_reserva")
@@ -29,12 +29,15 @@ public class Reserva implements Serializable
 
     @Column(name = "preco_final")
     private Double precoFinal;
+//aqui
+    @OneToMany(mappedBy = "reserva")
+    private List<ReservaEquipamento> equipamentos;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_cliente")
     private Cliente cliente;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_sala")
     private Sala sala;
 }

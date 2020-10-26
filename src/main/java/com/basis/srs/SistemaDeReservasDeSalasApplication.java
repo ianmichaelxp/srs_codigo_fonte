@@ -9,5 +9,6 @@ public class SistemaDeReservasDeSalasApplication
 	public static void main(String[] args)
 	{
 		SpringApplication.run(SistemaDeReservasDeSalasApplication.class, args);
+		System.out.println("uou");
 	}
 }
