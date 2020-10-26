@@ -24,8 +24,12 @@ export class ReservaClienteComponent implements OnInit {
     email: null
   };
   cols : any[];
+  
   ngOnInit(): void {  
-    this.cliente = this.reservaSalaService.getCliente();
-    this.clientes.push(this.cliente);
+    this.exibirClientes();
+  }
+
+  exibirClientes(){
+    this.clientes.push(this.reservaSalaService.getCliente());
   }
 }

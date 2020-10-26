@@ -2,11 +2,6 @@
 <div class="ui-g">
     <p-toast></p-toast>
     <p-panel header="Clientes">
-        <div style="margin-bottom: 20px;">
-            <p-menubar [model]="itens">
-            </p-menubar>
-        </div>
-
         <p-table #dt [value]="clientes" [columns]="cols" [paginator]="true" [rows]="7" [rowHover]="true"
             [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]">
             <ng-template pTemplate="header" let-columns>

@@ -10,6 +10,7 @@ import { ReservaEquipamentoService } from 'src/app/shared/service/reserva-equipa
 import { ReservaService } from 'src/app/shared/service/reserva.service';
 import { SalaService } from 'src/app/shared/service/sala.service';
 import { ReservaEquipamentoComponent } from '../reserva-equipamento/reserva-equipamento.component';
+import { ReservaSalaComponent } from '../reserva-sala/reserva-sala.component';
 
 @Component({
   selector: 'app-reserva',
@@ -77,12 +78,22 @@ export class ReservaComponent implements OnInit {
 
   mostrarCliente(id : number)
   {
-    this.reservaSalaService.setId(id);
+    this.reservaSalaService.setIdCliente(id);
     const ref = this.dialogService.open(ReservaClienteComponent, {
       header : "Cliente",
       width: '80%',
       modal: false
     });
+  }
+
+  mostrarSala(id:number)
+  {
+    this.reservaSalaService.setIdSala(id);
+    const ref = this.dialogService.open(ReservaSalaComponent,{
+      header : "Sala",
+      width: '80%',
+      modal: false
+    })
   }
 
   getAll() {
