@@ -4,6 +4,7 @@ import com.basis.srs.dominio.*;
 import com.basis.srs.repositorio.*;
 import com.basis.srs.servico.dto.ClienteDTO;
 import com.basis.srs.servico.dto.ReservaDTO;
+import com.basis.srs.servico.dto.ReservaEquipamentoDTO;
 import com.basis.srs.servico.excecao.RegraNegocioException;
 import com.basis.srs.servico.mapper.ClienteMapper;
 import com.basis.srs.servico.mapper.ReservaMapper;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class ReservaServicos {
     private final ClienteRepositorio clienteRepositorio;
     private final ReservaEquipamentoRepositorio reservaEquipamentoRepositorio;
     private final SalaRepositorio salaRepositorio;
+    private final EquipamentoRepositorio equipamentoRepositorio;
     private final ReservaMapper reservaMapper;
 
 
@@ -37,13 +40,16 @@ public class ReservaServicos {
 
     public ReservaDTO salvarReserva(ReservaDTO reservaDTO) {
 
-        {
 
             if (!clienteRepositorio.existsById(reservaDTO.getIdCliente())) {
                 throw new RegraNegocioException("Cadastro não pode ser cadastrada sem um cliente");
             }
             if (!salaRepositorio.existsById(reservaDTO.getIdSala())) {
                 throw new RegraNegocioException("Cadastro não pode ser feito sem uma sala");
+            }
+
+            if (verificaDatas(reservaDTO)) {
+            throw new RegraNegocioException("Sala já reservada nessa data");
             }
 
 
@@ -58,6 +64,9 @@ public class ReservaServicos {
 
             });
 
+
+
+
             reservaEquipamentoRepositorio.saveAll(reservaEquipamentos);
             return reservaMapper.toDto(reserva);
 
@@ -66,7 +75,7 @@ public class ReservaServicos {
 //        return reservaMapper.toDto(reservas);
 
 
-    }
+
         public void removerReserva(Integer id)
     {
         Reserva reserva = reservaRepositorio.findById(id).orElseThrow(()-> new RegraNegocioException(" não encontrada"));
@@ -76,6 +85,17 @@ public class ReservaServicos {
         reservaRepositorio.deleteById(id);
     }
 
+    public boolean verificaDatas(ReservaDTO reservaDTO){
+        List<Reserva> reservas = reservaRepositorio.getAllBySalaId(reservaDTO.getIdSala());
+
+        return reservas.stream().anyMatch(reserva -> !(reservaDTO.getDataInicio().isAfter(reserva.getDataFim())
+                | reservaDTO.getDataFim().isBefore(reserva.getDataInicio())));
+
+    }
+
 
 }
+
+
+
 

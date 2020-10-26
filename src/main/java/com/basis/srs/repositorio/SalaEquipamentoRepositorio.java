@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface SalaEquipamentoRepositorio extends JpaRepository<SalaEquipamento, SalaEquipamentoPK>
 {
 
+
+
 }
