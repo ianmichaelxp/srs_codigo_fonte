@@ -1,1 +1,52 @@
-<p>reservas-cadastro-sala works!</p>
+<html lang="pt-br">
+    <p-toast></p-toast>
+    <p-panel header="Salas">
+        <p-table #dt [value]="salas" [columns]="cols" [paginator]="true" [rows]="7"
+            [rowHover]="true" [showCurrentPageReport]="true" [paginator]="true"
+            currentPageReportTemplate="Mostrando de {first} até {last} de {totalRecords} salas" [rows]="10"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th>
+                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'descricao', 'startsWith')"
+                            placeholder="Pesquisar por descricao" class="ui-column-filter">
+                    </th> 
+                </tr>
+                <tr>
+                    <th pSortableColumn="descricao">Descrição <p-sortIcon field="descricao"></p-sortIcon></th>
+                    <th pSortableColumn="capacidadePessoas">Capacidade de Pessoas <p-sortIcon field="capacidadePessoas"></p-sortIcon></th>
+                    <th pSortableColumn="precoDiario">Preço Diário <p-sortIcon field="precoDiario"></p-sortIcon></th>
+                    <th>
+                        <p-dropdown [options]="tiposSalas"
+                            (onChange)="dt.filter($event.value, 'idTipoSala', 'equals')"
+                            styleClass="ui-column-filter" placeholder="Select a Status" [showClear]="true">
+                            <ng-template let-option pTemplate="item">
+                                <span
+                                    [class]="'sala-badge idTipoSala-' + option.value">{{option.label}}</span>
+                            </ng-template>
+                        </p-dropdown>
+                    </th>
+                    <th>Opções</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-sala let-columns="columns">
+                <tr [pSelectableRow]="sala">
+                    <td class="break">{{sala.descricao}}</td>
+                    <td >{{sala.capacidadePessoas}}</td>
+                    <td>R$ {{sala.precoDiario}}</td>
+                    <td>{{getTipoSala(sala.idTipoSala)}}</td>
+                    <td>
+                        <span style="float: center">
+                            <button pButton type="button" (click)="selecionar(sala)">
+                                <span class= "material-icons" style="font-size: medium; margin-top: 5px;">meeting_room</span>Selecionar
+                            </button>
+                        </span>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                Existem {{salas?.length}} salas
+            </ng-template>
+        </p-table>
+    </p-panel>
+</html>

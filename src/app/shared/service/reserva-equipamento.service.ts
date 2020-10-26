@@ -9,10 +9,11 @@ import { EquipamentoService } from './equipamento.service';
 export class ReservaEquipamentoService {
 
   equipamentos: EquipamentoSalaModel[];
-  reserva : ReservaModel;
-  equipamentosSelecionados : EquipamentoSalaModel[] = [];
-  reservaEquipamentos : ReservaEquipamento[] = [];
-  equipamento : EquipamentoSalaModel;
+  reserva: ReservaModel;
+  equipamentosSelecionados: EquipamentoSalaModel[] = [];
+  reservaEquipamentos: ReservaEquipamento[] = [];
+  equipamento: EquipamentoSalaModel;
+  valorDiario: number;
 
   constructor(private equipamentoService: EquipamentoService) {
   }
@@ -28,8 +29,7 @@ export class ReservaEquipamentoService {
     return this.equipamentos;
   }
 
-  private setEquipamentosById(id: number, reserva : ReservaEquipamento) 
-  {
+  private setEquipamentosById(id: number, reserva: ReservaEquipamento) {
     this.equipamentoService.getById(id).subscribe(
       (result: any) => {
         this.equipamento = result;
@@ -42,20 +42,28 @@ export class ReservaEquipamentoService {
     )
   }
 
-  getSalaEquipamentos()
-  {
-    this.reservaEquipamentos = [];
+  getReservaEquipamentos() {
+    this.valorDiario = 0;
     for (let index = 0; index < this.equipamentosSelecionados.length; index++) {
       let reservaEquipamento = new ReservaEquipamento;
       reservaEquipamento.idEquipamento = this.equipamentosSelecionados[index].id;
       reservaEquipamento.quantidade = this.equipamentosSelecionados[index].quantidade;
-      this.reservaEquipamentos.push(reservaEquipamento);      
+      this.valorDiario += (this.equipamentosSelecionados[index].quantidade *
+        this.equipamentosSelecionados[index].precoDiario);
+      this.reservaEquipamentos.push(reservaEquipamento);
     }
     return this.reservaEquipamentos;
   }
 
-  setEquipamentosSelecionados(equipamento : EquipamentoSalaModel) 
-  {
+  setEquipamentosSelecionados(equipamento: EquipamentoSalaModel) {
     this.equipamentosSelecionados.push(equipamento);
   }
+
+  setReservaEquipamentos(reserva: ReservaModel) {
+    this.reservaEquipamentos = [];
+    reserva.equipamentos.forEach(element => {
+      this.reservaEquipamentos.push(element);
+    });
+  }
+
 }

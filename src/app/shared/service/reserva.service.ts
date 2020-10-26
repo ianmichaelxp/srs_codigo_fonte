@@ -35,6 +35,6 @@ export class ReservaService {
   }
   
   public edit(reserva: ReservaModel): Observable<any> {
-    return this.httpClient.put(this.apiUrl,JSON.stringify(reserva), this.httpOptions);
+    return this.httpClient.put(this.apiUrl+'/'+reserva.id,JSON.stringify(reserva), this.httpOptions);
   }
 }

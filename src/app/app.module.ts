@@ -1,3 +1,5 @@
+import { ReservasCadastroSalaComponent } from './components/reservas-cadastro-sala/reservas-cadastro-sala.component';
+import { ReservasCadastroClienteComponent } from './components/reservas-cadastro-cliente/reservas-cadastro-cliente.component';
 import { ReservaEquipamentoComponent } from './components/reserva-equipamento/reserva-equipamento.component';
 import { SalaEquipamentoComponent } from './components/sala-equipamento/sala-equipamento.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -62,7 +64,9 @@ import { ReservaSalaComponent } from './components/reserva-sala/reserva-sala.com
         SalaEquipamentoComponent,
         SalasCadastroComponent,
         ReservaClienteComponent,
-        ReservaSalaComponent,     
+        ReservaSalaComponent,  
+        ReservasCadastroClienteComponent,
+        ReservasCadastroSalaComponent   
     ],
     imports: [
         BlockUIModule.forRoot({

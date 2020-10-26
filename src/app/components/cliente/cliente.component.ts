@@ -25,6 +25,7 @@ export class ClienteComponent implements OnInit {
   }
   ];
   erro: any;
+  dataAtual: Date = new Date();
   itens: MenuItem[];
   cols: any[];
   displaySaveDialog: boolean = false;
@@ -116,6 +117,7 @@ export class ClienteComponent implements OnInit {
   }
   
   save(){
+    this.verifyErrors();
     let cliente: ClienteModel = this.removeMask(this.cliente);
     this.clienteService.save(cliente).subscribe(
       (result:any)=>{
@@ -132,7 +134,9 @@ export class ClienteComponent implements OnInit {
       
   }
   edit(cliente: ClienteModel)
-  {   let clienteNovo: ClienteModel = this.removeMask(cliente);
+  {   
+    this.verifyErrors();
+    let clienteNovo: ClienteModel = this.removeMask(cliente);
     this.clienteService.edit(clienteNovo).subscribe(
       ()=> {
         this.displayEditDialog = false;
@@ -173,5 +177,31 @@ export class ClienteComponent implements OnInit {
     this.cliente = new ClienteModel;
     this.selectedCliente = new ClienteModel;
     this.displaySaveDialog = true;
+  }
+  verifyErrors(): boolean {
+    try {
+      if (this.cliente.nome === undefined || 
+        this.cliente.nome === null || 
+        this.cliente.nome === "" ) throw "Nome vazio";
+
+        if (this.cliente.endereco === undefined || 
+          this.cliente.endereco === null || 
+          this.cliente.endereco === "") throw "Endereço vazio";
+      
+        if (this.cliente.cpf === null || this.cliente.cpf.length<11) throw "CPF invalido";
+      
+        if (this.cliente.rg == null || this.cliente.rg.length < 7) throw "Rg invalido";
+        if (this.cliente.telefone == null || this.cliente.telefone.length < 11) throw "Telefone invalido";
+        if (this.cliente.dataNasc == null || this.cliente.dataNasc > this.dataAtual) throw "Data invalida";
+        if (this.cliente.email == null || this.cliente.email.search("@")==-1 ||
+        this.cliente.email.search(".") == -1 || this.cliente.email =="" ) throw "Email invalido";
+    } catch (err) {
+      this.messageService.add({
+        severity: 'error', summary: "Erro",
+        detail: err
+      });
+      return true;
+    }
+    return false;
   }
 }

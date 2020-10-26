@@ -1,3 +1,7 @@
+import { ReservaClienteService } from './../../shared/service/reserva-cliente.service';
+import { ReservasCadastroSalaComponent } from './../reservas-cadastro-sala/reservas-cadastro-sala.component';
+import { ReservasCadastroClienteComponent } from './../reservas-cadastro-cliente/reservas-cadastro-cliente.component';
+import { ReservasCadastroComponent } from './../reservas-cadastro/reservas-cadastro.component';
 import { ReservaSalaService } from './../../shared/service/reserva-sala.service';
 import { ReservaClienteComponent } from './../reserva-cliente/reserva-cliente.component';
 import { Component, OnInit } from '@angular/core';
@@ -38,7 +42,7 @@ export class ReservaComponent implements OnInit {
   constructor(private reservaService: ReservaService, private reservaEquipamentoService: ReservaEquipamentoService,
     private clienteService: ClienteService, private salaService: SalaService, public dialogService: DialogService,
     private messageService: MessageService, private confirmationService: ConfirmationService,
-    private reservaSalaService : ReservaSalaService) { }
+    private reservaSalaService: ReservaSalaService, private reservaClienteService: ReservaClienteService) { }
 
   ngOnInit(): void {
     this.getAll();
@@ -76,21 +80,19 @@ export class ReservaComponent implements OnInit {
     )
   }
 
-  mostrarCliente(id : number)
-  {
+  mostrarCliente(id: number) {
     this.reservaSalaService.setIdCliente(id);
     const ref = this.dialogService.open(ReservaClienteComponent, {
-      header : "Cliente",
+      header: "Cliente",
       width: '80%',
       modal: false
     });
   }
 
-  mostrarSala(id:number)
-  {
+  mostrarSala(id: number) {
     this.reservaSalaService.setIdSala(id);
-    const ref = this.dialogService.open(ReservaSalaComponent,{
-      header : "Sala",
+    const ref = this.dialogService.open(ReservaSalaComponent, {
+      header: "Sala",
       width: '80%',
       modal: false
     })
@@ -156,12 +158,81 @@ export class ReservaComponent implements OnInit {
   }
 
 
-  showEditDialog(reserva: ReservaModel)
-  {
+  showEditDialog(reserva: ReservaModel) {
+    this.reserva = reserva;
+    this.displayEditDialog = true;
+    this.getAll();
   }
 
-  save() 
-  {
+  save(reserva: ReservaModel) {
+    this.setDadosReserva(reserva);
+    reserva.precoFinal = this.calculaPrecoFinal(reserva);
+    this.reservaEquipamentoService.reservaEquipamentos = [];
+    this.reservaService.save(reserva).subscribe(
+      (result: any) => {
+        this.reserva = new ReservaModel;
+        this.messageService.add({
+          severity: 'success',
+          summary: "Resultado", detail: "Reserva salva com sucesso"
+        });
+        this.displaySaveDialog = false;
+        this.getAll();
+      }
+    )
   }
 
+  editar(reserva: ReservaModel)
+  {
+    this.setDadosReserva(reserva);
+    reserva.precoFinal = this.calculaPrecoFinal(reserva);
+    this.reservaEquipamentoService.reservaEquipamentos = [];
+    this.reservaService.edit(reserva).subscribe((result : any)=>{
+      this.reserva = new ReservaModel;
+      this.messageService.add({
+        severity: 'success',
+        summary: "Resultado", detail: "Reserva editada com sucesso"
+      });
+      this.displayEditDialog = false;
+      this.getAll();
+    }
+    )
+  }
+
+  private setDadosReserva(reserva: ReservaModel) {
+    reserva.idCliente = this.reservaClienteService.getCliente();
+    reserva.idSala = this.reservaSalaService.getIdSala();
+    reserva.equipamentos = this.reservaEquipamentoService.getReservaEquipamentos();
+  }
+
+  private calculaPrecoFinal(reserva: ReservaModel) {
+    var precoDiario = this.reservaEquipamentoService.valorDiario;
+    precoDiario += this.reservaSalaService.valorDiario;
+    var dateI = new Date(reserva.dataInicio);
+    var dateF = new Date(reserva.dataFim);
+    var tempo = Math.abs(dateI.getTime() - dateF.getTime());
+    const dias = Math.ceil(tempo / (1000 * 60 * 60 * 24));
+    reserva.precoFinal = precoDiario * dias;
+    return reserva.precoFinal;
+  }
+
+  showClientes() {
+    const ref = this.dialogService.open(ReservasCadastroClienteComponent, {
+      width: '80%',
+      modal: false
+    });
+  }
+
+  showSalas() {
+    const ref = this.dialogService.open(ReservasCadastroSalaComponent, {
+      width: '80%',
+      modal: false
+    });
+  }
+
+  showEquipamentos() {
+    const ref = this.dialogService.open(ReservasCadastroComponent, {
+      width: '80%',
+      modal: false
+    });
+  }
 }

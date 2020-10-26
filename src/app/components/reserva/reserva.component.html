@@ -27,16 +27,15 @@
                     <td>
                         <span style="float: center">
                             <button pButton type="button" (click)="mostrarCliente(reserva.idCliente)" style="font-size: 13px; margin-top: 5px;">
-                                <i class="pi pi-desktop" style="padding-top: 6px; padding-left: 5px;"></i>
-                                <span style="padding-left: 5px; font-size: 14px;">Mostrar</span>
+                                <i class="pi pi-users" style="padding-top: 6px; padding-left: 5px;"></i>
+                                <span style="padding-left: 5px; font-size: 13px;">Mostrar</span>
                             </button>
                         </span>
                     </td>
                     <td>
                         <span style="float: center">
                             <button pButton type="button" (click)="mostrarSala(reserva.idSala)" style="font-size: 13px; margin-top: 5px;">
-                                <i class="pi pi-desktop" style="padding-top: 6px; padding-left: 5px;"></i>
-                                <span style="padding-left: 5px; font-size: 14px;">Mostrar</span>
+                                <span class= "material-icons" style="font-size: 13px; margin-top: 5px;">meeting_room</span>Mostrar
                             </button>
                         </span>
                     </td>
@@ -44,7 +43,7 @@
                         <span style="float: center">
                             <button pButton type="button" (click)="show(reserva)" style="font-size: 13px; margin-top: 5px;">
                                 <i class="pi pi-desktop" style="padding-top: 6px; padding-left: 5px;"></i>
-                                <span style="padding-left: 5px; font-size: 14px;">Mostrar</span>
+                                <span style="padding-left: 5px; font-size: 13px;">Mostrar</span>
                             </button>
                         </span>
                     </td>
@@ -72,4 +71,63 @@
             </p-footer>
         </p-confirmDialog>
     </p-panel>
+    <p-dialog header="Nova Reserva" [(visible)]="displaySaveDialog">
+        <div class="dialog">
+            <div class="divPad">  
+                <label for="dataInicio">Data Inicio</label><br>           
+                <input type="date" pInputText id="dataInicio" [(ngModel)]="reserva.dataInicio" required autofocus /><br>  
+            </div>
+            <div class="divPad">
+                <label for="dataFim">Data Fim</label><br>                
+                <input type="date" pInputText id="dataFim" [(ngModel)]="reserva.dataFim" required autofocus />
+            </div>
+            <div class="divPad">
+                <button pButton type="button" (click)="showClientes()">
+                    <i class="pi pi-users" style="padding-top: 7px; font-size: 12px;"></i>
+                    <span style="font-size: 14px;">Clientes</span>
+                </button>
+            </div>
+            <div class="divPad">
+                <button pButton type="button" (click)="showSalas()">
+                    <span class= "material-icons" style="font-size: medium; margin-top: 5px;">meeting_room</span>Salas
+                </button>
+            </div>
+            <div class="divPad">
+                <button pButton type="button" (click)="showEquipamentos()">
+                    <i class="pi pi-desktop" style="padding-top: 7px; font-size: 10px;"></i>
+                    <span style="font-size: 14px;">Equipamentos</span>
+                </button>
+            </div>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-check"
+                    (click)="save(reserva)" label="Salvar"></button>
+            </div>
+        </p-footer>
+    </p-dialog>
+    <p-dialog header="Editar Reserva" [(visible)]="displayEditDialog">
+        <div class="dialog">
+            <div class="divPad">  
+                <label for="dataInicio">Data Inicio</label><br>           
+                <input type="date" pInputText id="dataInicio" [(ngModel)]="reserva.dataInicio" required autofocus /><br>  
+            </div>
+            <div class="divPad">
+                <label for="dataFim">Data Fim</label><br>                
+                <input type="date" pInputText id="dataFim" [(ngModel)]="reserva.dataFim" required autofocus />
+            </div>
+            <div class="divPad">
+                <button pButton type="button" (click)="showEquipamentos()">
+                    <i class="pi pi-desktop" style="padding-top: 7px; font-size: 10px;"></i>
+                    <span style="font-size: 14px;">Equipamentos</span>
+                </button>
+            </div>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button style="background-color: rgb(44, 44, 44);color: white;" type="button" pButton icon="pi pi-check"
+                    (click)="editar(reserva)" label="Salvar"></button>
+            </div>
+        </p-footer>
+    </p-dialog>
 </div>

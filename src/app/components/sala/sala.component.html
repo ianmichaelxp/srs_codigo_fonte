@@ -11,7 +11,7 @@
             [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]">
             <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th>
+                    <th colspan="6">
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'descricao', 'startsWith')"
                             placeholder="Pesquisar descrição" class="ui-column-filter" maxlength="255">
                     </th>
@@ -58,13 +58,15 @@
                     </td>
                     <td style="text-align: center;">
                         <span style="float: center">
-                            <button pButton type="button" (click)="showEditDialog(sala)">
-                                <i class="pi pi-pencil" style="padding-top: 6px;"></i>
+                            <button pButton type="button" (click)="showEditDialog(sala)"
+                                style="font-size: 14px; padding-top: 5px">
+                                <i class="pi pi-pencil" style="padding-top: 2px;"></i>
                                 <span style="padding-left: 5px;">Editar</span>
-                            </button>
-                            <button pButton type="button" style="font-size: 13px; margin-top: 5px;" (click)="confirm(sala)">
-                                <i class="pi pi-trash" style="padding-top: 6px; padding-left: 5px;"></i>
-                                <span style="padding-left: 5px;">Excluir</span>
+                            </button><br>
+                            <button pButton type="button" style="font-size: 14px; padding-top: 5px; margin-top: 15px;"
+                                (click)="confirm(sala)">
+                                <i class="pi pi-trash"></i>
+                                <span style="padding-left: 5px; justify-content: center;">Excluir</span>
                             </button>
                         </span>
                     </td>

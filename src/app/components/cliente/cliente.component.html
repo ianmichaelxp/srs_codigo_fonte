@@ -7,44 +7,42 @@
             </p-menubar>
         </div>
 
-        <p-table #dt [value]="clientes" [columns]="cols" [paginator]="true" [rows]="7" [rowHover]="true"
-            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]">
+        <p-table #dt [value]="clientes" [columns]="cols" [paginator]="true" [responsive]="true" [rowHover]="true"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Mostrando de {first} até {last} de {totalRecords} clientes" [rows]="10"
+            [rowsPerPageOptions]="[10,25,50]">
             <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th>
+                    <th colspan="5">
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'nome', 'startsWith')"
                             placeholder="Buscar por nome" class="ui-column-filter" maxlength="120">
                     </th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
                     <th>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'cpf', 'startsWith')"
                             placeholder="Buscar por cpf" class="ui-column-filter" maxlength="11">
                     </th>
-                    <th>
+                    <th colspan="2">
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'email', 'startsWith')"
                             placeholder="Buscar por email" class="ui-column-filter" maxlength="255">
                     </th>
                 </tr>
 
                 <tr>
-                    <th pSortableColumn="nome">NOME <p-sortIcon field="nome"></p-sortIcon>
+                    <th pSortableColumn="nome">Nome <p-sortIcon field="nome"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="endereco">ENDEREÇO <p-sortIcon field="endereco"></p-sortIcon>
+                    <th pSortableColumn="endereco">Endereço <p-sortIcon field="endereco"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="dataNasc">DATA DE NASCIMENTO <p-sortIcon field="dataNasc"></p-sortIcon>
+                    <th pSortableColumn="dataNasc">Data de nascimento <p-sortIcon field="dataNasc"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="telefone">TELEFONE<p-sortIcon field="telefone"></p-sortIcon>
+                    <th pSortableColumn="telefone">Telefone<p-sortIcon field="telefone"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="rg">RG<p-sortIcon field="rg"></p-sortIcon>
+                    <th pSortableColumn="rg">Rg<p-sortIcon field="rg"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="cpf">CPF<p-sortIcon field="cpf"></p-sortIcon>
+                    <th pSortableColumn="cpf">Cpf<p-sortIcon field="cpf"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="email">EMAIL<p-sortIcon field="email"></p-sortIcon>
+                    <th pSortableColumn="email">E-mail<p-sortIcon field="email"></p-sortIcon>
                     </th>
-                    <th>OPÇÕES</th>
+                    <th>Opções</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-cliente let-columns="columns">
@@ -59,11 +57,11 @@
                     <td style="text-align: center;">
                         <span style="float: center">
                             <button pButton type="button" (click)="showEditDialog(cliente)"
-                                style="font-size: 13px; padding-top: 5px;">
+                                style="font-size: 14px; padding-top: 5px;">
                                 <i class="pi pi-pencil" style="padding-top: 2px;"></i>
                                 <span style="padding-left: 5px;">Editar</span>
                             </button>
-                            <button pButton type="button" style="font-size: 13px; padding-top: 5px; margin-top: 15px;"
+                            <button pButton type="button" style="font-size: 14px; padding-top: 5px; margin-top: 15px;"
                                 (click)="confirm(cliente)">
                                 <i class="pi pi-trash"></i>
                                 <span style="padding-left: 5px; justify-content: center;">Excluir</span>
@@ -71,11 +69,6 @@
                         </span>
                     </td>
                 </tr>
-            </ng-template>
-            <ng-template pTemplate="summary">
-                <div class="p-d-flex p-ai-center p-jc-between">
-                    Total de {{clientes ? clientes.length : 0 }} clientes.
-                </div>
             </ng-template>
         </p-table>
     </p-panel>

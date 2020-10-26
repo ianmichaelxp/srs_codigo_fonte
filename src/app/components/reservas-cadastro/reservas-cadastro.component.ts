@@ -15,11 +15,6 @@ export class ReservasCadastroComponent implements OnInit {
   equipamentos: EquipamentoSalaModel[];
   tiposEquipamentos: SelectItem[];
   cols: any[];
-  reservaEquipamento : ReservaEquipamento = {
-    idReserva: null,
-    idEquipamento: null,
-    quantidade: null
-}
   constructor(private equipamentoService : EquipamentoService, 
     private reservaEquipamentoService: ReservaEquipamentoService) 
   {
@@ -48,7 +43,5 @@ export class ReservasCadastroComponent implements OnInit {
   selecionarEquip(equipamento : EquipamentoSalaModel)
   {
     this.reservaEquipamentoService.setEquipamentosSelecionados(equipamento);
-    this.reservaEquipamento = new ReservaEquipamento;
   }
-
 }

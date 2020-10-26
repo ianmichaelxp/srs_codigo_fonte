@@ -7,11 +7,7 @@
             [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]">
             <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, 'id', 'startsWith')"
-                            placeholder="Pesquisar por id" class="ui-column-filter" pKeyFilter="int">
-                    </th> 
-                    <th>
+                    <th colspan="4">
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'nome', 'startsWith')"
                             placeholder="Pesquisar por nome" class="ui-column-filter" maxlength="255">
                     </th>

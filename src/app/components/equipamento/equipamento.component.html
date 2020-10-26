@@ -13,7 +13,7 @@
             [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]">
             <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th>
+                    <th colspan="4">
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'nome', 'startsWith')"
                             placeholder="Pesquisar por nome" class="ui-column-filter" maxlength="255">
                     </th>

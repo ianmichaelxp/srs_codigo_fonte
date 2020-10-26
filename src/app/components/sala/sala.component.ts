@@ -1,5 +1,4 @@
 import { SalasCadastroComponent } from './../salas-cadastro/salas-cadastro.component';
-import { SalaEquipamentoService } from './../../shared/service/salaEquipamento.service';
 import { SalaEquipamentoComponent } from './../sala-equipamento/sala-equipamento.component';
 
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -7,6 +6,7 @@ import { SalaService } from './../../shared/service/sala.service';
 import { SalaEquipamento, SalaModel, TipoSala } from './../../shared/model/sala.model';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService, SelectItem, ConfirmationService } from 'primeng/api';
+import { SalaEquipamentoService } from 'src/app/shared/service/salaEquipamento.service';
 
 @Component({
   selector: 'app-sala',
@@ -125,6 +125,7 @@ export class SalaComponent implements OnInit {
 
   save() {
     this.sala.equipamentos = this.salaEquipamentoService.getSalaEquipamentos();
+    this.sala.precoDiario += this.salaEquipamentoService.precoSala;
     this.salaEquipamentoService.salaEquipamentos = [];
     this.salaService.save(this.sala).subscribe(
       (result: any) => {
@@ -142,6 +143,7 @@ export class SalaComponent implements OnInit {
   editEquipWithButton() {
     this.salaEquipamentoService.setSalaEquipamentos(this.sala);
     this.sala.equipamentos = this.salaEquipamentoService.getSalaEquipamentos();
+    this.sala.precoDiario += this.salaEquipamentoService.precoSala;
     this.salaEquipamentoService.salaEquipamentos = [];
     this.salaService.edit(this.sala).subscribe(
       () => {
