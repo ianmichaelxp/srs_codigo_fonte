@@ -16,7 +16,7 @@ export class ReservaSalaService {
   reserva : ReservaModel;
   idCliente : number;
   idSala:number;
-  valorDiario: number;
+  valorDiario: number = 0;
   constructor(private clienteService : ClienteService, private salaService: SalaService) { }
 
   setIdCliente(id : number)
@@ -61,5 +61,8 @@ export class ReservaSalaService {
   }
   getTipoSala(id: number) {
     return TipoSala[id];
+  }
+  getValorDiario(){
+    return this.valorDiario;
   }
 }

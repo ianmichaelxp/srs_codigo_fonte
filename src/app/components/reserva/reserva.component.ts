@@ -202,22 +202,31 @@ export class ReservaComponent implements OnInit {
   }
 
   private setDadosReserva(reserva: ReservaModel) {
-    reserva.idCliente = this.reservaClienteService.getCliente();
-    reserva.idSala = this.reservaSalaService.getIdSala();
+    
+    if(this.reservaClienteService.getCliente!=null)
+      reserva.idCliente = this.reservaClienteService.getCliente();
+    if(this.reservaSalaService.getSala!=null)
+      reserva.idSala = this.reservaSalaService.getIdSala();
     reserva.equipamentos = this.reservaEquipamentoService.getReservaEquipamentos();
   }
 
   private calculaPrecoFinal(reserva: ReservaModel) {
-    var precoDiario = this.reservaEquipamentoService.valorDiario;
+    let precoDiario = this.reservaEquipamentoService.valorDiario;
+    console.log("precodiario1 "+precoDiario);
     precoDiario += this.reservaSalaService.valorDiario;
-    var dateI = new Date(reserva.dataInicio);
-    var dateF = new Date(reserva.dataFim);
-    var tempo = Math.abs(dateI.getTime() - dateF.getTime());
-    const dias = Math.ceil(tempo / (1000 * 60 * 60 * 24));
+    console.log("precodiario2 "+this.reservaSalaService.valorDiario);
+    let dateI = new Date(reserva.dataInicio);
+    let dateF = new Date(reserva.dataFim);
+    let tempo = Math.abs(dateI.getTime() - dateF.getTime());
+    let dias = Math.ceil(tempo / (1000 * 60 * 60 * 24));
+    console.log("dias " +dias);
     reserva.precoFinal = precoDiario * dias;
+    console.log(reserva.precoFinal);
     return reserva.precoFinal;
   }
+  private calculaPrecoEditado(reserva: ReservaModel){
 
+  }
   showClientes() {
     const ref = this.dialogService.open(ReservasCadastroClienteComponent, {
       width: '80%',
