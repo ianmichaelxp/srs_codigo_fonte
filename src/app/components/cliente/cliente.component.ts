@@ -13,17 +13,7 @@ import {ConfirmationService} from 'primeng/api';
 })
 export class ClienteComponent implements OnInit {
 
-  clientes: ClienteModel[] = [{
-    id: 1,
-    nome: "Matheus Henrique Lima Silva",
-    endereco: "Rua rio de Janeiro",
-    dataNasc: new Date(1996, 4, 21),
-    telefone: "83999515180",
-    rg: "1234567",
-    cpf: "70062928406",
-    email: "matheus@gmail.com"
-  }
-  ];
+  clientes: ClienteModel[] = [];
   erro: any;
   dataAtual: Date = new Date();
   itens: MenuItem[];
@@ -56,7 +46,7 @@ export class ClienteComponent implements OnInit {
   constructor(private clienteService: ClienteService,
     private messageService: MessageService, private confirmationService: ConfirmationService
     ) { 
-
+      
   }
 
   hideDialog(){
@@ -122,12 +112,12 @@ export class ClienteComponent implements OnInit {
     this.clienteService.save(cliente).subscribe(
       (result:any)=>{
         this.clientes.push(result);
-        this.messageService.add({severity: 'success',
+        this.messageService.add({severity: 'success',key: 'myKey1',
         summary:"Resultado",detail:"Cliente salvo com sucesso"});
         this.hideDialog();
       },
       error=> {
-        this.messageService.add({severity: 'error',summary:"Error",
+        this.messageService.add({severity: 'error',summary:"Error",key: 'myKey1',
         detail:"Cliente não pode ser adicionado, verifique os dados e tente novamente"})
       }
       )
@@ -142,11 +132,11 @@ export class ClienteComponent implements OnInit {
         this.displayEditDialog = false;
         this.getAll();
         this.selectedCliente = new ClienteModel;
-        this.messageService.add({severity: 'success',
+        this.messageService.add({severity: 'success',key: 'myKey1',
         summary:"Resultado",detail:"Cliente editado com sucesso"});
       },
       error=> {
-        this.messageService.add({severity: 'error',summary:"Error",
+        this.messageService.add({severity: 'error',summary:"Error",key: 'myKey1',
         detail:"Cliente não pode ser editado, verifique os dados e tente novamente"})
       }     
     )
@@ -156,11 +146,11 @@ export class ClienteComponent implements OnInit {
     this.clienteService.delete(cliente).subscribe(
       ()=>{
         this.getAll();
-        this.messageService.add({severity: 'sucess', 
+        this.messageService.add({severity: 'sucess',key: 'myKey1',
         summary:'Error',detail:'Cliente removido'})
       },
       error=> {
-        this.messageService.add({severity: 'error',summary:"Error",
+        this.messageService.add({severity: 'error',summary:"Error",key: 'myKey1',
         detail:"Cliente não pode ser removido pois está cadastrado em uma reserva"})
       }
       
@@ -199,7 +189,7 @@ export class ClienteComponent implements OnInit {
     } catch (err) {
       this.messageService.add({
         severity: 'error', summary: "Erro",
-        detail: err
+        detail: err,key: 'myKey1',
       });
       return true;
     }

@@ -1,13 +1,13 @@
 <html lang="pt-br">
 <div class="ui-g">
-    <p-toast></p-toast>
+    <p-toast key="myKey1" position="bottom-right"></p-toast>
     <p-panel header="Clientes">
         <div style="margin-bottom: 20px;">
             <p-menubar [model]="itens">
             </p-menubar>
         </div>
 
-        <p-table #dt [value]="clientes" [columns]="cols" [paginator]="true" [responsive]="true" [rowHover]="true"
+        <p-table #dt [value]="clientes" [columns]="cols" [paginator]="true" [rowHover]="true"
             [showCurrentPageReport]="true"
             currentPageReportTemplate="Mostrando de {first} até {last} de {totalRecords} clientes" [rows]="10"
             [rowsPerPageOptions]="[10,25,50]">
