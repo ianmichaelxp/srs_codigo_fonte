@@ -1,5 +1,6 @@
+import { SalaEquipamentoService } from 'src/app/shared/service/salaEquipamento.service';
 import { Injectable } from '@angular/core';
-import { EquipamentoSalaModel } from '../model/equipamento.model';
+import { EquipamentoModel } from '../model/equipamento.model';
 import { ReservaEquipamento, ReservaModel } from '../model/reserva.model';
 import { EquipamentoService } from './equipamento.service';
 
@@ -8,57 +9,60 @@ import { EquipamentoService } from './equipamento.service';
 })
 export class ReservaEquipamentoService {
 
-  equipamentos: EquipamentoSalaModel[];
-  reserva: ReservaModel;
-  equipamentosSelecionados: EquipamentoSalaModel[] = [];
+  equipamentos: EquipamentoModel[] = [];
+  reserva: ReservaModel = new ReservaModel;
+  equipamentosSelecionados: ReservaEquipamento[] = [];
+  equipamento: EquipamentoModel;
   reservaEquipamentos: ReservaEquipamento[] = [];
-  equipamento: EquipamentoSalaModel;
   valorDiario: number;
 
-  constructor(private equipamentoService: EquipamentoService) {
+  constructor(private equipamentoService: EquipamentoService, salaEquipamentoService: SalaEquipamentoService) {
+    this.getAllEquipamentos();
+  }
+
+  getValorDiario() {
+    return this.valorDiario;
   }
 
 
-  getEquipamentos(reserva: ReservaModel): EquipamentoSalaModel[] {
-    this.equipamentosSelecionados = [];
+  setReserva(reserva: ReservaModel) {
     this.reserva = reserva;
-    this.equipamentos = [];
-    reserva.equipamentos.forEach(element => {
-      this.setEquipamentosById(element.idEquipamento, element);
+  }
+
+  getAllEquipamentosReserva() {
+    let equipamentosSel = [];
+    this.reserva.equipamentos.forEach(element => {
+      equipamentosSel.push(this.equipamentos.find(e => e.id === element.idEquipamento));
+    });
+    return equipamentosSel;
+  }
+
+  getAllEquipamentos(): EquipamentoModel[] {
+    this.equipamentoService.getEquipamentos().subscribe((result: EquipamentoModel[]) => {
+      this.equipamentos = result;
     })
     return this.equipamentos;
   }
 
-  private setEquipamentosById(id: number, reserva: ReservaEquipamento) {
-    this.equipamentoService.getById(id).subscribe(
-      (result: any) => {
-        this.equipamento = result;
-        this.equipamento.quantidade = reserva.quantidade;
-        this.equipamentos.push(this.equipamento);
-      },
-      error => {
-        console.log(error);
-      }
-    )
-  }
-
   getReservaEquipamentos() {
-    this.valorDiario = 0;
-    for (let index = 0; index < this.equipamentosSelecionados.length; index++) {
-      let reservaEquipamento = new ReservaEquipamento;
-      reservaEquipamento.idEquipamento = this.equipamentosSelecionados[index].id;
-      reservaEquipamento.quantidade = this.equipamentosSelecionados[index].quantidade;
-      this.valorDiario += (this.equipamentosSelecionados[index].quantidade *
-        this.equipamentosSelecionados[index].precoDiario);
-      this.reservaEquipamentos.push(reservaEquipamento);
-    }
-    return this.reservaEquipamentos;
+    return this.equipamentosSelecionados;
   }
 
-  setEquipamentosSelecionados(equipamento: EquipamentoSalaModel) {
+  getSomaEquipamentos(reserva: ReservaModel) {
+    let valorEquip = 0;
+      reserva.equipamentos.forEach(element => {
+        valorEquip += element.quantidade *this.getAllEquipamentos().find(e => e.id === element.idEquipamento).precoDiario;
+    }); 
+    return valorEquip;
+  }
+
+  //utilizado ao setar quantidade e equipamento
+  setEquipamentosSelecionados(equipamento: ReservaEquipamento) {
     this.equipamentosSelecionados.push(equipamento);
   }
 
+
+  //utilizado no editar
   setReservaEquipamentos(reserva: ReservaModel) {
     this.reservaEquipamentos = [];
     reserva.equipamentos.forEach(element => {

@@ -11,7 +11,6 @@ import { EquipamentoModel } from '../model/equipamento.model';
   providedIn: 'root'
 })
 export class SalaEquipamentoService {
-  sala :SalaModel;
   salaEquipamentos : SalaEquipamento[];
   equipamentos : EquipamentoModel[]; 
   equipamentosSelecionados : SalaEquipamento[] = [];
@@ -37,7 +36,7 @@ export class SalaEquipamentoService {
     return this.equipamentos;
   }
 
-  getAllEquipamentosOfSala()
+  getAllEquipamentosSala()
   {
     let equipamentosSel = [];
     this.salaEquipamentos.forEach(element => {

@@ -1,3 +1,4 @@
+import { ReservaModel, ReservaEquipamento } from './../../shared/model/reserva.model';
 import { SelectItem } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { EquipamentoService } from 'src/app/shared/service/equipamento.service';
@@ -18,13 +19,24 @@ export class ReservaEquipamentoComponent implements OnInit {
     this.tiposEquipamentos = equipamentoService.getTipoEquipamentos(this.tiposEquipamentos); 
   }
 
-  equipamentos: EquipamentoModel[];
+  equipamentosReserva: ReservaEquipamento[] = [];
+  equipamentos : EquipamentoModel[] = [];
 
   ngOnInit(): void {
-    this.equipamentos = this.reservaEquipamentoService.equipamentos;
+    this.equipamentosReserva = this.reservaEquipamentoService.reserva.equipamentos;
+    this.equipamentosReserva.forEach(element => {
+      this.equipamentoService.getById(element.idEquipamento).subscribe((result : EquipamentoModel) =>{
+        this.equipamentos.push(result);
+      });
+    });
   }
 
   getTipoEquipamento(id: number) {
     return TipoEquipamento[id];
+  }
+
+  getQuantidade(id : number)
+  {
+    return this.equipamentosReserva.find(e => e.idEquipamento=== id).quantidade;
   }
 }

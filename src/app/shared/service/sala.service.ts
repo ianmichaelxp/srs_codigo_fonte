@@ -54,16 +54,4 @@ export class SalaService {
       ]
       return tiposSalas;
   }
-
-  public getEquipamentoSala()
-  {
-    this.getSalas().subscribe(
-      (result: SalaModel[])=>{
-        let equipamentosSalas = []
-        result.forEach(element => {
-           equipamentosSalas.push(element.equipamentos);
-        });
-      }
-    )
-  }
 }

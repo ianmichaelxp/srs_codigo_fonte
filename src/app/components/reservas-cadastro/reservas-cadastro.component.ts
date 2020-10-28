@@ -1,7 +1,7 @@
 import { EquipamentoService } from './../../shared/service/equipamento.service';
 import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng';
-import { EquipamentoSalaModel, TipoEquipamento } from 'src/app/shared/model/equipamento.model';
+import { EquipamentoModel, TipoEquipamento } from 'src/app/shared/model/equipamento.model';
 import { ReservaEquipamento } from 'src/app/shared/model/reserva.model';
 import { ReservaEquipamentoService } from 'src/app/shared/service/reserva-equipamento.service';
 
@@ -12,9 +12,10 @@ import { ReservaEquipamentoService } from 'src/app/shared/service/reserva-equipa
 })
 export class ReservasCadastroComponent implements OnInit {
 
-  equipamentos: EquipamentoSalaModel[];
+  equipamentos: EquipamentoModel[];
   tiposEquipamentos: SelectItem[];
   cols: any[];
+  quantidade : number;
   constructor(private equipamentoService : EquipamentoService, 
     private reservaEquipamentoService: ReservaEquipamentoService) 
   {
@@ -40,8 +41,12 @@ export class ReservasCadastroComponent implements OnInit {
   getTipoEquipamentoNome(nome: string) {
     return TipoEquipamento[nome];
   }
-  selecionarEquip(equipamento : EquipamentoSalaModel)
+  selecionarEquip(equipamento : EquipamentoModel)
   {
-    this.reservaEquipamentoService.setEquipamentosSelecionados(equipamento);
+    let reservaEquipamento = new ReservaEquipamento;
+    reservaEquipamento.quantidade = this.quantidade;
+    this.quantidade = null;
+    reservaEquipamento.idEquipamento = equipamento.id;
+    this.reservaEquipamentoService.setEquipamentosSelecionados(reservaEquipamento);
   }
 }

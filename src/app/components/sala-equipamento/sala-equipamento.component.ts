@@ -24,7 +24,7 @@ export class SalaEquipamentoComponent implements OnInit {
 
   ngOnInit(): void {
     this.salaEquipamentos = this.salaEquipamentoService.getSalaEquipamento();
-    this.equipamentos = this.salaEquipamentoService.getAllEquipamentosOfSala();
+    this.equipamentos = this.salaEquipamentoService.getAllEquipamentosSala();
   }
 
   getTipoEquipamento(id: number) {

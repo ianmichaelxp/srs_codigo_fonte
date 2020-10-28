@@ -1,6 +1,7 @@
-import { ReservasCadastroSalaComponent } from './components/reservas-cadastro-sala/reservas-cadastro-sala.component';
-import { ReservasCadastroClienteComponent } from './components/reservas-cadastro-cliente/reservas-cadastro-cliente.component';
+import { ReservaSalaComponent } from './components/reserva-sala/reserva-sala.component';
+import { ReservaClienteComponent } from './components/reserva-cliente/reserva-cliente.component';
 import { ReservaEquipamentoComponent } from './components/reserva-equipamento/reserva-equipamento.component';
+import { ReservasCadastroClienteComponent } from './components/reservas-cadastro-cliente/reservas-cadastro-cliente.component';
 import { SalaEquipamentoComponent } from './components/sala-equipamento/sala-equipamento.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { BrowserModule } from '@angular/platform-browser';
@@ -24,7 +25,6 @@ import {SalaComponent} from './components/sala/sala.component';
 import {PanelMenuModule} from 'primeng/panelmenu';
 import { ClienteComponent } from './components/cliente/cliente.component';
 import { EquipamentoComponent } from './components/equipamento/equipamento.component';
-import { ReservaComponent } from './components/reserva/reserva.component';
 import {PanelModule} from 'primeng/panel';
 import {DialogModule} from 'primeng/dialog';
 import {InputTextModule} from 'primeng/inputtext';
@@ -41,9 +41,10 @@ import { CPFPipe } from './pipe/cpf.pipe';
 import { TelPipe } from './pipe/tel.pipe';
 import { RgPipe } from './pipe/rg.pipe';
 import { SalasCadastroComponent } from './components/salas-cadastro/salas-cadastro.component';
+import { ReservasCadastroSalaComponent } from './components/reservas-cadastro-sala/reservas-cadastro-sala.component';
+import { ReservaComponent } from './components/reserva/reserva.component';
 import { ReservasCadastroComponent } from './components/reservas-cadastro/reservas-cadastro.component';
-import { ReservaClienteComponent } from './components/reserva-cliente/reserva-cliente.component';
-import { ReservaSalaComponent } from './components/reserva-sala/reserva-sala.component';
+
 
 
 @NgModule({
@@ -55,18 +56,18 @@ import { ReservaSalaComponent } from './components/reserva-sala/reserva-sala.com
         SalaComponent,
         ClienteComponent,
         EquipamentoComponent,
-        ReservaComponent,
-        ReservaEquipamentoComponent,
         CPFPipe,
         TelPipe,
         RgPipe,
-        ReservasCadastroComponent,
         SalaEquipamentoComponent,
         SalasCadastroComponent,
+        ReservasCadastroClienteComponent,
+        ReservasCadastroSalaComponent,
+        ReservaComponent,
+        ReservaEquipamentoComponent,
         ReservaClienteComponent,
         ReservaSalaComponent,  
-        ReservasCadastroClienteComponent,
-        ReservasCadastroSalaComponent   
+        ReservasCadastroComponent,
     ],
     imports: [
         BlockUIModule.forRoot({

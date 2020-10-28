@@ -36,7 +36,7 @@ export class ReservaSalaComponent implements OnInit {
     return TipoSala[id];
   }
     show(sala: SalaModel) {
-    this.salaEquipamentoService.getEquipamentos(sala);
+    this.salaEquipamentoService.setSalaEquipamento(sala);
     const ref = this.dialogService.open(SalaEquipamentoComponent, {
       width: '80%',
       modal: false
