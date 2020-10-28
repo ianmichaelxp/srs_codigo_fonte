@@ -51,20 +51,17 @@ export class ReservaEquipamentoService {
 
   getSomaEquipamentos(reserva: ReservaModel) {
     let valorEquip = 0;
-      reserva.equipamentos.forEach(element => {
-        valorEquip += element.quantidade *this.equipamentos.find(e => e.id === element.idEquipamento).precoDiario;
-    }); 
-    this.equipamentosSelecionados = [];
+    reserva.equipamentos.forEach(element => {
+      valorEquip += element.quantidade * this.equipamentos.find(e => e.id === element.idEquipamento).precoDiario;
+    });
     return valorEquip;
   }
 
   //utilizado ao setar quantidade e equipamento
   setEquipamentosSelecionados(equipamento: ReservaEquipamento) {
-    if(this.equipamentosSelecionados.find(e => e.idEquipamento === equipamento.idEquipamento))
-    {
-      this.equipamentosSelecionados.splice(equipamento.idEquipamento, 1);
+    if (!this.equipamentosSelecionados.find(e => e.idEquipamento === equipamento.idEquipamento)) {
+      this.equipamentosSelecionados.push(equipamento);
     }
-    this.equipamentosSelecionados.push(equipamento);
   }
 
 

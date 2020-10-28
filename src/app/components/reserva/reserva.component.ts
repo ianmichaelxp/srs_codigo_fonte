@@ -90,7 +90,7 @@ export class ReservaComponent implements OnInit {
   }
 
   mostrarSala(id: number) {
-    this.reservaSalaService.setIdSala(id);
+    this.reservaSalaService.calculaValorSala(id);
     const ref = this.dialogService.open(ReservaSalaComponent, {
       header: "Sala",
       width: '80%',
@@ -159,7 +159,6 @@ export class ReservaComponent implements OnInit {
 
 
   showEditDialog(reserva: ReservaModel) {
-    this.reservaEquipamentoService.setReservaEquipamentos(reserva);
     this.reserva = reserva;
     this.displayEditDialog = true;
     this.getAll();
@@ -183,9 +182,13 @@ export class ReservaComponent implements OnInit {
   }
 
   editar(reserva: ReservaModel) {
-    reserva.precoFinal = 0;
+    reserva.precoFinal = this.reservaSalaService.calculaValorSala(reserva.idSala);
+    reserva.equipamentos.forEach(element => {
+      this.reservaEquipamentoService.setEquipamentosSelecionados(element);
+    });
     reserva.equipamentos = this.reservaEquipamentoService.getReservaEquipamentos();
-    reserva.precoFinal = this.calculaPrecoFinal(reserva);
+    reserva.precoFinal += this.reservaEquipamentoService.getSomaEquipamentos(reserva);
+    reserva.precoFinal = this.calculaPrecoEditarReserva(reserva);
     this.reservaEquipamentoService.equipamentosSelecionados = [];
     this.reservaService.edit(reserva).subscribe(() => {
       this.displayEditDialog = false;
@@ -214,6 +217,16 @@ export class ReservaComponent implements OnInit {
     let tempo = Math.abs(dateI.getTime() - dateF.getTime());
     let dias = Math.ceil(tempo / (1000 * 60 * 60 * 24));
     reserva.precoFinal = precoDiario * dias;
+    return reserva.precoFinal;
+  }
+
+  private calculaPrecoEditarReserva(reserva: ReservaModel)
+  {
+    let dateI = new Date(reserva.dataInicio);
+    let dateF = new Date(reserva.dataFim);
+    let tempo = Math.abs(dateI.getTime() - dateF.getTime());
+    let dias = Math.ceil(tempo / (1000 * 60 * 60 * 24));
+    reserva.precoFinal = reserva.precoFinal * dias;
     return reserva.precoFinal;
   }
   showClientes() {

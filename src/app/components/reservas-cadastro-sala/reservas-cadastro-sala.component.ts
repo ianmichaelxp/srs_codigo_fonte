@@ -44,6 +44,6 @@ export class ReservasCadastroSalaComponent implements OnInit {
 
   selecionar(sala : SalaModel)
   {
-    this.reservaSalaService.setIdSala(sala.id);
+    this.reservaSalaService.calculaValorSala(sala.id);
   }
 }

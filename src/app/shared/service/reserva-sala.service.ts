@@ -24,7 +24,7 @@ export class ReservaSalaService {
     this.idCliente = id;
   }
 
-  setIdSala(id : number)
+  calculaValorSala(id : number)
   {
     this.idSala = id;
     this.salaService.getSalaPorId(id).subscribe(
@@ -33,6 +33,7 @@ export class ReservaSalaService {
         this.valorDiario = result.precoDiario;
       }
     )
+    return this.valorDiario;
   }
 
   getCliente()
