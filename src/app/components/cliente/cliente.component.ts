@@ -117,14 +117,8 @@ export class ClienteComponent implements OnInit {
         this.hideDialog();
       },
       error=> {
-        if(error.status===400){
-          this.messageService.add({severity: 'error',summary:"Error",key: 'myKey1',
-        detail:"Cpf Inválido"})  
-        }
-        else{
           this.messageService.add({severity: 'error',summary:"Error",key: 'myKey1',
           detail:"Cliente não pode ser adicionado, verifique os dados e tente novamente"})
-        }
       }
       )
       

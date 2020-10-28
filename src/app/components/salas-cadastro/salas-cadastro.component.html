@@ -1,5 +1,5 @@
 <html lang="pt-br">
-<p-toast></p-toast>
+<p-toast key="myKey1" position="bottom-right"></p-toast>
 <p-panel header="Equipamentos">
     <p-table #dt [value]="equipamentos" [columns]="cols" [paginator]="true" [rows]="7" [rowHover]="true"
         [showCurrentPageReport]="true" [paginator]="true"
@@ -7,9 +7,14 @@
         [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]">
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th colspan="4">
+                <th colspan="2">
                     <input pInputText type="text" (input)="dt.filter($event.target.value, 'nome', 'startsWith')"
                         placeholder="Pesquisar por nome" class="ui-column-filter" maxlength="255">
+                </th>
+                <th></th>
+                <th>
+                    <label>Quantidade de Equipamentos </label>
+                    <p-inputNumber [(ngModel)]="quantidade" [min]="0" [max]="1000" placeholder="Digite aqui..."></p-inputNumber>
                 </th>
             </tr>
             <tr>
@@ -20,14 +25,13 @@
                 <th>
                     <p-dropdown [options]="tiposEquipamentos"
                         (onChange)="dt.filter($event.value, 'idTipoEquipamento', 'equals')"
-                        styleClass="ui-column-filter" placeholder="Select a Status" [showClear]="true">
+                        styleClass="ui-column-filter" placeholder="Tipo do Equipamento" [showClear]="true">
                         <ng-template let-option pTemplate="item">
                             <span
                                 [class]="'equipamento-badge idTipoEquipamento-' + option.value">{{option.label}}</span>
                         </ng-template>
                     </p-dropdown>
                 </th>
-                <th>Quantidade equipamento</th>
                 <th>Opções</th>
             </tr>
         </ng-template>
@@ -36,9 +40,6 @@
                 <td class="break">{{equipamento.nome}}</td>
                 <td>{{equipamento.precoDiario | currency:'BRL'}}</td>
                 <td>{{getTipoEquipamento(equipamento.idTipoEquipamento)}}</td>
-                <td>
-                    <p-inputNumber [(ngModel)]="quantidade" [min]="0" [max]="1000"></p-inputNumber>
-                </td>
                 <td>
                     <span>
                         <button pButton type="button" (click)="selecionarEquip(equipamento)" style="font-size: 13px; margin-top: 5px;">

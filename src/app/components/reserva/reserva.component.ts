@@ -113,14 +113,14 @@ export class ReservaComponent implements OnInit {
     this.reservaService.delete(reserva).subscribe(
       () => {
         this.messageService.add({
-          severity: 'success',
+          severity: 'success',key: 'myKey1',
           summary: "Resultado", detail: "Reserva removida com sucesso"
         });
         this.getAll();
       },
       error => {
         this.messageService.add({
-          severity: 'error', summary: "Error",
+          severity: 'error', summary: "Error",key: 'myKey1',
           detail: "Reserva não pode ser removida"
         })
       }
@@ -172,13 +172,20 @@ export class ReservaComponent implements OnInit {
       (result: any) => {
         this.reserva = new ReservaModel;
         this.messageService.add({
-          severity: 'success',
+          severity: 'success',key: 'myKey1',
           summary: "Resultado", detail: "Reserva salva com sucesso"
         });
         this.displaySaveDialog = false;
         this.getAll();
-      }
-    )
+      },
+        error => {
+          this.messageService.add({
+            severity: 'error', summary: "Error",key: 'myKey1',
+            detail: "Reserva não pode ser salva, verifique os dados e tente novamente"
+          });
+        }
+
+      )
   }
 
   editar(reserva: ReservaModel) {
@@ -190,16 +197,23 @@ export class ReservaComponent implements OnInit {
     reserva.precoFinal += this.reservaEquipamentoService.getSomaEquipamentos(reserva);
     reserva.precoFinal = this.calculaPrecoEditarReserva(reserva);
     this.reservaEquipamentoService.equipamentosSelecionados = [];
-    this.reservaService.edit(reserva).subscribe(() => {
+    this.reservaService.edit(reserva).subscribe(
+      () => {
       this.displayEditDialog = false;
       this.reserva = new ReservaModel;
       this.messageService.add({
-        severity: 'success',
+        severity: 'success',key: 'myKey1',
         summary: "Resultado", detail: "Reserva editada com sucesso"
       });
       this.displayEditDialog = false;
       this.getAll();
-    }
+    },
+      error => {
+        this.messageService.add({
+          severity: 'error', summary: "Error",key: 'myKey1',
+          detail: "Reserva não pode ser editada, verifique os dados e tente novamente"
+        });
+      }
     )
   }
 

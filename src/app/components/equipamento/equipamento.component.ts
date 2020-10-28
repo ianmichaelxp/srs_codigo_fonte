@@ -77,7 +77,7 @@ export class EquipamentoComponent implements OnInit {
           let equipamento = result as EquipamentoModel;
           this.equipamentos.push(equipamento);
           this.messageService.add({
-            severity: 'success',
+            severity: 'success',key: 'myKey1',
             summary: "Resultado", detail: "Equipamento salvo com sucesso"
           }),  
           this.displaySaveDialog = false;
@@ -85,7 +85,7 @@ export class EquipamentoComponent implements OnInit {
         },
         error => {
           this.messageService.add({
-            severity: 'error', summary: "Error",
+            severity: 'error', summary: "Error",key: 'myKey1',
             detail: "Equipamento não pode ser salvo, verifique os dados e tente novamente"
           })
         }
@@ -107,14 +107,14 @@ export class EquipamentoComponent implements OnInit {
     this.equipamentoService.delete(equipamento).subscribe(
       () => {
         this.messageService.add({
-          severity: 'success',
+          severity: 'success',key: 'myKey1',
           summary: "Resultado", detail: "Equipamento removido com sucesso"
         });
         this.getAll();
       },
       error => {
         this.messageService.add({
-          severity: 'error', summary: "Error",
+          severity: 'error', summary: "Error",key: 'myKey1',
           detail: "Equipamento não pode ser removido"
         })
       }
@@ -127,14 +127,14 @@ export class EquipamentoComponent implements OnInit {
           this.displayEditDialog = false;
           this.equipamento = new EquipamentoModel;
           this.messageService.add({
-            severity: 'success',
+            severity: 'success',key: 'myKey1',
             summary: "Resultado", detail: "Equipamento editado com sucesso"
           });
           this.getAll();
         },
         error => {
           this.messageService.add({
-            severity: 'error', summary: "Error",
+            severity: 'error', summary: "Error",key: 'myKey1',
             detail: "Equipamento não pode ser editado, verifique os dados e tente novamente"
           })
         }
@@ -155,7 +155,7 @@ export class EquipamentoComponent implements OnInit {
       if (this.equipamento.precoDiario == null) throw "Preço vazio";
     } catch (err) {
       this.messageService.add({
-        severity: 'error', summary: "Erro",
+        severity: 'error', summary: "Erro",key: 'myKey1',
         detail: err
       });
       return true;

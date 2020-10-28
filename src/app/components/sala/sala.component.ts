@@ -85,14 +85,14 @@ export class SalaComponent implements OnInit {
     this.salaService.delete(sala).subscribe(
       () => {
         this.messageService.add({
-          severity: 'success',
+          severity: 'success',key: 'myKey1',
           summary: "Resultado", detail: "Sala removida com sucesso"
         });
         this.getAll();
       },
       error => {
         this.messageService.add({
-          severity: 'error', summary: "Error",
+          severity: 'error', summary: "Error",key: 'myKey1',
           detail: "Sala não pode ser removida"
         })
       }
@@ -135,12 +135,12 @@ export class SalaComponent implements OnInit {
       (result: any) => {
         this.sala = new SalaModel;
         this.messageService.add({
-          severity: 'success',
+          severity: 'success',key: 'myKey1',
           summary: "Resultado", detail: "Sala salva com sucesso"
         }),
           error => {
             this.messageService.add({
-              severity: 'error', summary: "Error",
+              severity: 'error', summary: "Error",key: 'myKey1',
               detail: "Equipamento não pode ser salva, verifique os dados e tente novamente"
             })
           }
@@ -158,14 +158,14 @@ export class SalaComponent implements OnInit {
         this.displayEditDialog = false;
         this.sala = new SalaModel;
         this.messageService.add({
-          severity: 'success',
+          severity: 'success',key: 'myKey1',
           summary: "Resultado", detail: "Equipamento editado com sucesso"
         });
         this.getAll();
       },
       error => {
         this.messageService.add({
-          severity: 'error', summary: "Error",
+          severity: 'error', summary: "Error",key: 'myKey1',
           detail: "Equipamento não pode ser editado, verifique os dados e tente novamente"
         })
       }
