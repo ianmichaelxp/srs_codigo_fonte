@@ -45,28 +45,34 @@ export class ReservaEquipamentoService {
   }
 
   getReservaEquipamentos() {
+    console.log(this.equipamentosSelecionados);
     return this.equipamentosSelecionados;
   }
 
   getSomaEquipamentos(reserva: ReservaModel) {
     let valorEquip = 0;
       reserva.equipamentos.forEach(element => {
-        valorEquip += element.quantidade *this.getAllEquipamentos().find(e => e.id === element.idEquipamento).precoDiario;
+        valorEquip += element.quantidade *this.equipamentos.find(e => e.id === element.idEquipamento).precoDiario;
     }); 
+    this.equipamentosSelecionados = [];
     return valorEquip;
   }
 
   //utilizado ao setar quantidade e equipamento
   setEquipamentosSelecionados(equipamento: ReservaEquipamento) {
+    if(this.equipamentosSelecionados.find(e => e.idEquipamento === equipamento.idEquipamento))
+    {
+      this.equipamentosSelecionados.splice(equipamento.idEquipamento, 1);
+    }
     this.equipamentosSelecionados.push(equipamento);
   }
 
 
   //utilizado no editar
   setReservaEquipamentos(reserva: ReservaModel) {
-    this.reservaEquipamentos = [];
+    this.equipamentosSelecionados = [];
     reserva.equipamentos.forEach(element => {
-      this.reservaEquipamentos.push(element);
+      this.equipamentosSelecionados.push(element);
     });
   }
 

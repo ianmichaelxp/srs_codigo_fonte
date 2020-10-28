@@ -159,6 +159,7 @@ export class ReservaComponent implements OnInit {
 
 
   showEditDialog(reserva: ReservaModel) {
+    this.reservaEquipamentoService.setReservaEquipamentos(reserva);
     this.reserva = reserva;
     this.displayEditDialog = true;
     this.getAll();
@@ -167,7 +168,7 @@ export class ReservaComponent implements OnInit {
   save(reserva: ReservaModel) {
     this.setDadosReserva(reserva);
     reserva.precoFinal = this.calculaPrecoFinal(reserva);
-    this.reservaEquipamentoService.reservaEquipamentos = [];
+    this.reservaEquipamentoService.equipamentosSelecionados = [];
     this.reservaService.save(reserva).subscribe(
       (result: any) => {
         this.reserva = new ReservaModel;
@@ -182,10 +183,10 @@ export class ReservaComponent implements OnInit {
   }
 
   editar(reserva: ReservaModel) {
+    reserva.precoFinal = 0;
     reserva.equipamentos = this.reservaEquipamentoService.getReservaEquipamentos();
     reserva.precoFinal = this.calculaPrecoFinal(reserva);
-    reserva.precoFinal += this.reserva.precoFinal;
-    this.reservaEquipamentoService.reservaEquipamentos = [];
+    this.reservaEquipamentoService.equipamentosSelecionados = [];
     this.reservaService.edit(reserva).subscribe(() => {
       this.displayEditDialog = false;
       this.reserva = new ReservaModel;
