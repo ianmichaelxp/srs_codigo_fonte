@@ -9,7 +9,4 @@ export enum TipoEquipamento {
     "Eletrodoméstico",
     "Informática"
 }
-export class EquipamentoSalaModel extends EquipamentoModel{
-    quantidade: number;
-}
 

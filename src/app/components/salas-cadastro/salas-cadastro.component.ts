@@ -1,9 +1,12 @@
+import { element } from 'protractor';
+import { SalaService } from 'src/app/shared/service/sala.service';
 import { MessageService } from 'primeng/api';
 import { SalaEquipamentoService } from './../../shared/service/salaEquipamento.service';
 import { EquipamentoService } from './../../shared/service/equipamento.service';
 import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng';
-import { EquipamentoSalaModel, TipoEquipamento } from 'src/app/shared/model/equipamento.model';
+import { EquipamentoModel, TipoEquipamento } from 'src/app/shared/model/equipamento.model';
+import { SalaEquipamento, SalaModel } from 'src/app/shared/model/sala.model';
 
 @Component({
   selector: 'app-salas-cadastro',
@@ -11,14 +14,17 @@ import { EquipamentoSalaModel, TipoEquipamento } from 'src/app/shared/model/equi
   styleUrls: ['./salas-cadastro.component.css']
 })
 export class SalasCadastroComponent implements OnInit {
-  equipamentos: EquipamentoSalaModel[];
+  equipamentos: EquipamentoModel[];
   tiposEquipamentos: SelectItem[];
+  salaEquipamentos: SalaEquipamento[];
+  salas: SalaEquipamento[];
   cols: any[];
+  quantidade : number;
   constructor(private equipamentoService: EquipamentoService, private salaEquipamentoService: SalaEquipamentoService,
-    private messageService: MessageService) {
+    private messageService: MessageService, private salaService: SalaService) {
   }
   ngOnInit(): void {
-    this.tiposEquipamentos = this.equipamentoService.getTipoEquipamentos(this.tiposEquipamentos);
+    this.salaEquipamentos = this.salaEquipamentoService.getSalaEquipamento();
     this.getAll();
   }
   getAll() {
@@ -31,34 +37,18 @@ export class SalasCadastroComponent implements OnInit {
       }
     )
   }
+
   getTipoEquipamento(id: number) {
     return TipoEquipamento[id];
   }
-  getTipoEquipamentoNome(nome: string) {
-    return TipoEquipamento[nome];
-  }
-  
-  selecionarEquip(equipamento: EquipamentoSalaModel) {
-    if(!this.hasErros(equipamento)){
-      this.salaEquipamentoService.setEquipamentosSelecionados(equipamento);
-    }
-  }
 
-  private hasErros(equipamento: EquipamentoSalaModel) : boolean {
-    try {
-      if (equipamento.quantidade == null)
-        throw "quantidade Nula";
-    } catch (err) {
-      this.messageService.add({
-        severity: 'error', summary: "Erro",
-        detail: err  
-      });
-      return true;
-    }
-    return false;
-  }
-
-  removerEquip(equipamento: EquipamentoSalaModel) {
-    this.salaEquipamentoService.removeEquipamentosSelecionados(equipamento);
+  selecionarEquip(equipamento : EquipamentoModel)
+  {
+    let salaEquipamento = new SalaEquipamento;
+    salaEquipamento.quantidade = this.quantidade;
+    this.quantidade = null;
+    salaEquipamento.idEquipamento = equipamento.id;
+    this.salaEquipamentoService.setEquipamentosSelecionados(salaEquipamento);
   }
 }
+

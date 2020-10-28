@@ -35,7 +35,7 @@
                     <td class="break">{{equipamento.nome}}</td>
                     <td>{{equipamento.precoDiario | currency:'BRL'}}</td>
                     <td>{{getTipoEquipamento(equipamento.idTipoEquipamento)}}</td>
-                    <td>{{equipamento.quantidade}}</td>
+                    <td>{{getQuantidade(equipamento.id)}}</td>
                 </tr>
             </ng-template>
         </p-table>

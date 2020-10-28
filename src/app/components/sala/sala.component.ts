@@ -1,9 +1,8 @@
 import { SalasCadastroComponent } from './../salas-cadastro/salas-cadastro.component';
 import { SalaEquipamentoComponent } from './../sala-equipamento/sala-equipamento.component';
-
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SalaService } from './../../shared/service/sala.service';
-import { SalaEquipamento, SalaModel, TipoSala } from './../../shared/model/sala.model';
+import { SalaEquipamento, SalaModel, TipoSala, SalaEPreco } from './../../shared/model/sala.model';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService, SelectItem, ConfirmationService } from 'primeng/api';
 import { SalaEquipamentoService } from 'src/app/shared/service/salaEquipamento.service';
@@ -23,6 +22,7 @@ export class SalaComponent implements OnInit {
   displayEditDialog: boolean = false;
   tiposSalas: SelectItem[];
   ref: DynamicDialogRef;
+  salasEPrecos: SalaEPreco[] = [];
 
   salaEquipamento: SalaEquipamento = {
     idSala: null,
@@ -80,6 +80,7 @@ export class SalaComponent implements OnInit {
       }
     });
   }
+
   deleteWithButton(sala: SalaModel) {
     this.salaService.delete(sala).subscribe(
       () => {
@@ -105,11 +106,15 @@ export class SalaComponent implements OnInit {
   }
 
   show(sala: SalaModel) {
-    this.salaEquipamentoService.getEquipamentos(sala);
+    this.salaEquipamentoService.setSalaEquipamento(sala);
     const ref = this.dialogService.open(SalaEquipamentoComponent, {
       width: '80%',
       modal: false
     });
+  }
+
+  getPrecoTotal(sala: SalaModel) {
+    return this.salasEPrecos.find(s => s.idSala == sala.id).precoTotal;
   }
 
   getAll() {
@@ -124,9 +129,8 @@ export class SalaComponent implements OnInit {
   }
 
   save() {
-    this.sala.equipamentos = this.salaEquipamentoService.getSalaEquipamentos();
-    this.sala.precoDiario += this.salaEquipamentoService.precoSala;
-    this.salaEquipamentoService.salaEquipamentos = [];
+    this.sala.equipamentos = this.salaEquipamentoService.getEquipamentosSelecionados();
+    this.salaEquipamentoService.equipamentosSelecionados = [];
     this.salaService.save(this.sala).subscribe(
       (result: any) => {
         this.sala = new SalaModel;
@@ -134,12 +138,12 @@ export class SalaComponent implements OnInit {
           severity: 'success',
           summary: "Resultado", detail: "Sala salva com sucesso"
         }),
-        error => {
-          this.messageService.add({
-            severity: 'error', summary: "Error",
-            detail: "Equipamento não pode ser salva, verifique os dados e tente novamente"
-          })
-        }
+          error => {
+            this.messageService.add({
+              severity: 'error', summary: "Error",
+              detail: "Equipamento não pode ser salva, verifique os dados e tente novamente"
+            })
+          }
         this.displaySaveDialog = false;
         this.getAll();
       }
@@ -147,10 +151,8 @@ export class SalaComponent implements OnInit {
   }
 
   editEquipWithButton() {
-    this.salaEquipamentoService.setSalaEquipamentos(this.sala);
-    this.sala.equipamentos = this.salaEquipamentoService.getSalaEquipamentos();
-    this.sala.precoDiario += this.salaEquipamentoService.precoSala;
-    this.salaEquipamentoService.salaEquipamentos = [];
+    this.sala.equipamentos = this.salaEquipamentoService.getEquipamentosSelecionados();
+    this.salaEquipamentoService.equipamentosSelecionados = [];
     this.salaService.edit(this.sala).subscribe(
       () => {
         this.displayEditDialog = false;
@@ -184,6 +186,9 @@ export class SalaComponent implements OnInit {
   }
 
   showEditDialog(sala: SalaModel) {
+    sala.equipamentos.forEach(element => {
+      this.salaEquipamentoService.setEquipamentosSelecionados(element);
+    });
     this.displayEditDialog = true;
     this.sala = sala;
     this.getAll();

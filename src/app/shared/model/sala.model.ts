@@ -20,3 +20,8 @@ export class SalaEquipamento{
     idEquipamento: number;
     quantidade: number;
 }
+
+export class SalaEPreco{
+    idSala : number;
+    precoTotal : number;
+}
