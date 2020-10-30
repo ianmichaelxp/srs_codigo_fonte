@@ -146,6 +146,7 @@ export class SalaComponent implements OnInit {
           }
         this.displaySaveDialog = false;
         this.getAll();
+        location.reload(); 
       }
     )
   }
